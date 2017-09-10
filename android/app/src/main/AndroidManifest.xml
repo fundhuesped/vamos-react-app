@@ -30,6 +30,12 @@
             android:windowSoftInputMode="adjustResize"
         />
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+      <!-- BEGIN GOOGLE MAPS CONFIG -->
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCRp8hQPPguJURPqyx0ptSzy4L5vU6AUhU"/>
+      <!-- END GOOGLE MAPS CONFIG -->
     </application>
 
 </manifest>
