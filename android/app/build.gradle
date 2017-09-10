@@ -144,6 +144,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-maps')
     compile project(':realm')
     compile project(':lottie-react-native')
     compile project(':react-native-i18n')
