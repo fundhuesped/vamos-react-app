@@ -45,7 +45,7 @@ export const HaversineFormula = (place, coordsOrigin) => {
   return distance; // Distance in km
 }
 
-const isTeen = (place) => (place.friendly_condones || place.friendly_dc || place.friendly_ile || place.friendly_infectologia || place.friendly_mac || place.friendly_prueba || place.friendly_ssr || place.friendly_vacunatorios)
+const isTeen = (place) => (place.friendly_condones || place.friendly_dc || place.friendly_ile || place.friendly_mac || place.friendly_prueba || place.friendly_ssr)
 
 export const getServiceData = (service, size) => {
   let serviceData;
@@ -231,7 +231,8 @@ export class Engine {
       console.log('filtro por teen');
       let filterForTeen = []
       if(value) {
-        filterForTeen = this.Data.filter( (place) => {if(isTeen(place)) return place});
+
+        filterForTeen = this.Data.filter( (place) => {if(isTeen(place.placeData)) return place});
       }
       else {
         filterForTeen = this.Data;

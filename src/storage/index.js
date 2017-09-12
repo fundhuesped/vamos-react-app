@@ -121,7 +121,7 @@ export const _getStore = (id) => {
 }
 
 export const _updateStore = async (store, value, type) => {
-  alert('update store '+ value.length, type);
+  alert('update store '+ value.length +" "+ type);
   console.log(store);
   console.log(value);
   switch (type) {

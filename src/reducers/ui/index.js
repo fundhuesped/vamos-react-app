@@ -154,9 +154,15 @@ export default (state = initialState, action) => {
     case SET_LANG:
       {
         let lang = String(action.lang)
-        if (availiableLangs.indexOf(lang) === -1) return state
-        let storeRealm = _getStore("1");
-        _updateStore(storeRealm,lang,"lang")
+        if (availiableLangs.indexOf(lang) === -1){
+          let storeRealm = _getStore("1");
+          _updateStore(storeRealm,"en-US","lang")
+          return state
+        }
+        else {
+          let storeRealm = _getStore("1");
+          _updateStore(storeRealm,lang,"lang")
+        }
         return { ...state,
           lang
         }

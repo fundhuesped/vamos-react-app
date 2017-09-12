@@ -16,8 +16,8 @@ export class HTTPServices {
 
   fetchPlaces = async () => {
     store.dispatch(startFetching())
-    console.log('FIRTS FETCH BD');
-    alert('FIRTS FETCH BD');
+    // console.log('FIRTS FETCH BD');
+    // alert('FIRTS FETCH BD');
     while (this.currentPage) {
       if(this.currentPage <= this.totalPages){
         try {
@@ -47,14 +47,14 @@ export class HTTPServices {
         this.currentPage = 0;
       }
     }
-    console.log('FINALIZADO FIRTS FETCH BD');
-    alert('FINALIZADO FIRTS FETCH BD');
+    // console.log('FINALIZADO FIRTS FETCH BD');
+    // alert('FINALIZADO FIRTS FETCH BD');
     store.dispatch(updatePlaces(this.currentData,this.failedPages))
   }
 
   checkPlaces = async () => {
-    console.log('CHECKEANDO BD');
-    alert('CHECKEANDO BD');
+    // console.log('CHECKEANDO BD');
+    // alert('CHECKEANDO BD');
     let lastUpdate = new Date(store.getState().db.places.meta.updatedAt) || new Date()
         currentDate = new Date(),
         differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime(),
@@ -90,8 +90,8 @@ export class HTTPServices {
       }
     }
 
-    console.log('FINALIZADO CHECKEANDO BD');
-    alert('FINALIZADO CHECKEANDO BD');
+    // console.log('FINALIZADO CHECKEANDO BD');
+    // alert('FINALIZADO CHECKEANDO BD');
     store.dispatch(updatePlaces(failedPages,newFailedPages))
   }
 

@@ -22,6 +22,22 @@ class SmartLanding extends React.Component {
   componentDidMount = () =>{
     if(this.props.db.places.data.length === 0) HTTPService.fetchPlaces();
     else HTTPService.checkPlaces();
+
+    // this._checkCities();
+
+  }
+
+  _checkCities = async () =>{
+    let url = 'https://ippf-staging.com.ar/api/v1/places/all/autocomplete';
+
+    try {
+      console.log('fetcheando ciudades');
+      let responseServices = await fetch(url)
+      let responseServicesJson = await responseServices.json();
+      console.log(responseServicesJson);
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   _handleService = (service) =>{
