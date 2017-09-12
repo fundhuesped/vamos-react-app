@@ -146,7 +146,13 @@ android {
 dependencies {
     compile project(':react-native-svg')
     compile project(':react-native-google-analytics-bridge')
-    compile project(':react-native-maps')
+    compile(project(':react-native-maps')) {
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }
+    compile 'com.google.android.gms:play-services-base:11.+'
+    compile 'com.google.android.gms:play-services-maps:11.+'
+    compile 'com.google.android.gms:play-services-location:11.+'
     compile project(':realm')
     compile project(':lottie-react-native')
     compile project(':react-native-i18n')

@@ -154,14 +154,6 @@ export default class Map extends React.Component {
             </Right>
             </Header>
             <MapView
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
-            {/* <MapView
               ref={map => this.map = map}
               initialRegion={this.state.region}
               style={styles.container}
@@ -219,7 +211,7 @@ export default class Map extends React.Component {
                     />
                   </View>
                 ))}
-              </Animated.ScrollView> */}
+              </Animated.ScrollView>
           </Container>
         </StyleProvider>
       ) : (<ProgressCircle downloading={false}/>)
