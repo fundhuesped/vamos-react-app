@@ -8,9 +8,10 @@ export class HTTPServices {
     this.currentPage = 1;
     this.currentData = {};
     this.failedPages = {};
-    this.totalPages = 0;
+    this.totalPages = 1;
     this.nextUrl = URLPLACES;
     this.totalEstablishment = 0;
+    this.to = 0;
   }
 
   fetchPlaces = async () => {
@@ -18,30 +19,32 @@ export class HTTPServices {
     console.log('FIRTS FETCH BD');
     alert('FIRTS FETCH BD');
     while (this.currentPage) {
-      try {
-        let response = await fetch(this.nextUrl, {
-                              method: 'GET',
-                              headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                              }})
-        let responseJson = await response.json();
-        if(responseJson.current_page === 10){
-        // if(responseJson.current_page === responseJson.last_page){
-          // alert(`termino de fetchear ${responseJson.last_page} paginas => ${responseJson.total} lugares`)
-          this.currentPage = 0;
-        } else {
-          this.totalEstablishment = responseJson.total;
-          this.nextUrl = `${URLPLACES}/?page=${responseJson.current_page+1}`;
-              // if(this.currentPage % 5 === 0) throw new Error('error')
-              this.currentData[responseJson.current_page.toString()] = responseJson.data;
-              this.currentPage = responseJson.current_page;
-              this.totalPages = responseJson.last_page
+      if(this.currentPage <= this.totalPages){
+        try {
+          let response = await fetch(this.nextUrl, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json',
+                                }})
+          let responseJson = await response.json();
 
+            this.totalEstablishment = responseJson.total;
+            this.nextUrl = `${URLPLACES}/?page=${responseJson.current_page+1}`;
+                // if(this.currentPage % 5 === 0) throw new Error('error')
+                this.currentData[responseJson.current_page.toString()] = responseJson.data;
+                this.totalPages = responseJson.last_page
+                this.currentPage = responseJson.current_page;
+                this.to = responseJson.to;
+                if(this.totalPages === this.currentPage) this.currentPage += 1;
+        } catch(error) {
+          this.nextUrl = `${URLPLACES}/?page=${this.currentPage+1}`;
+              this.currentPage = this.currentPage + 1;
         }
-      } catch(error) {
-        this.nextUrl = `${URLPLACES}/?page=${this.currentPage+1}`;
-            this.currentPage = this.currentPage + 1;
+      }
+      else {
+        // alert(`termino de fetchear ${responseJson.last_page} paginas => ${responseJson.total} lugares`)
+        this.currentPage = 0;
       }
     }
     console.log('FINALIZADO FIRTS FETCH BD');
@@ -93,16 +96,17 @@ export class HTTPServices {
   }
 
   getCurrentPage = () => {
-    return {currentPage: this.currentPage, totalEstablishment: this.totalEstablishment}
+    return {currentPlaces: this.to, totalEstablishment: this.totalEstablishment}
   };
 
   cleanState = () =>{
     this.currentPage = 1;
     this.currentData = {};
     this.failedPages = {};
-    this.totalPages = 0;
+    this.totalPages = 1;
     this.nextUrl = URLPLACES;
     this.totalEstablishment = 0;
+    this.to = 0;
   }
 }
 

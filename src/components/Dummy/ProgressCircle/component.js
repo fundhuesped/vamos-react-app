@@ -12,7 +12,7 @@ export default class ProgressCircle extends React.Component {
     super();
     this.state = {
       progress: new Animated.Value(0),
-      page: "",
+      currentPlaces: "",
       totalEstablishment: ""
       // loop: true
       // progress: 1
@@ -43,7 +43,7 @@ export default class ProgressCircle extends React.Component {
 
     this.interval = setInterval(() => {
       let downloadStatus = HTTPService.getCurrentPage()
-      if(this.state.page !== downloadStatus.currentPage) this.setState({page: downloadStatus.currentPage, totalEstablishment: downloadStatus.totalEstablishment})
+      if(this.state.currentPlaces !== downloadStatus.currentPage) this.setState({currentPlaces: downloadStatus.currentPlaces, totalEstablishment: downloadStatus.totalEstablishment})
       console.log('intervalo ',downloadStatus.currentPage);
     }, 500);
 
@@ -87,8 +87,8 @@ export default class ProgressCircle extends React.Component {
             loop={true}
           />
           <View style={{paddingHorizontal: '20%'}}>
-            {(this.state.page !== 0) ? (
-              <Text style={styles.loaderText}>{(this.state.page !== "" && this.state.totalEstablishment !== "") ?`Descargando ${this.state.page*100} establecimientos de ${this.state.totalEstablishment}` : ""}</Text>
+            {(this.state.currentPlaces !== 0) ? (
+              <Text style={styles.loaderText}>{(this.state.currentPlaces !== "" && this.state.totalEstablishment !== "") ?`Descargando ${this.state.currentPlaces} establecimientos de ${this.state.totalEstablishment}` : ""}</Text>
             ) : (
               <Text style={styles.loaderText}>Guardando establecimientos</Text>
             )}

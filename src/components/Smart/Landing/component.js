@@ -20,8 +20,8 @@ class SmartLanding extends React.Component {
 
 
   componentDidMount = () =>{
-    // if(this.props.db.places.data.length === 0) HTTPService.fetchPlaces();
-    // else HTTPService.checkPlaces();
+    if(this.props.db.places.data.length === 0) HTTPService.fetchPlaces();
+    else HTTPService.checkPlaces();
   }
 
   _handleService = (service) =>{
