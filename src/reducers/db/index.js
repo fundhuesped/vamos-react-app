@@ -127,7 +127,7 @@ export default (state = initialState, action) => {
             data: action.store
           }
         }
-        alert('store reducer '+ store.places.data.length);
+        // alert('store reducer '+ store.places.data.length);
         return store
         break
       }

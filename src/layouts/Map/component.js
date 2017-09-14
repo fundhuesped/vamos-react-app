@@ -20,7 +20,7 @@ import ProgressCircle from '../../components/Dummy/ProgressCircle/component.js'
 const { width, height } = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = width / 1.5;
+const CARD_WIDTH = width / 1.2;
 
 const iconMarker = require('../../assets/images/marker.png');
 const selectedIconMarker = require('../../assets/images/marker-selected.png');
@@ -95,7 +95,8 @@ export default class Map extends React.Component {
   _scrollToAnimatedScrollView = (e, index) =>{
     console.log(index);
     this.setState({selectedMarkerIndex: index, isPicked:true}, () => {
-      let distanceToCard = (CARD_WIDTH * index) + 30;
+      let distanceToCard = (CARD_WIDTH + 20) * index;
+      alert(distanceToCard)
       this.refs.scrollRef._component.scrollTo({x: distanceToCard, animated: false})
     });
   }
@@ -175,8 +176,11 @@ export default class Map extends React.Component {
                       key={index}
                       coordinate={marker.placeData}
                       onPress={(e) => this._scrollToAnimatedScrollView(e,index)}
-                      image={this.state.selectedMarkerIndex === index ? selectedIconMarker : iconMarker}
                       >
+                        <Image
+                          source={this.state.selectedMarkerIndex === index ? selectedIconMarker : iconMarker}
+                          style={styles.markerImage}
+                        />
                     </MapView.Marker>
                   );
                 })}
@@ -246,5 +250,9 @@ const styles = StyleSheet.create({
   },
   textContent: {
     flex: 1,
+  },
+  markerImage:{
+    width: width / 6,
+    height: width / 6
   }
 });

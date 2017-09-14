@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Text, Linking,View} from 'react-native';
 import CityItem from '../CityItem/component.js'
 
 
@@ -21,14 +21,50 @@ export default class CitiesList extends React.PureComponent {
 
   _renderItem = ({item}) => (
     <CityItem
-      id={item.placeId}
-      onPressItem={this._onPressItem}
+      id={item.id}
+      onPressItem={this.props.onPressItem}
       selected={!!this.state.selected.get(item.id)}
-      title={item.establecimiento}
+      data={item}
     />
   );
 
+  _goToSuggest = () =>{
+    let url = 'https://donde.huesped.org.ar/form';
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
+  _renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 10,
+          width: "100%",
+          alignItems: 'center',
+          justifyContent:'center',
+        }}
+      >
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: 'rgba(0,0,0,0.2)',
+            width: "80%"
+          }}
+        />
+      </View>
+    );
+  };
+
+
+  _renderEmptyList = () => <Text style={{color: '#e6334c'}} onPress={this._goToSuggest}>No se encontraron establecimientos, sugiere uno</Text>
+
   render() {
+    console.log(this.props);
     return (
       <FlatList
         data={this.props.data}
@@ -36,7 +72,9 @@ export default class CitiesList extends React.PureComponent {
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
         style={{paddingLeft:'5%'}}
-        keyboardShouldPersistTaps="always"
+        ListEmptyComponent={this._renderEmptyList}
+        keyboardShouldPersistTaps='always'
+        ItemSeparatorComponent={this._renderSeparator}
         keyboardDismissMode='on-drag'
       />
     );

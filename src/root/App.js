@@ -56,18 +56,18 @@ export default class App extends React.Component {
     if(storeRealm === undefined) {
       console.log('creando store');
       _createStore('1')
-      alert('creando store');
+      // alert('creando store');
       store.dispatch(setLang(I18n.currentLocale()))
       alert(I18n.currentLocale())
     }
     else {
-      alert('cargando store '+storeRealm.places.length);
+      // alert('cargando store '+storeRealm.places.length);
       console.log('cargando store '+storeRealm.places.length);
       store.dispatch(startFetching())
       // store.dispatch(updateStoreDB(Array.from(storeRealm.places)))
       store.dispatch(updateStoreDB(storeRealm.places))
       store.dispatch(updateStoreUI(storeRealm.lang))
-      alert(I18n.currentLocale())
+      // alert(I18n.currentLocale())
     }
 
   }

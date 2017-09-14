@@ -156,7 +156,7 @@ class SideBar extends Component {
               <Text style={styles.bodyItemText}>{I18n.t("refetch", {locale: this.props.ui.lang})}</Text>
             </View>
           </TouchableHighlight>
-          <Text>{`cantidad de establecimientos ${Object.keys(this.props.db.places.data).length}`}</Text>
+          {/* <Text>{`cantidad de establecimientos ${Object.keys(this.props.db.places.data).length}`}</Text> */}
         </View>
         <View style={styles.footer}>
           <View style={styles.footerImage}>

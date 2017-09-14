@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner, CheckBox } from 'native-base';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner, CheckBox,DeviceEventEmitter } from 'native-base';
 import {View, StyleSheet,Picker, NetInfo, Modal, Text, Dimensions, TouchableHighlight} from 'react-native'
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
@@ -32,6 +32,7 @@ export default class SearchForGeolocation extends React.Component {
   componentDidMount = () => {
     console.log('MOUNT ', this.props);
     // setTimeout(() => { this.setState({loaded:true}) }, 1000);
+    if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true})
     this._getAddress();
   }
 

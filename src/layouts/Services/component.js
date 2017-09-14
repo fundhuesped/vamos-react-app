@@ -6,6 +6,7 @@ import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
+import CitiesList from '../../components/Dummy/CitiesList/component.js'
 
 import {getServiceData} from '../../utils/engines/index.js'
 
@@ -27,8 +28,15 @@ export default class Services extends React.Component {
     super();
     this.state = {
       textInput: "",
-      showModal: false
+      showModal: false,
+      filterCities: [],
+      showList: false,
+      itemSelected: null
     }
+  }
+
+  componentWillReceiveProps = (nextProps) =>{
+    this.setState({textInput: ""})
   }
 
   _goToGeolocation = () =>{
@@ -44,6 +52,93 @@ export default class Services extends React.Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+
+  _filterList = () =>{
+    if(this.state.itemSelected === null) this._isInputFocus(true)
+    if(this.state.textInput.length > 1){
+      console.log('filtrando');
+      let cities = this.props.cities,
+          filterCities = cities.filter((city) => {
+          let cityString,
+              departmentString;
+
+              if(city.nombre_ciudad !== undefined && city.nombre_ciudad !== null) {
+                cityString = city.nombre_ciudad.toLowerCase()
+                //CUT Diacritics cityString
+                cityString = cityString.replace(/\s/g, '')
+                cityString = cityString.replace(/[àáâãäå]/g,"a")
+                cityString = cityString.replace(/[èéêëēę]/g,"e")
+                cityString = cityString.replace(/[îïíīìį]/g,"i")
+                cityString = cityString.replace(/[ôöòóøōõ]/g,"o")
+                cityString = cityString.replace(/[ûüùúū]/g,"u")
+                cityString = cityString.replace(/[çćč]/g,"c")
+              }
+              else cityString = ""
+
+              if(city.nombre_partido !== undefined && city.nombre_partido !== null) {
+                departmentString = city.nombre_partido.toLowerCase()
+
+                //CUT Diacritics departmentString
+                departmentString = departmentString.replace(/\s/g, '')
+                departmentString = departmentString.replace(/[àáâãäå]/g,"a")
+                departmentString = departmentString.replace(/[èéêëēę]/g,"e")
+                departmentString = departmentString.replace(/[îïíīìį]/g,"i")
+                departmentString = departmentString.replace(/[ôöòóøōõ]/g,"o")
+                departmentString = departmentString.replace(/[ûüùúū]/g,"u")
+                departmentString = departmentString.replace(/[çćč]/g,"c")
+              }
+              else departmentString = ""
+
+              //CUT Diacritics textInputString
+          let textInputString = this.state.textInput.toLowerCase()
+              textInputString = textInputString.replace(/\s/g, '')
+              textInputString = textInputString.replace(/[àáâãäå]/g,"a")
+              textInputString = textInputString.replace(/[èéêëēę]/g,"e")
+              textInputString = textInputString.replace(/[îïíīìį]/g,"i")
+              textInputString = textInputString.replace(/[ôöòóøōõ]/g,"o")
+              textInputString = textInputString.replace(/[ûüùúū]/g,"u")
+              textInputString = textInputString.replace(/[çćč]/g,"c")
+
+          if(cityString.includes(textInputString) || departmentString.includes(textInputString)) return city;
+      });
+
+      this.setState({filterCities})
+      console.log(filterCities);
+    }
+  }
+
+  _onPressItem = (item) =>{
+
+    let label,
+    cityString = (item.nombre_ciudad !== undefined && item.nombre_ciudad !== null ) ? `${item.nombre_ciudad},` : "",
+    departmentString = (item.nombre_partido !== undefined && item.nombre_partido !== null ) ? `${item.nombre_partido},` : "",
+    provinceString = (item.nombre_provincia !== undefined && item.nombre_provincia !== null ) ? `${item.nombre_provincia},` : "",
+    countryString = (item.nombre_pais !== undefined && item.nombre_pais !== null ) ? item.nombre_pais : "";
+
+    label = `${cityString} ${departmentString} ${provinceString} ${countryString}`
+
+    this.setState({textInput:label, showList:false, itemSelected:item}, this._sendToGeolocation)
+  }
+
+  _sendToGeolocation = () =>{
+    setTimeout( () => {
+      this.props.navigation.navigate('SearchForGeolocation',{cityDepartment: this.state.itemSelected})
+    }, 500);
+  }
+
+  _renderListResults = () =>{
+    console.log(this.state.textInput);
+    console.log(this.state.textInput.length);
+    return (this.state.textInput !== "" && this.state.textInput.length > 1 && this.state.showList) ? (
+      <View style={styles.flatlistContainer}>
+        <CitiesList data={this.state.filterCities} onPressItem={this._onPressItem}/>
+      </View>
+    ):(
+      null
+    )
+  }
+
+  _isInputFocus = (isFocus) => this.setState({showList:isFocus})
 
   render() {
     let serviceData = getServiceData(this.props.serviceTypeData, width/10)
@@ -95,11 +190,16 @@ export default class Services extends React.Component {
                 <View style={styles.containerSearchCity}>
                   <Icon name="md-search" style={{fontSize: 30, color: '#FFFFFF'}}/>
                   <TextInput
+                    multiline={true}
                     style={styles.textInput}
-                    onChangeText={(text) => this.setState({textInput:text})}
+                    onChangeText={(text) => this.setState({textInput:text, itemSelected: null}, this._filterList)}
                     value={this.state.textInput}
                     placeholder={I18n.t("search_department_description", {locale: this.props.lang})}
                     underlineColorAndroid='rgba(0,0,0,0)'
+                    autoFocus={true}
+                    // onSubmitEditing={ () => alert('buscar')}
+                    onFocus={() => {if(this.state.itemSelected === null) this._isInputFocus(true)}}
+                    // onBlur={() => this._isInputFocus(false)}
                   />
                 </View>
                   <TouchableHighlight
@@ -111,7 +211,10 @@ export default class Services extends React.Component {
                     <View style={styles.containerGeolocation}>
                       <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
                     </View>
-              </TouchableHighlight>
+                  </TouchableHighlight>
+              </View>
+              <View style={{height: 200}}>
+                {this._renderListResults()}
               </View>
               <Modal
                 animationType={"fade"}
@@ -199,7 +302,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     width: 200,
     color: '#FFFFFF',
-    height: 40,
+    height: 55,
   },
   containerSearchCity:{
     borderRadius: 5,
@@ -212,6 +315,15 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center',
     flex:1,
+  },
+  flatlistContainer:{
+    paddingVertical: 20,
+    width: '80%',
+    marginLeft:'2.5%',
+    backgroundColor: '#FFFFFF',
+    elevation: 4,
+    zIndex: 10,
+    flex: 1
   },
   modalContainer:{
     flex: 1,

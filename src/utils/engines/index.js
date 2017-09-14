@@ -128,6 +128,7 @@ export class Engine {
 
   searchForGeolocation = (coordsOrigin) => {
     console.log('SEARCHENGINE GEOLOCATE');
+    // alert(this.Store.length)
     // let coordsOriginMock = {
     //   latitude: -34.4860687255859,
     //   longitude: -58.7250442504883
@@ -180,6 +181,7 @@ export class Engine {
 
     console.log(filterData);
     this.Data = filterData;
+    // alert(this.Store.length)
     this.sortEngine(DISTANCE);
   }
 
@@ -205,6 +207,7 @@ export class Engine {
 
     console.log(filterData);
     this.Data = filterData;
+    // alert(this.Data.length)
     this.sortEngine(DISTANCE);
   }
 
