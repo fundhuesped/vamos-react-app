@@ -42,8 +42,8 @@ export default (state = initialState, action) => {
         }
         let currentData = state.places.data ? { ...state.places.data
         } : {}
-        return Object.assign({}, state, {
-          isFetching: false,
+        let store = Object.assign({}, state, {
+          isFetching: true,
           places: {
             meta: {
               updatedAt: new Date(),
@@ -53,6 +53,8 @@ export default (state = initialState, action) => {
             })
           }
         })
+        console.log(store);
+        return store
         break
       }
     case UPDATE_COUNTRIES:
@@ -84,15 +86,43 @@ export default (state = initialState, action) => {
       }
     case UPDATE_CITIES:
       {
-        let cities = action.cities.map((city) => {
+        let cities = action.cities.map((city,i) => {
+          let id
+          if(city.idObject === undefined) id = (city.id !== null && city.id !== undefined) ? city.id : 0
+          else id = (city.idObject !== null && city.idObject !== undefined) ? city.idObject : 0
+
+          let nombre_ciudad = (city.nombre_ciudad !== null && city.nombre_ciudad !== undefined) ? city.nombre_ciudad : ""
+          let idPartido = (city.idPartido !== null && city.idPartido !== undefined) ? city.idPartido : 0
+          let nombre_partido = (city.nombre_partido !== null && city.nombre_partido !== undefined) ? city.nombre_partido : ""
+          let idProvincia = (city.idProvincia !== null && city.idProvincia !== undefined) ? city.idProvincia : 0
+          let nombre_provincia = (city.nombre_provincia !== null && city.nombre_provincia !== undefined) ? city.nombre_provincia : ""
+          let idPais = (city.idPais !== null && city.idPais !== undefined) ? city.idPais : 0
+          let nombre_pais = (city.nombre_pais !== null && city.nombre_pais !== undefined) ? city.nombre_pais : ""
           return {
-            id: city.id,
-            name: city.nombre_partido
+            id: i,
+            idObject: id,
+            nombre_ciudad: nombre_ciudad,
+            idPartido: idPartido,
+            nombre_partido: nombre_partido,
+            idProvincia: idProvincia,
+            nombre_provincia: nombre_provincia,
+            idPais: idPais,
+            nombre_pais: nombre_pais
           }
         })
-        return Object.assign(state, {
-          cities
-        })
+
+        if(cities.length !== 0){
+          let storeRealm = _getStore("1");
+          _updateStore(storeRealm,cities,"cities")
+        }
+        let currentCities = state.cities.length ? state.cities : cities
+        let store = {
+          ...state,
+          isFetching: false,
+          cities: currentCities
+        }
+        console.log(store);
+        return store
         break
       }
     case UPDATE_EVALUATIONS:
@@ -119,14 +149,20 @@ export default (state = initialState, action) => {
         //     data: action.store
         //   }
         // })
+        console.log(action.store);
         let store ={
           ...state,
           isFetching: false,
           places: {
-            ...state.places,
-            data: action.store
-          }
+            meta: {
+              ...state.places.meta,
+              updatedAt: action.store.createdTimestamp,
+            },
+            data: action.store.places
+          },
+          cities: action.store.cities
         }
+        console.log(store);
         // alert('store reducer '+ store.places.data.length);
         return store
         break

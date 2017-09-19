@@ -161,7 +161,8 @@ export default class Evaluations extends React.Component {
               }}
           >
             <ScrollView
-              style={{flex:1}}
+              style={{width: '100%'}}
+              contentContainerStyle ={{alignItems: 'center'}}
               ref='scrollRef'
               >
                 {(this.state.showThanks) ? (
@@ -352,7 +353,6 @@ const styles = StyleSheet.create({
   fontColor:{ color: '#655E5E'},
   fontColorInvalid:{ color: '#e6334c'},
   evaluationsContainer:{
-    flex:1,
     marginTop: '10%',
     width: width / 1.2,
   },

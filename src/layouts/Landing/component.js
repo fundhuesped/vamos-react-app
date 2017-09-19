@@ -45,7 +45,7 @@ export default class Landing extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // alert('gps activado');
-        this.props.navigation.navigate('SearchForGeolocation',{isTeen: true})
+        this.props.navigation.navigate('SearchForGeolocation',{isTeen: true, coords:position.coords})
       },
       (error) => {
         this.setState({showModal:true})

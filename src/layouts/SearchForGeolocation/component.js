@@ -32,8 +32,7 @@ export default class SearchForGeolocation extends React.Component {
   componentDidMount = () => {
     console.log('MOUNT ', this.props);
     // setTimeout(() => { this.setState({loaded:true}) }, 1000);
-    if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true})
-    this._getAddress();
+    if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true, address:this.props.address})
   }
 
   componentWillReceiveProps = (nextProps) =>{
@@ -45,7 +44,7 @@ export default class SearchForGeolocation extends React.Component {
     NetInfo.isConnected.fetch().then(isConnected => {
       let conection = isConnected ? 'online' : 'offline'
       console.log('First, is ' + conection);
-      isConnected ? this.props.navigation.navigate('Map') : this.setState({showModal:true})
+      isConnected ? this.props.navigation.navigate('Map',{coords: this.props.coords }) : this.setState({showModal:true})
     });
   }
 
@@ -80,43 +79,6 @@ export default class SearchForGeolocation extends React.Component {
     return view
   }
 
-  _getAddress = async () =>{
-    let url = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${this.props.coords.latitude},${this.props.coords.longitude}&sensor=false`;
-    try {
-      let response = await fetch(url, {
-                            method: 'GET',
-                            headers: {
-                              'Accept': 'application/json',
-                              'Content-Type': 'application/json',
-                            }})
-      let responseJson = await response.json();
-
-      if(responseJson.status !== "OK"){
-          // alert('FAIL GEOCODIGN');
-      }
-      else{
-        console.log(responseJson);
-        let address = {};
-        const address_components = responseJson.results[0].address_components;
-        address_components.forEach(element => {
-            address[element.types[0]] = element.long_name;
-        });
-
-
-        let addressFormated = {
-              formatted_address: responseJson.results[0].formatted_address,
-              address_parts: address
-          };
-
-        // alert(this.props.coords.latitude +' '+ this.props.coords.longitude +' '+ addressFormated.formatted_address);
-        this.setState({address:addressFormated})
-      }
-    } catch (e) {
-      console.log(e);
-    }
-
-  }
-
   render() {
     let serviceData = getServiceData(this.props.serviceTypeData, width/10)
     let location ={
@@ -125,7 +87,7 @@ export default class SearchForGeolocation extends React.Component {
       partido: false,
       ciudad: false
     }
-    if(typeof this.state.address !== 'string') location = {
+    if(typeof this.state.address !== 'string' && this.state.address !== undefined) location = {
       pais: this.state.address.address_parts.country || null,
       provincia: this.state.address.address_parts.administrative_area_level_1 || null,
       partido: this.state.address.address_parts.administrative_area_level_2 || null,
@@ -169,15 +131,17 @@ export default class SearchForGeolocation extends React.Component {
                   <Text style={styles.headerServiceTitle}>{serviceData.title.toUpperCase()}</Text>
                 </View>
               </View>
-              <View style={styles.serviceBreadcrumbLocation}>
-                {(location.pais) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.pais}</Text> : null }
-                {(location.pais) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                {(location.provincia) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.provincia}</Text> : null }
-                {(location.provincia) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                {(location.partido) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.partido}</Text> : null }
-                {(location.partido) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
-              </View>
+              {(this.state.address !== undefined) ? (
+                <View style={styles.serviceBreadcrumbLocation}>
+                  {(location.pais) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.pais}</Text> : null }
+                  {(location.pais) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
+                  {(location.provincia) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.provincia}</Text> : null }
+                  {(location.provincia) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
+                  {(location.partido) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.partido}</Text> : null }
+                  {(location.partido) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
+                  {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
+                </View>
+              ) : (null)}
               {(this.props.serviceTypeData !== TEEN) ? (
                 <TouchableHighlight
                   onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}

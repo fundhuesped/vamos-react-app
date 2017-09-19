@@ -10,7 +10,27 @@ class Store {
       id: {type: 'string'},
       lang:{type: 'string', default: ''},
       places: {type: 'list', objectType: 'Place'},
+      cities: {type: 'list', objectType: 'City'},
       createdTimestamp: {type: 'date'}
+    }
+  }
+}
+
+class City {
+  static get () { return realm.objects(City.schema.name) }
+  static schema = {
+    name: 'City',
+    primaryKey: 'id',
+    properties: {
+      id: 'int',
+      idObject: 'int',
+      nombre_ciudad: 'string',
+      idPartido: 'int',
+      nombre_partido: 'string',
+      idProvincia: 'int',
+      nombre_provincia: 'string',
+      idPais: 'int',
+      nombre_pais: 'string'
     }
   }
 }
@@ -22,6 +42,8 @@ class Place {
     primaryKey: 'id',
     properties: {
       id: 'int',
+      idCiudad: 'int',
+      idPartido: 'int',
       placeId: 'int',
       establecimiento: 'string',
       tipo: 'string',
@@ -141,6 +163,7 @@ export const _updateStore = async (store, value, type) => {
       realm.write(() => {
         try {
           store.places = value
+          store.createdTimestamp = new Date()
         } catch (e) {
           // alert('error realm '+e);
           console.warn(e)
@@ -149,17 +172,17 @@ export const _updateStore = async (store, value, type) => {
       break;
     }
 
-    // case "cities":{
-    //   realm.write(() => {
-    //     try {
-    //       store.places = value
-    //     } catch (e) {
-    //       alert('error realm '+e);
-    //       console.warn(e)
-    //     }
-    //   })
-    //   break;
-    // }
+    case "cities":{
+      realm.write(() => {
+        try {
+          store.cities = value
+        } catch (e) {
+          alert('error realm '+e);
+          console.warn(e)
+        }
+      })
+      break;
+    }
 
 
     default:
@@ -186,4 +209,4 @@ export const _deleteStore = (store) => {
 // const serializedState = JSON.stringify(state) save
 // let serializedState = JSON.parse(value) load
 
-const realm = new Realm({schema: [Place,Store]})
+const realm = new Realm({schema: [City,Place,Store]})

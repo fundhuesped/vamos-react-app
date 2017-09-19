@@ -10,10 +10,10 @@ export default class CityItem extends React.PureComponent {
 
   _renderLabel = () =>{
     let label,
-    cityString = (this.props.data.nombre_ciudad !== undefined && this.props.data.nombre_ciudad !== null ) ? `${this.props.data.nombre_ciudad},` : "",
-    departmentString = (this.props.data.nombre_partido !== undefined && this.props.data.nombre_partido !== null ) ? `${this.props.data.nombre_partido},` : "",
-    provinceString = (this.props.data.nombre_provincia !== undefined && this.props.data.nombre_provincia !== null ) ? `${this.props.data.nombre_provincia},` : "",
-    countryString = (this.props.data.nombre_pais !== undefined && this.props.data.nombre_pais !== null ) ? this.props.data.nombre_pais : "";
+    cityString = (this.props.data.nombre_ciudad !== undefined && this.props.data.nombre_ciudad !== null && this.props.data.nombre_ciudad !== "") ? `${this.props.data.nombre_ciudad},` : "",
+    departmentString = (this.props.data.nombre_partido !== undefined && this.props.data.nombre_partido !== null && this.props.data.nombre_partido !== "") ? `${this.props.data.nombre_partido},` : "",
+    provinceString = (this.props.data.nombre_provincia !== undefined && this.props.data.nombre_provincia !== null && this.props.data.nombre_provincia !== "") ? `${this.props.data.nombre_provincia},` : "",
+    countryString = (this.props.data.nombre_pais !== undefined && this.props.data.nombre_pais !== null && this.props.data.nombre_pais !== "") ? this.props.data.nombre_pais : "";
 
     label = `${cityString} ${departmentString} ${provinceString} ${countryString}`
 

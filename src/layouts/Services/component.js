@@ -35,15 +35,11 @@ export default class Services extends React.Component {
     }
   }
 
-  componentWillReceiveProps = (nextProps) =>{
-    this.setState({textInput: ""})
-  }
-
-  _goToGeolocation = () =>{
+  _sendToInfoCountryGEOLOCATE = () =>{
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // alert('gps activado');
-        this.props.navigation.navigate('SearchForGeolocation',{coords: position.coords})
+        this.props.navigation.navigate('InfoCountry',{coords: position.coords})
       },
       (error) => {
         this.setState({showModal:true})
@@ -61,8 +57,7 @@ export default class Services extends React.Component {
           filterCities = cities.filter((city) => {
           let cityString,
               departmentString;
-
-              if(city.nombre_ciudad !== undefined && city.nombre_ciudad !== null) {
+              if(city.nombre_ciudad !== undefined && city.nombre_ciudad !== null && city.nombre_ciudad !=="") {
                 cityString = city.nombre_ciudad.toLowerCase()
                 //CUT Diacritics cityString
                 cityString = cityString.replace(/\s/g, '')
@@ -110,19 +105,20 @@ export default class Services extends React.Component {
   _onPressItem = (item) =>{
 
     let label,
-    cityString = (item.nombre_ciudad !== undefined && item.nombre_ciudad !== null ) ? `${item.nombre_ciudad},` : "",
+    cityString = (item.nombre_ciudad !== undefined && item.nombre_ciudad !== null && item.nombre_ciudad !=="") ? `${item.nombre_ciudad},` : "",
     departmentString = (item.nombre_partido !== undefined && item.nombre_partido !== null ) ? `${item.nombre_partido},` : "",
     provinceString = (item.nombre_provincia !== undefined && item.nombre_provincia !== null ) ? `${item.nombre_provincia},` : "",
     countryString = (item.nombre_pais !== undefined && item.nombre_pais !== null ) ? item.nombre_pais : "";
 
     label = `${cityString} ${departmentString} ${provinceString} ${countryString}`
 
-    this.setState({textInput:label, showList:false, itemSelected:item}, this._sendToGeolocation)
+    this.setState({textInput:label, showList:false, itemSelected:item}, this._sendToInfoCountryAUTOCOMPLETE)
   }
 
-  _sendToGeolocation = () =>{
+  _sendToInfoCountryAUTOCOMPLETE = () =>{
     setTimeout( () => {
-      this.props.navigation.navigate('SearchForGeolocation',{cityDepartment: this.state.itemSelected})
+      this.setState({textInput: ""})
+      this.props.navigation.navigate('InfoCountry',{cityDepartment: this.state.itemSelected})
     }, 500);
   }
 
@@ -203,7 +199,7 @@ export default class Services extends React.Component {
                   />
                 </View>
                   <TouchableHighlight
-                    onPress={this._goToGeolocation}
+                    onPress={this._sendToInfoCountryGEOLOCATE}
                     style={{borderRadius: 5}}
                     activeOpacity={0.5}
                     underlayColor="#e6334c"

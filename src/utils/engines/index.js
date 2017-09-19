@@ -47,6 +47,202 @@ export const HaversineFormula = (place, coordsOrigin) => {
 
 const isTeen = (place) => (place.friendly_condones || place.friendly_dc || place.friendly_ile || place.friendly_mac || place.friendly_prueba || place.friendly_ssr)
 
+export const getGralTextandILEForCountry = (country) =>{
+  let ILEService,
+      asocciationImageUrl;
+  switch (country) {
+    case "AG":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/AG.jpg')
+      }
+      break;
+    case "AR":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/AR.jpg')
+      }
+      break;
+    case "AW":
+      {
+        ILEService = false;
+        asocciationImageUrl =  ''
+      }
+      break;
+    case "BB":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/BB.jpg')
+      }
+      break;
+    case "BZ":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/BZ.jpg')
+      }
+      break;
+    case "BO":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/BO.jpg')
+      }
+      break;
+    case "CL":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/CL.jpg')
+      }
+      break;
+    case "CO":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/CO.jpg')
+      }
+      break;
+    case "CW":
+      {
+        ILEService = false;
+        asocciationImageUrl =  ''
+      }
+      break;
+    case "DM":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/DM.jpg')
+      }
+      break;
+    case "DO":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/DO.jpg')
+      }
+      break;
+    case "EC":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/EC.jpg')
+      }
+      break;
+    case "SV":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/SV.jpg')
+      }
+      break;
+    case "GD":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/GD.jpg')
+      }
+      break;
+    case "GT":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/GT.jpg')
+      }
+      break;
+    case "GY":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/GY.jpg')
+      }
+      break;
+    case "HT":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/HT.jpg')
+      }
+      break;
+    case "HN":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/HN.jpg')
+      }
+      break;
+    case "JM":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/JM.jpg')
+      }
+      break;
+    case "MX":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/MX.jpg')
+      }
+      break;
+    case "PA":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/PA.jpg')
+      }
+      break;
+    case "PY":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/PY.jpg')
+      }
+      break;
+    case "PE":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/PE.jpg')
+      }
+      break;
+    case "PR":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/PR.jpg')
+      }
+      break;
+    case "LC":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/LC.jpg')
+      }
+      break;
+    case "VC":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/VC.jpg')
+      }
+      break;
+    case "SR":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/SR.jpg')
+      }
+      break;
+    case "TT":
+      {
+        ILEService = false;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/TT.jpg')
+      }
+      break;
+    case "UY":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/UY.jpg')
+      }
+      break;
+    case "VE":
+      {
+        ILEService = true;
+        asocciationImageUrl =  require('../../assets/images/countryLogos/VE.jpg')
+      }
+      break;
+
+    default:
+  }
+
+  return {
+    generalText: I18n.t(`General_Service_${country}`, {locale: store.getState().ui.lang}),
+    asocciationImageUrl: asocciationImageUrl,
+    ILEText: I18n.t(`General_ILE_${country}`, {locale: store.getState().ui.lang}),
+    ILEService: ILEService
+  };
+}
+
 export const getServiceData = (service, size) => {
   let serviceData;
   switch (service) {
@@ -209,6 +405,88 @@ export class Engine {
     this.Data = filterData;
     // alert(this.Data.length)
     this.sortEngine(DISTANCE);
+  }
+
+  searchForAutocomplete = (location) =>{
+    console.log('SEARCHENGINE AUTOCOMPLETE');
+
+    let filterData;
+
+    filterData = Object.values(this.Store).filter((place) => {
+      switch (this.Service) {
+        case CON:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.condones) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.condones) return place;
+            }
+            break;
+          }
+        case VIH:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.prueba) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.prueba) return place;
+            }
+            break;
+          }
+        case SSR:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.ssr) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.ssr) return place;
+            }
+            break;
+          }
+        case MAC:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.mac) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.mac) return place;
+            }
+            break;
+          }
+        case LPI:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.ile) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.ile) return place;
+            }
+            break;
+          }
+        case DC:
+          {
+            if(location.idPartido !== undefined){
+              if (place.idCiudad === location.idObject && place.dc) return place;
+            }
+            else {
+              if (place.idPartido === location.idObject && place.dc) return place;
+            }
+            break;
+          }
+
+        default:
+      }
+    }).map( (place) =>{
+      return {
+        placeData: place,
+      }
+    })
+
+    console.log(filterData);
+    this.Data = filterData;
+    // alert(this.Data.length)
+    store.dispatch(setResultList(filterData))
   }
 
   sortEngine = (sortType, value) =>{

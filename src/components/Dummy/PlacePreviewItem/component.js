@@ -174,10 +174,13 @@ export default class PlacePreviewItem extends React.PureComponent {
                   <Icon name='ios-pin' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
                   <Text numberOfLines={1} style={[styles.subtitle, styles.fontColor]}>{`${this.props.data.placeData.calle} ${this.props.data.placeData.altura}`}</Text>
                 </View>
-                <View style={[styles.bodyLocationDistance, styles.rowAlign]}>
-                  <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                  <Text style={[styles.subtitle, styles.fontColor]}>{`${parseInt(this.props.data.distance*1000)} ${I18n.t("place_distance_unit", {locale: store.getState().ui.lang})}`}</Text>
-                </View>
+                {(this.props.data.distance !== undefined) ? (
+                  <View style={[styles.bodyLocationDistance, styles.rowAlign]}>
+                    <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
+                    <Text style={[styles.subtitle, styles.fontColor]}>{`${parseInt(this.props.data.distance*1000)} ${I18n.t("place_distance_unit", {locale: store.getState().ui.lang})}`}</Text>
+                  </View>
+                )
+                : (null)}
               </View>
               <View style={{flexDirection:'row', alignItems: 'center'}}>
                 <View style={[styles.bodyCategories, styles.rowAlign, styles.marginSeparator]}>

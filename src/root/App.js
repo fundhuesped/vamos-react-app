@@ -37,7 +37,7 @@ _getCurrentRouteName = (navigationState) => {
 const AppNavigator = StackNavigator(
   Routes,
   {
-    // initialRouteName: "Evaluations",
+    // initialRouteName: "InfoCountry",
     // initialRouteName: "Drawer",
     headerMode: 'none'
   }
@@ -58,19 +58,21 @@ export default class App extends React.Component {
       _createStore('1')
       // alert('creando store');
       store.dispatch(setLang(I18n.currentLocale()))
-      alert(I18n.currentLocale())
+      // alert(I18n.currentLocale())
     }
     else {
       // alert('cargando store '+storeRealm.places.length);
       console.log('cargando store '+storeRealm.places.length);
-      store.dispatch(startFetching())
       // store.dispatch(updateStoreDB(Array.from(storeRealm.places)))
-      store.dispatch(updateStoreDB(storeRealm.places))
+      console.log(Array.from(storeRealm.cities))
+      store.dispatch(updateStoreDB({places:storeRealm.places, createdTimestamp:storeRealm.createdTimestamp, cities:storeRealm.cities}))
       store.dispatch(updateStoreUI(storeRealm.lang))
       // alert(I18n.currentLocale())
-    }
 
+    }
   }
+
+  componentDidMount = () => this.setState({rehydrated: true})
 
   componentWillUnmount = () =>{
     console.log('unmount');
@@ -78,7 +80,7 @@ export default class App extends React.Component {
 
   render() {
     // return <ProgressCircle/>
-    return (!store.getState().db.isFetching) ? (
+    return (this.state.rehydrated) ? (
       <Provider store={store}>
           <Root>
             <AppNavigator

@@ -79,6 +79,8 @@ export const normalizePlacesList = (places) => {
 export const normalizePlace = (place) => {
   return {
     id: place.placeId ? parseInt(place.placeId) : -1,
+    idCiudad: place.idCiudad ? parseInt(place.idCiudad) : -1,
+    idPartido: place.idPartido ? parseInt(place.idPartido) : -1,
     placeId: place.placeId ? parseInt(place.placeId) : -1,
     establecimiento: place.establecimiento ? String(place.establecimiento) : "",
     tipo: place.tipo ? String(place.tipo) : "",

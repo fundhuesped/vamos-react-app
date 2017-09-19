@@ -17,7 +17,7 @@ import {
 } from '../../constants/action-types'
 
 export const updatePlaces = (places, failedPages) => {
-  if (!places || !failedPages) throw Error("Review action parameters updatePlaces!")
+  // if (!places || !failedPages) throw Error("Review action parameters updatePlaces!")
   return {
     type: UPDATE_PLACES,
     places,

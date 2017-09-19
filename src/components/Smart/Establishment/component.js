@@ -155,9 +155,14 @@ class Establishment extends React.Component {
   }
 
   render() {
-    console.log(this.state.services);
-    console.log(this.state.comments);
-    return ((this.state.comments !== null && this.state.services !== null) ? <DummyEstablishment servicesAvailable={this.state.services} commentsAvailable={this.state.comments} navigation={this.props.navigation} establishmentData={this.props.navigation.state.params.establishmentData} lang={this.props.ui.lang}/> : <ProgressCircle downloading={false}/>)
+    return ((this.state.comments !== null && this.state.services !== null) ?
+    <DummyEstablishment
+      servicesAvailable={this.state.services}
+      commentsAvailable={this.state.comments}
+      navigation={this.props.navigation}
+      establishmentData={this.props.navigation.state.params.establishmentData}
+      lang={this.props.ui.lang}/>
+    : <ProgressCircle downloading={false}/>)
   }
 }
 

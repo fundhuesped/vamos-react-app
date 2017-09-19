@@ -19,13 +19,19 @@ class SmartMap extends React.Component {
 
 
   render() {
-    let coords = this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation;
-    return ((coords.latitude !== null && coords.longitude !== null) ?
+    let coords;
+    if(this.props.navigation.state.params.establishmentData === undefined){
+      if(this.props.navigation.state.params.coords !== undefined) coords = this.props.navigation.state.params.coords
+      else coords = {latitude:this.props.ui.resultList[0].placeData.latitude, longitude:this.props.ui.resultList[0].placeData.longitude}
+    }
+    else coords = {latitude:this.props.navigation.state.params.establishmentData.placeData.latitude, longitude:this.props.navigation.state.params.establishmentData.placeData.longitude}
+
+    return ((true) ?
     <DummyMap
       // coords={(this.props.navigation.state.params === undefined) ? coords : {latitude: this.props.navigation.state.params.establishmentData.placeData.latitude, longitude: this.props.navigation.state.params.establishmentData.placeData.longitude }}
       coords={coords}
       navigation={this.props.navigation}
-      store={(this.props.navigation.state.params === undefined) ? this.props.ui.resultList : [this.props.navigation.state.params.establishmentData]}/>
+      store={(this.props.navigation.state.params.establishmentData === undefined) ? this.props.ui.resultList : [this.props.navigation.state.params.establishmentData]}/>
       : <ProgressCircle downloading={false}/>
     )
   }

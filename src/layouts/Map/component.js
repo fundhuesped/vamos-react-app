@@ -96,7 +96,7 @@ export default class Map extends React.Component {
     console.log(index);
     this.setState({selectedMarkerIndex: index, isPicked:true}, () => {
       let distanceToCard = (CARD_WIDTH + 20) * index;
-      alert(distanceToCard)
+      // alert(distanceToCard)
       this.refs.scrollRef._component.scrollTo({x: distanceToCard, animated: false})
     });
   }
@@ -170,7 +170,7 @@ export default class Map extends React.Component {
                   const opacityStyle = {
                     opacity: interpolations[index].opacity,
                   };
-                  let coords = {latitude:marker.placeData.latitude,longitude:marker.placeData.longitude}
+                  let coords = {latitude:parseInt(marker.placeData.latitude),longitude:parseInt(marker.placeData.longitude)}
                   return (
                     <MapView.Marker
                       key={index}

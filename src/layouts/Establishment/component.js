@@ -39,9 +39,20 @@ export default class Establishment extends React.Component {
     }
   }
 
+  _goURL = (url) =>{
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
   _renderHeader = (section, index, isActive) => {
-    let serviceData;
-    switch (section.title) {
+    let serviceData,
+        title = section.title.toLowerCase();
+    switch (title) {
       case 'condones':{
         serviceData = getServiceData(CON, width/12)
       }
@@ -50,19 +61,19 @@ export default class Establishment extends React.Component {
         serviceData = getServiceData(VIH, width/12)
       }
         break;
-      case 'ILE':{
+      case 'ile':{
         serviceData = getServiceData(LPI, width/12)
       }
         break;
-      case 'DC':{
+      case 'dc':{
         serviceData = getServiceData(DC, width/12)
       }
         break;
-      case 'MAC':{
+      case 'mac':{
         serviceData = getServiceData(MAC, width/12)
       }
         break;
-      case 'SSR':{
+      case 'ssr':{
         serviceData = getServiceData(MAC, width/12)
       }
         break;
@@ -85,8 +96,9 @@ export default class Establishment extends React.Component {
 
     _renderContent = (section, index, isActive) => {
       let service,
-          data = this.props.establishmentData;
-      switch (section.title) {
+          data = this.props.establishmentData,
+          title = section.title.toLowerCase();
+      switch (title) {
         case 'condones':{
           service = {
             openTime: data.placeData.horario_distrib,
@@ -107,7 +119,7 @@ export default class Establishment extends React.Component {
           }
         }
           break;
-        case 'ILE':{
+        case 'ile':{
           service = {
             openTime: data.placeData.horario_ile,
             director: data.placeData.responsable_ile,
@@ -117,7 +129,7 @@ export default class Establishment extends React.Component {
           }
         }
           break;
-        case 'DC':{
+        case 'dc':{
           service = {
             openTime: data.placeData.horario_dc,
             director: data.placeData.responsable_dc,
@@ -127,7 +139,7 @@ export default class Establishment extends React.Component {
           }
         }
           break;
-        case 'MAC':{
+        case 'mac':{
           service = {
             openTime: data.placeData.horario_mac,
             director: data.placeData.responsable_mac,
@@ -137,7 +149,7 @@ export default class Establishment extends React.Component {
           }
         }
           break;
-        case 'SSR':{
+        case 'ssr':{
           service = {
             openTime: data.placeData.horario_ssr,
             director: data.placeData.responsable_ssr,
@@ -157,7 +169,8 @@ export default class Establishment extends React.Component {
           {(service.openTime !== "" && service.phone !== undefined) ? (
             <View style={styles.serviceAditionalInfoItem}>
               <Icon name='ios-clock-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
-              <Text style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}>{service.openTime}</Text>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}>{service.openTime}</Text>
             </View>
           ): null
           }
@@ -171,21 +184,30 @@ export default class Establishment extends React.Component {
           {(service.email !== "" && service.phone !== undefined) ? (
             <View style={styles.serviceAditionalInfoItem}>
               <Icon name='md-mail' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
-              <Text style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}>{service.email}</Text>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                onPress={() => this._goURL(`mailto:${service.email}`)}
+                >{service.email}</Text>
             </View>
           ): null
           }
           {(service.web !== "" && service.phone !== undefined) ? (
             <View style={styles.serviceAditionalInfoItem}>
               <Icon name='ios-globe-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
-              <Text style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}>{service.web}</Text>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                onPress={() => this._goURL(service.web)}
+                >{service.web}</Text>
             </View>
           ): null
           }
           {(service.phone !== "" && service.phone !== undefined) ? (
             <View style={styles.serviceAditionalInfoItem}>
               <Icon name='ios-call' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
-              <Text style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}>{service.phone}</Text>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                onPress={() => this._goURL(`tel:${service.phone}`)}
+                >{service.phone}</Text>
             </View>
           ): null
           }
@@ -281,7 +303,7 @@ export default class Establishment extends React.Component {
     switch (social) {
       case 'whatsapp':{
         // url = 'whatsapp://send?text=Hello%20World!'
-        url = 'whatsapp://send?text=Comparteeeee!%20"http://ippf-client/establishment/10000"'
+        url = `whatsapp://send?text=Using%20Vamos%20I%20found%20${this.props.establishmentData.placeData.establecimiento}%20in%20${this.props.establishmentData.placeData.barrio_localidad}%20"https://ippf-staging.com.ar/share/${this.props.establishmentData.placeData.placeId}"`
         break;
       }
 
@@ -333,7 +355,10 @@ export default class Establishment extends React.Component {
               alignItems: 'center'
               }}
           >
-            <ScrollView style={{flex:1}}>
+            <ScrollView
+              style={{width: '100%'}}
+              contentContainerStyle ={{alignItems: 'center'}}
+            >
               <View style={styles.establishmentContainer}>
                 <View style ={styles.establishmentHeader}>
                   <View style ={styles.establishmentName}>
@@ -343,10 +368,13 @@ export default class Establishment extends React.Component {
                     <Icon name='ios-pin' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
                     <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{`${data.placeData.calle} ${data.placeData.altura}`}</Text>
                   </View>
-                  <View style ={styles.establishmentDistance}>
-                    <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                    <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{`${parseInt(data.distance*1000)} ${I18n.t("place_distance_unit", {locale: this.props.lang})}`}</Text>
-                  </View>
+                  {(data.distance !== undefined) ? (
+                    <View style ={styles.establishmentDistance}>
+                      <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
+                      <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{`${parseInt(data.distance*1000)} ${I18n.t("place_distance_unit", {locale: this.props.lang})}`}</Text>
+                    </View>
+                  )
+                  : (null)}
                 </View>
                 <View style={styles.establishmentAdicionalInfo}>
                   <TouchableHighlight
@@ -570,7 +598,6 @@ export default class Establishment extends React.Component {
 const styles = StyleSheet.create({
   fontColor:{ color: '#655E5E'},
   establishmentContainer:{
-    flex:1,
     marginTop: '10%',
     width: width / 1.2,
   },

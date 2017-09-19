@@ -1,17 +1,19 @@
 import store from '../../store/index.js'
 
-import {updatePlaces, startFetching} from '../../constants/actions/index.js'
-import {DAYSBEFOREUPDATE, URLPLACES} from '../../config/HTTP/index.js'
+import {updatePlaces, updateCities, startFetching} from '../../constants/actions/index.js'
+import {DAYSBEFOREUPDATE, URLPLACES, URLCITIES} from '../../config/HTTP/index.js'
 
 export class HTTPServices {
   constructor() {
     this.currentPage = 1;
-    this.currentData = {};
+    this.currentDataPlaces = {};
+    this.currentDataCities = {};
     this.failedPages = {};
     this.totalPages = 1;
     this.nextUrl = URLPLACES;
     this.totalEstablishment = 0;
-    this.to = 0;
+    this.to = 1;
+    this.cityOrPlace = 'place'
   }
 
   fetchPlaces = async () => {
@@ -32,7 +34,7 @@ export class HTTPServices {
             this.totalEstablishment = responseJson.total;
             this.nextUrl = `${URLPLACES}/?page=${responseJson.current_page+1}`;
                 // if(this.currentPage % 5 === 0) throw new Error('error')
-                this.currentData[responseJson.current_page.toString()] = responseJson.data;
+                this.currentDataPlaces[responseJson.current_page.toString()] = responseJson.data;
                 this.totalPages = responseJson.last_page
                 this.currentPage = responseJson.current_page;
                 this.to = responseJson.to;
@@ -49,7 +51,7 @@ export class HTTPServices {
     }
     // console.log('FINALIZADO FIRTS FETCH BD');
     // alert('FINALIZADO FIRTS FETCH BD');
-    store.dispatch(updatePlaces(this.currentData,this.failedPages))
+    this.fetchCities()
   }
 
   checkPlaces = async () => {
@@ -65,7 +67,7 @@ export class HTTPServices {
     if(differenceDays >= DAYSBEFOREUPDATE){
       console.log('BAJANDO BD NUEVAMENTE');
       // alert('BAJANDO BD NUEVAMENTE');
-      _fetchPlaces();
+      this.fetchPlaces();
     }else {
       failedPages = store.getState().db.places.meta.failedPages,
           newFailedPages = {};
@@ -92,30 +94,71 @@ export class HTTPServices {
 
     // console.log('FINALIZADO CHECKEANDO BD');
     // alert('FINALIZADO CHECKEANDO BD');
-    store.dispatch(updatePlaces(failedPages,newFailedPages))
+    this.fetchCities({currentDataPlaces:failedPages,failedPages:newFailedPages})
+  }
+
+  fetchCities = async (places) => {
+    this.cityOrPlace = 'city'
+
+
+    if(places !== undefined && places !== null){
+      if(!store.getState().db.cities.length){
+        try {
+          let response = await fetch(URLCITIES, {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json',
+                                }})
+          let responseJson = await response.json();
+          this.currentDataCities = responseJson
+
+        } catch(error) {
+          console.log(error);
+          alert('error fetching cities'+error.message)
+        }
+      }
+      else this.currentDataCities = store.getState().db.cities;
+
+      store.dispatch(updatePlaces(places.currentDataPlaces,places.failedPages))
+      store.dispatch(updateCities(this.currentDataCities))
+    }else {
+      try {
+        let response = await fetch(URLCITIES, {
+                              method: 'GET',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                              }})
+        let responseJson = await response.json();
+        this.currentDataCities = responseJson
+
+      } catch(error) {
+        console.log(error);
+        alert('error fetching cities'+error.message)
+      }
+
+      store.dispatch(updatePlaces(this.currentDataPlaces,this.failedPages))
+      store.dispatch(updateCities(this.currentDataCities))
+    }
+
   }
 
   getCurrentPage = () => {
-    return {currentPlaces: this.to, totalEstablishment: this.totalEstablishment}
+    return {currentPlaces: this.to, totalEstablishment: this.totalEstablishment, cityOrPlace: this.cityOrPlace}
   };
 
   cleanState = () =>{
     this.currentPage = 1;
-    this.currentData = {};
+    this.currentDataPlaces = {};
+    this.currentDataCities = {};
     this.failedPages = {};
     this.totalPages = 1;
     this.nextUrl = URLPLACES;
     this.totalEstablishment = 0;
-    this.to = 0;
+    this.to = 1;
+    this.cityOrPlace = 'place'
   }
 }
 
 export let HTTPService = new HTTPServices();
-
-export const _fetchCountries = async () => {}
-
-export const _fetchProvinces = async () => {}
-
-export const _fetchCities = async () => {}
-
-export const _fetchEvaluations = async () => {}

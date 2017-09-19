@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import DummySearchForGeolocation from '../../../layouts/SearchForGeolocation/component.js'
 
 import {selectSearchEngine, setCurrentLocation} from '../../../constants/actions/index.js'
-import {GEOLOCATE, DISTANCE, RATE, TEEN} from '../../../constants/action-types/index.js'
+import {GEOLOCATE, DISTANCE, RATE, TEEN, AUTOCOMPLETE} from '../../../constants/action-types/index.js'
 
 import ProgressCircle from '../../Dummy/ProgressCircle/component.js'
 
@@ -29,37 +29,22 @@ class SmartSearchForGeolocation extends React.Component {
     console.log(this.props.navigation.state.params.isTeen);
     this.Engine = new Engine(this.props.db.places.data, this.props.ui.lookingFor);
     if(this.props.navigation.state.params.cityDepartment !== undefined){
-      this.props.dispatch(selectSearchEngine(GEOLOCATE))
-      this.props.dispatch(setCurrentLocation(this.props.navigation.state.params.cityDepartment.centerlatitude,this.props.navigation.state.params.cityDepartment.centerLongitude))
-      this.Engine.searchForGeolocation({latitude:this.props.navigation.state.params.cityDepartment.centerlatitude, longitude:this.props.navigation.state.params.cityDepartment.centerLongitude});
+      this.props.dispatch(selectSearchEngine(AUTOCOMPLETE))
+      this.Engine.searchForAutocomplete(this.props.navigation.state.params.cityDepartment);
     }
     else {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position.coords.latitude+" "+position.coords.longitude);
-          this.props.dispatch(setCurrentLocation(position.coords.latitude,position.coords.longitude))
-          // alert(position.coords.latitude+" "+position.coords.longitude);
-
-          if(this.props.navigation.state.params.isTeen) {
-            this.props.dispatch(selectSearchEngine(TEEN))
-            this.Engine.searchForTeen({latitude:position.coords.latitude, longitude:position.coords.longitude});
-          }
-          else {
-            this.props.dispatch(selectSearchEngine(GEOLOCATE))
-            this.Engine.searchForGeolocation({latitude:position.coords.latitude, longitude:position.coords.longitude});
-          }
-
-
-        },
-        (error) => this.setState({ errorMessage: error.message }, ()=> {
-          // alert('error geolocalizando '+error.message);
-        }),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-      );
+      if(this.props.navigation.state.params.isTeen) {
+        this.props.dispatch(selectSearchEngine(TEEN))
+        this.Engine.searchForTeen({latitude:this.props.navigation.state.params.coords.latitude, longitude:this.props.navigation.state.params.coords.longitude});
+      }
+      else {
+        this.props.dispatch(selectSearchEngine(GEOLOCATE))
+        this.Engine.searchForGeolocation({latitude:this.props.navigation.state.params.coords.latitude, longitude:this.props.navigation.state.params.coords.longitude});
+      }
     }
   }
 
-  
+
 
   _changeSortValue = (sortEngine, value) => {
     console.log(sortEngine);
@@ -71,8 +56,17 @@ class SmartSearchForGeolocation extends React.Component {
 
   render() {
     let data = this.props.ui.resultList;
-    let coords = this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation
-    return ((coords.latitude !== null && coords.longitude !== null) ? <DummySearchForGeolocation navigation={this.props.navigation} store={data} _changeSortValue={this._changeSortValue} coords={coords} serviceTypeData={this.props.ui.lookingFor} lang={this.props.ui.lang}/> : <ProgressCircle/>)
+    let coords = this.props.navigation.state.params.coords
+    return ((true) ?
+    <DummySearchForGeolocation
+      navigation={this.props.navigation}
+      store={data}
+      _changeSortValue={this._changeSortValue}
+      coords={coords}
+      address={this.props.navigation.state.params.address}
+      serviceTypeData={this.props.ui.lookingFor}
+      lang={this.props.ui.lang}/>
+    : <ProgressCircle/>)
   }
 }
 
