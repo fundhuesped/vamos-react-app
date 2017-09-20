@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
 import {View, Image, StyleSheet, Picker, Dimensions, Text, ScrollView, TextInput, TouchableHighlight} from 'react-native';
 import { StyleProvider } from 'native-base';
@@ -130,6 +131,17 @@ export default class Evaluations extends React.Component {
     }
   }
 
+  _goToLanding = () =>{
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Landing'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+
   render() {
     return (
       <StyleProvider style={getTheme(platform)}>
@@ -146,10 +158,15 @@ export default class Evaluations extends React.Component {
                 </Button>
               </Left>
               <Body style={{flex:1,  justifyContent:'flex-start'}}>
-                <SVGVamosLogo
-                  height={140}
-                  width={140}
-                />
+                <Button
+                  transparent
+                  onPress={this._goToLanding}
+                  >
+                  <SVGVamosLogo
+                    height={140}
+                    width={140}
+                  />
+                </Button>
               </Body>
             <Right style={{flex:1}}/>
           </Header>

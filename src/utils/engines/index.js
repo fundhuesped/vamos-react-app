@@ -7,11 +7,14 @@ import {
   DC,
   TEEN,
   RATE,
-  DISTANCE
+  DISTANCE,
+  NEARBY
 } from '../../constants/action-types';
 import React from "react"
 import store from '../../store';
 import I18n from '../../config/i18n/index.js';
+import {Toast, Icon} from 'native-base';
+import {DISTANCE_KM} from '../../config/HTTP/index.js'
 
 import SVGCondomIcon from '../../components/Dummy/SVG/CondomIcon/component.js'
 import SVGDetectionIcon from '../../components/Dummy/SVG/DetectionIcon/component.js'
@@ -302,6 +305,13 @@ export const getServiceData = (service, size) => {
         subtitle: ""
       }
       break;
+    case NEARBY:
+      serviceData = {
+        svg:<Icon name='ios-pin' style={{fontSize: size, color:'#e6334c'}}/>,
+        title: "CERCANOS",
+        subtitle: ""
+      }
+      break;
     default:
 
   }
@@ -335,32 +345,37 @@ export class Engine {
       switch (this.Service) {
         case CON:
           {
-            if (distance <= 10 && distance !== 0 && place.condones) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.condones) return place;
             break;
           }
         case VIH:
           {
-            if (distance <= 10 && distance !== 0 && place.prueba) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.prueba) return place;
             break;
           }
         case SSR:
           {
-            if (distance <= 10 && distance !== 0 && place.ssr) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.ssr) return place;
             break;
           }
         case MAC:
           {
-            if (distance <= 10 && distance !== 0 && place.mac) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.mac) return place;
             break;
           }
         case LPI:
           {
-            if (distance <= 10 && distance !== 0 && place.ile) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.ile) return place;
             break;
           }
         case DC:
           {
-            if (distance <= 10 && distance !== 0 && place.dc) return place;
+            if (distance <= DISTANCE_KM && distance !== 0 && place.dc) return place;
+            break;
+          }
+        case NEARBY:
+          {
+            if (distance <= DISTANCE_KM && distance !== 0) return place;
             break;
           }
 
@@ -391,7 +406,7 @@ export class Engine {
       // let distance = HaversineFormula(place, coordsOriginMock);
       let distance = HaversineFormula(place, coordsOrigin);
 
-      if (distance <= 10 && distance !== 0 && isTeen(place)) return place;
+      if (distance <= DISTANCE_KM && distance !== 0 && isTeen(place)) return place;
 
     }).map( (place) =>{
       let distance = HaversineFormula(place, coordsOrigin);

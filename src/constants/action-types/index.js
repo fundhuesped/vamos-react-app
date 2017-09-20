@@ -6,6 +6,7 @@ export const MAC = "MAC" /*(MAC === Metodos anti-conceptivos)*/
 export const LPI = "LPI" /*(LPI === Interrupcion legal del embarazo)*/
 export const DC = "DC" /*(DC === Deteccion de Cancer)*/
 export const TEEN = "TEEN" /*(TEEN === Adolescente Friendly*/
+export const NEARBY = "NEARBY" /*(NEARBY === Nearby Places*/
 
 /* Search engines */
 export const AUTOCOMPLETE = "AUTOCOMPLETE"
@@ -36,7 +37,6 @@ export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION"
 
 /* Supported langs */
 export const ES = "es-ES"
-export const PT = "pt-BR"
 export const EN = "en-US"
 
 /* Supported countries */

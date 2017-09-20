@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner, CheckBox,DeviceEventEmitter } from 'native-base';
 import {View, StyleSheet,Picker, NetInfo, Modal, Text, Dimensions, TouchableHighlight} from 'react-native'
 import { StyleProvider } from 'native-base';
@@ -79,6 +80,17 @@ export default class SearchForGeolocation extends React.Component {
     return view
   }
 
+  _goToLanding = () =>{
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Landing'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+
   render() {
     let serviceData = getServiceData(this.props.serviceTypeData, width/10)
     let location ={
@@ -108,10 +120,15 @@ export default class SearchForGeolocation extends React.Component {
               </Button>
             </Left>
             <Body style={{flex:1,  justifyContent:'flex-start'}}>
-              <SVGVamosLogo
-                height={140}
-                width={140}
-              />
+              <Button
+                transparent
+                onPress={this._goToLanding}
+                >
+                <SVGVamosLogo
+                  height={140}
+                  width={140}
+                />
+              </Button>
             </Body>
           <Right style={{flex:1}}/>
           </Header>

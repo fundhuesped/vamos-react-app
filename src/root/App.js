@@ -72,7 +72,9 @@ export default class App extends React.Component {
     }
   }
 
-  componentDidMount = () => this.setState({rehydrated: true})
+  componentDidMount = () => setTimeout( () => {
+    this.setState({rehydrated: true})
+  }, 10);
 
   componentWillUnmount = () =>{
     console.log('unmount');

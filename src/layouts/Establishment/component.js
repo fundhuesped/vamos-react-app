@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon } from 'native-base';
 import { StyleProvider} from 'native-base';
 import { Text, StyleSheet, View, Image, ScrollView, TouchableHighlight, Dimensions, Modal, NetInfo, Linking } from 'react-native';
@@ -324,6 +325,17 @@ export default class Establishment extends React.Component {
     });
   }
 
+  _goToLanding = () =>{
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Landing'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+
   render() {
     let data = this.props.establishmentData
     return (
@@ -341,10 +353,15 @@ export default class Establishment extends React.Component {
               </Button>
             </Left>
             <Body style={{flex:1,  justifyContent:'flex-start'}}>
-              <SVGVamosLogo
-                height={140}
-                width={140}
-              />
+              <Button
+                transparent
+                onPress={this._goToLanding}
+                >
+                <SVGVamosLogo
+                  height={140}
+                  width={140}
+                />
+              </Button>
             </Body>
           <Right style={{flex:1}}/>
           </Header>

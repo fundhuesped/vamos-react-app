@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
 import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal} from 'react-native';
 import { StyleProvider } from 'native-base';
@@ -45,7 +46,7 @@ export default class Services extends React.Component {
         this.setState({showModal:true})
         // alert('error yendo a geolocalizacion'+error.message);
       },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
     );
   }
 
@@ -136,6 +137,16 @@ export default class Services extends React.Component {
 
   _isInputFocus = (isFocus) => this.setState({showList:isFocus})
 
+  _goToLanding = () =>{
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Landing'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
   render() {
     let serviceData = getServiceData(this.props.serviceTypeData, width/10)
     return (
@@ -154,11 +165,18 @@ export default class Services extends React.Component {
                 <Icon name="ios-arrow-back"/>
               </Button>
             </Left>
-            <Body style={{flex:1,  justifyContent:'flex-start'}}>
-              <SVGVamosLogo
-                height={140}
-                width={140}
-              />
+            <Body
+              style={{flex:1,  justifyContent:'flex-start'}}
+              >
+              <Button
+                transparent
+                onPress={this._goToLanding}
+                >
+                <SVGVamosLogo
+                  height={140}
+                  width={140}
+                />
+              </Button>
             </Body>
           <Right style={{flex:1}}>
           </Right>

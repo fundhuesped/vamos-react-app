@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import MapView from 'react-native-maps';
 import { Container, Header, Title, Button, Left, Right, Icon, Body } from 'native-base';
 import {
@@ -101,6 +102,17 @@ export default class Map extends React.Component {
     });
   }
 
+  _goToLanding = () =>{
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Landing'})
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+  }
+
+
   render() {
     console.log(this.state.region.latitude);
     console.log(this.state.region.longitude);
@@ -146,10 +158,15 @@ export default class Map extends React.Component {
                 </Button>
               </Left>
               <Body style={{flex:1,  justifyContent:'flex-start'}}>
-                <SVGVamosLogo
-                  height={140}
-                  width={140}
-                />
+                <Button
+                  transparent
+                  onPress={this._goToLanding}
+                  >
+                  <SVGVamosLogo
+                    height={140}
+                    width={140}
+                  />
+                </Button>
               </Body>
             <Right style={{flex:1}}>
             </Right>
