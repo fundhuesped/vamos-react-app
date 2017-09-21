@@ -73,7 +73,7 @@ export default class CitiesList extends React.PureComponent {
         renderItem={this._renderItem}
         style={{paddingLeft:'5%'}}
         ListEmptyComponent={this._renderEmptyList}
-        keyboardShouldPersistTaps='always'
+        keyboardShouldPersistTaps='handled'
         ItemSeparatorComponent={this._renderSeparator}
         keyboardDismissMode='on-drag'
       />

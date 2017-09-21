@@ -242,7 +242,7 @@ export default class SearchForGeolocation extends React.Component {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    marginTop: '10%',
+    marginTop: '5%',
     width: width / 1.2,
   },
   headerService:{

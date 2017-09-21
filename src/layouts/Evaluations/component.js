@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   fontColor:{ color: '#655E5E'},
   fontColorInvalid:{ color: '#e6334c'},
   evaluationsContainer:{
-    marginTop: '10%',
+    marginTop: '5%',
     width: width / 1.2,
   },
   section:{

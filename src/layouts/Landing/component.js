@@ -211,7 +211,7 @@ export default class Landing extends React.Component {
                       <View style={styles.modalViewDescriptionIcon}>
                         <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                       </View>
-                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la busqueda por adolescente amigbable debes activar tu gps</Text>
+                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la búsqueda por adolescente amigable debes activar tu GPS</Text>
                     </View>
                     <View style={styles.modalViewActions}>
                       <View>

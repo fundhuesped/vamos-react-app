@@ -15,6 +15,7 @@ import SVGMACIcon from '../SVG/MACIcon/component.js'
 import SVGMACFriendlyIcon from '../SVG/MACFriendlyIcon/component.js'
 import SVGVIHIcon from '../SVG/VIHIcon/component.js'
 import SVGVIHFriendlyIcon from '../SVG/VIHFriendlyIcon/component.js'
+import SVGVIHQuickIcon from '../SVG/VIHQuickIcon/component.js'
 
 import store from '../../../store/index.js'
 
@@ -134,6 +135,16 @@ export default class PlacePreviewItem extends React.PureComponent {
         )
       iconsArray.push(svg)
       }
+      if(services.prueba && services.es_rapido) {
+        let svg = (
+          <SVGVIHQuickIcon
+            key={6}
+            height={width / 12}
+            width={width / 12}
+          />
+        )
+      iconsArray.push(svg)
+      }
 
     return iconsArray;
   }
@@ -142,11 +153,18 @@ export default class PlacePreviewItem extends React.PureComponent {
     return (this.props.data.placeData.rateReal !== 0) ? (
         <View>
           <Text style={{color: '#FFFFFF', fontSize: 18, fontWeight:'bold', textAlign:'center', flexWrap:'wrap'}}>
-            {this.props.data.placeData.rateReal}
+            {Math.round(this.props.data.placeData.rateReal*10)/10}
           </Text>
-          <Text style={{color: '#FFFFFF', fontSize: 8, flexWrap:'wrap'}}>
-            {I18n.t("evaluation_plural", {locale: store.getState().ui.lang})}
-          </Text>
+          {(Math.round(this.props.data.placeData.rateReal*10)/10 !== 1) ? (
+            <Text style={{color: '#FFFFFF', fontSize: 8, flexWrap:'wrap'}}>
+              {I18n.t("point_plural", {locale: store.getState().ui.lang})}
+            </Text>
+          ) : (
+            <Text style={{color: '#FFFFFF', fontSize: 8, flexWrap:'wrap'}}>
+              {I18n.t("point_singular", {locale: store.getState().ui.lang})}
+            </Text>
+          )}
+
         </View>
     ):(
         <Text style={{color: '#FFFFFF', fontSize:10, textAlign: 'center', flexWrap:'wrap'}}>
@@ -159,7 +177,7 @@ export default class PlacePreviewItem extends React.PureComponent {
     return (
       <TouchableHighlight
         onPress={this._onPress}
-        style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, borderRadius: 5}}
+        style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, borderRadius: 5, marginBottom: 3}}
         activeOpacity={0.5}
         underlayColor="white"
         >
@@ -177,12 +195,12 @@ export default class PlacePreviewItem extends React.PureComponent {
                 {(this.props.data.distance !== undefined) ? (
                   <View style={[styles.bodyLocationDistance, styles.rowAlign]}>
                     <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                    <Text style={[styles.subtitle, styles.fontColor]}>{`${parseInt(this.props.data.distance*1000)} ${I18n.t("place_distance_unit", {locale: store.getState().ui.lang})}`}</Text>
+                    <Text style={[styles.subtitle, styles.fontColor]}>{I18n.t("place_distance_size", {distance: parseInt(this.props.data.distance*1000) ,locale: store.getState().ui.lang})}</Text>
                   </View>
                 )
                 : (null)}
               </View>
-              <View style={{flexDirection:'row', alignItems: 'center'}}>
+              <View style={{flexDirection:'row', alignItems: 'center', width: '100%'}}>
                 <View style={[styles.bodyCategories, styles.rowAlign, styles.marginSeparator]}>
                   {this._renderServices()}
                 </View>
@@ -203,7 +221,6 @@ export default class PlacePreviewItem extends React.PureComponent {
 
 const styles = StyleSheet.create({
   placePreviewContainer:{
-    // backgroundColor: '#000',
     // borderWidth: 1,
     // borderColor: "#",
     paddingLeft: '5%',
@@ -244,7 +261,8 @@ const styles = StyleSheet.create({
 
   },
   bodyCategories:{
-
+    width: '80%',
+    flexWrap: 'wrap',
   },
   subtitle:{
     fontSize: 14

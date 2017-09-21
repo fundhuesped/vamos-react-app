@@ -303,8 +303,8 @@ export default class Establishment extends React.Component {
     let url;
     switch (social) {
       case 'whatsapp':{
-        // url = 'whatsapp://send?text=Hello%20World!'
-        url = `whatsapp://send?text=Using%20Vamos%20I%20found%20${this.props.establishmentData.placeData.establecimiento}%20in%20${this.props.establishmentData.placeData.barrio_localidad}%20"https://ippf-staging.com.ar/share/${this.props.establishmentData.placeData.placeId}"`
+        url = `whatsapp://send?text=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20https://ippf-staging.com.ar/share/${this.props.establishmentData.placeData.placeId}`
         break;
       }
 
@@ -417,9 +417,14 @@ export default class Establishment extends React.Component {
                     {(data.placeData.rateReal) ?
                       <View style={{flexDirection:'row', alignItems:'center'}}>
                         <View style={{marginRight:'2%'}}>
-                          <Text style={{color: "#e6334c", fontSize: 18, fontWeight: 'bold'}}>{data.placeData.rateReal}</Text>
+                          <Text style={{color: "#e6334c", fontSize: 18, fontWeight: 'bold'}}>{Math.round(data.placeData.rateReal*10)/10}</Text>
                         </View>
-                        <Text style={{color: "#e6334c"}}>{I18n.t("evaluation_plural", {locale: this.props.lang})}</Text>
+                        {(Math.round(data.placeData.rateReal*10)/10 !== 1) ? (
+                          <Text style={{color: "#e6334c"}}>{I18n.t("point_plural", {locale: this.props.lang})}</Text>
+                        ) : (
+                          <Text style={{color: "#e6334c"}}>{I18n.t("point_singular", {locale: this.props.lang})}</Text>
+                        )}
+
                       </View>:
                       <Text style={{color: "#e6334c"}}>{I18n.t("without_evaluations", {locale: this.props.lang})}</Text>
                   }

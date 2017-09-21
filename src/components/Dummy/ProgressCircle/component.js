@@ -61,7 +61,7 @@ export default class ProgressCircle extends React.Component {
 
           <Text style={styles.loaderTitle}>{(this.props.firstFetch) ? 'Bienvenid@' : 'Descargando'}</Text>
           <View style={{paddingHorizontal: '20%'}}>
-            <Text style={styles.loaderText}>{(this.props.firstFetch) ? 'Estamos descargando todos nuestros establecimientos, para que puedas disfrutar de una experiencia totalmente offline' : 'Estamos renovando los establecimientos actuales'}</Text>
+            <Text style={styles.loaderText}>{(this.props.firstFetch) ? 'Estamos descargando todos nuestros establecimientos y ciudades, para que puedas disfrutar de una experiencia totalmente offline' : 'Estamos renovando nuestros establecimientos y ciudades'}</Text>
           </View>
           <Animation
             ref={animation => { this.animation = animation; }}

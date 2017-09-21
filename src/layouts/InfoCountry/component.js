@@ -22,7 +22,7 @@ import {
   TEEN
 } from '../../constants/action-types'
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 
 export default class InfoCountry extends React.Component {
@@ -124,6 +124,37 @@ export default class InfoCountry extends React.Component {
     this.props.navigation.dispatch(resetAction)
   }
 
+  _renderGralText = (service, ILECondition, text) =>{
+    let gralText;
+
+    if(service !== "LPI") gralText = this._handleLinks(text)
+    else {
+      if(ILECondition) gralText = this._handleLinks(text)
+      else gralText = null
+    }
+
+    return gralText;
+  }
+
+  _renderAssociationImage = (service, ILECondition, image) =>{
+    let AssociationImage;
+
+    if(service !== "LPI") AssociationImage = (<Image
+      source={image}
+      style={styles.associationLogo}
+      resizeMode="contain"
+    />)
+    else {
+      if(ILECondition) AssociationImage = (<Image
+        source={image}
+        style={styles.associationLogo}
+        resizeMode="contain"
+      />)
+      else AssociationImage = null
+    }
+
+    return AssociationImage;
+  }
 
   render() {
     console.log(this.props);
@@ -167,19 +198,15 @@ export default class InfoCountry extends React.Component {
           >
             <ScrollView
               style={{width: '100%'}}
-              contentContainerStyle ={{alignItems: 'center'}}
+              contentContainerStyle ={{alignItems: 'center', minHeight: (height - height/8)}}
               >
               <View style={styles.container}>
                 <View style={styles.infoCountryHeader}>
-                  <Text style={{fontSize: 20}}>{I18n.t(this.props.country, {locale: this.props.lang})}</Text>
-                  <Image
-                    source={gralTextandILEForCountry.asocciationImageUrl}
-                    style={styles.associationLogo}
-                    resizeMode="contain"
-                  />
+                  <Text style={{fontSize: 20, color: '#e6334c'}}>{`${I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()}`}</Text>
+                  { this._renderAssociationImage(this.props.service, gralTextandILEForCountry.ILEService, gralTextandILEForCountry.asocciationImageUrl)}
                 </View>
                 <View style={styles.infoCountryBody}>
-                  {this._handleLinks(gralTextandILEForCountry.generalText)}
+                  {this._renderGralText(this.props.service, gralTextandILEForCountry.ILEService, gralTextandILEForCountry.generalText)}
                   {(this.props.service === "LPI") ? (
                     <View>
                       <View style={{height: 20}}/>
@@ -202,8 +229,9 @@ export default class InfoCountry extends React.Component {
 const styles = StyleSheet.create({
   fontColor:{ color: '#655E5E'},
   container:{
-    marginTop: '10%',
+    marginTop: '5%',
     width: width / 1.2,
+    flex: 1,
   },
   infoCountryHeader:{
     alignItems: 'center',
@@ -216,6 +244,8 @@ const styles = StyleSheet.create({
     marginVertical: '5%'
   },
   infoCountryFooter:{
+    marginTop: 'auto',
+    marginBottom: '2%',
     paddingBottom: 10
   }
 })

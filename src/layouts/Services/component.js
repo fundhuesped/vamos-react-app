@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
-import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal} from 'react-native';
+import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal, Keyboard} from 'react-native';
+
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
@@ -46,7 +47,7 @@ export default class Services extends React.Component {
         this.setState({showModal:true})
         // alert('error yendo a geolocalizacion'+error.message);
       },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 },
     );
   }
 
@@ -114,6 +115,7 @@ export default class Services extends React.Component {
     label = `${cityString} ${departmentString} ${provinceString} ${countryString}`
 
     this.setState({textInput:label, showList:false, itemSelected:item}, this._sendToInfoCountryAUTOCOMPLETE)
+    Keyboard.dismiss()
   }
 
   _sendToInfoCountryAUTOCOMPLETE = () =>{
@@ -127,8 +129,10 @@ export default class Services extends React.Component {
     console.log(this.state.textInput);
     console.log(this.state.textInput.length);
     return (this.state.textInput !== "" && this.state.textInput.length > 1 && this.state.showList) ? (
-      <View style={styles.flatlistContainer}>
-        <CitiesList data={this.state.filterCities} onPressItem={this._onPressItem}/>
+      <View style={{flex: 1}}>
+        <View style={styles.flatlistContainer}>
+          <CitiesList data={this.state.filterCities} onPressItem={this._onPressItem}/>
+        </View>
       </View>
     ):(
       null
@@ -182,6 +186,7 @@ export default class Services extends React.Component {
           </Right>
           </Header>
           <Content
+            keyboardShouldPersistTaps='handled'
             contentContainerStyle ={{
               flex:1,
               backgroundColor:"#FFFFFF",
@@ -210,15 +215,16 @@ export default class Services extends React.Component {
                     value={this.state.textInput}
                     placeholder={I18n.t("search_department_description", {locale: this.props.lang})}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    autoFocus={true}
                     // onSubmitEditing={ () => alert('buscar')}
                     onFocus={() => {if(this.state.itemSelected === null) this._isInputFocus(true)}}
-                    // onBlur={() => this._isInputFocus(false)}
+                    onBlur={() => this._isInputFocus(false)}
                   />
                 </View>
+              </View>
+              {this._renderListResults()}
                   <TouchableHighlight
                     onPress={this._sendToInfoCountryGEOLOCATE}
-                    style={{borderRadius: 5}}
+                    style={{borderRadius: 5, marginTop: '2.5%'}}
                     activeOpacity={0.5}
                     underlayColor="#e6334c"
                     >
@@ -226,10 +232,6 @@ export default class Services extends React.Component {
                       <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
                     </View>
                   </TouchableHighlight>
-              </View>
-              <View style={{height: 200}}>
-                {this._renderListResults()}
-              </View>
               <Modal
                 animationType={"fade"}
                 transparent={true}
@@ -270,7 +272,7 @@ export default class Services extends React.Component {
 
 const styles = StyleSheet.create({
   container:{
-    marginTop: '10%',
+    marginTop: '5%',
     width: width / 1.2,
     height: 150
   },
@@ -299,7 +301,7 @@ const styles = StyleSheet.create({
     marginTop: '2.5%'
   },
   infoContainerText:{
-    fontSize: 16,
+    fontSize: 12,
     color: "#655E5E",
     textAlign: 'left'
   },
@@ -314,7 +316,8 @@ const styles = StyleSheet.create({
   },
   textInput:{
     marginLeft: '5%',
-    width: 200,
+    marginRight: '2.5%',
+    flex: 1,
     color: '#FFFFFF',
     height: 55,
   },
@@ -325,19 +328,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerGeolocation:{
-    width:50,
-    justifyContent:'center',
-    alignItems: 'center',
-    flex:1,
+    borderRadius: 5,
+    width: '100%',
+    height: 55,
+    paddingVertical: '2.5%',
+    paddingLeft: '5%',
+    justifyContent: 'center',
+    backgroundColor: '#e6334c'
   },
   flatlistContainer:{
+    height: 200,
+    position: 'absolute',
     paddingVertical: 20,
     width: '80%',
     marginLeft:'2.5%',
     backgroundColor: '#FFFFFF',
     elevation: 4,
     zIndex: 10,
-    flex: 1
   },
   modalContainer:{
     flex: 1,

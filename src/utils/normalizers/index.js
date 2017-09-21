@@ -100,6 +100,7 @@ export const normalizePlace = (place) => {
     rateReal: place.rateReal ? parseFloat(place.rateReal) : 0,
     cantidad_votos: place.cantidad_votos ? parseInt(place.cantidad_votos) : 0,
     habilitado: normalizeBoolean(place.habilitado),
+    es_rapido: normalizeBoolean(place.es_rapido),
     condones: normalizeBoolean(place.condones),
     prueba: normalizeBoolean(place.prueba),
     ssr: normalizeBoolean(place.ssr),

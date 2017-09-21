@@ -205,7 +205,7 @@ class SideBar extends Component {
                   <View style={styles.modalViewDescriptionIcon}>
                     <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                   </View>
-                    <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la busqueda por geolocalización debes activar tu gps</Text>
+                    <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la búsqueda por geolocalización debes activar tu GPS</Text>
                 </View>
                 <View style={styles.modalViewActions}>
                   <View>
@@ -231,14 +231,14 @@ class SideBar extends Component {
                     <Button
                       onPress={this._refetch}
                       color="#e6334c"
-                      title="Aceptar"
+                      title={I18n.t("confirm", {locale: this.props.ui.lang})}
                     />
                   </View>
                   <View>
                     <Button
                       onPress={() => this._setModalVisible(false,false)}
                       color="#e6334c"
-                      title="Cancelar"
+                      title={I18n.t("cancel", {locale: this.props.ui.lang})}
                     />
                   </View>
                 </View>

@@ -63,6 +63,7 @@ class Place {
       rateReal: 'float',
       cantidad_votos: 'float',
       habilitado: 'bool',
+      es_rapido: 'bool',
       condones: 'bool',
       prueba: 'bool',
       ssr: 'bool',

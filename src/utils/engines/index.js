@@ -254,7 +254,7 @@ export const getServiceData = (service, size) => {
         svg: <SVGCondomIcon height={size}
         width={size}/>,
         title: I18n.t("condones_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("condones_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("condones_desc", {locale: store.getState().ui.lang})
       }
       break;
     case VIH:
@@ -262,7 +262,7 @@ export const getServiceData = (service, size) => {
         svg: <SVGVIHIcon height={size}
         width={size}/>,
         title: I18n.t("prueba_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("prueba_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("prueba_desc", {locale: store.getState().ui.lang})
       }
       break;
     case SSR:
@@ -270,7 +270,7 @@ export const getServiceData = (service, size) => {
         svg:<SVGHealthIcon height={size}
         width={size}/>,
         title: I18n.t("ssr_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("ssr_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("ssr_desc", {locale: store.getState().ui.lang})
       }
       break;
     case MAC:
@@ -278,7 +278,7 @@ export const getServiceData = (service, size) => {
         svg:<SVGMACIcon height={size}
         width={size}/>,
         title: I18n.t("mac_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("mac_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("mac_desc", {locale: store.getState().ui.lang})
       }
       break;
     case LPI:
@@ -286,7 +286,7 @@ export const getServiceData = (service, size) => {
         svg:<SVGILEIcon height={size}
         width={size}/>,
         title: I18n.t("ile_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("ile_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("ile_desc", {locale: store.getState().ui.lang})
       }
       break;
     case DC:
@@ -294,7 +294,7 @@ export const getServiceData = (service, size) => {
         svg:<SVGDetectionIcon height={size}
         width={size}/>,
         title: I18n.t("dc_name", {locale: store.getState().ui.lang}),
-        subtitle: I18n.t("dc_content", {locale: store.getState().ui.lang})
+        subtitle: I18n.t("dc_desc", {locale: store.getState().ui.lang})
       }
       break;
     case TEEN:
