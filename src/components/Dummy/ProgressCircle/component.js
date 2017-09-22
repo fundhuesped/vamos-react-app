@@ -3,6 +3,9 @@ import { Text, StyleSheet,View, Animated } from 'react-native';
 // import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Animation from 'lottie-react-native';
 import {HTTPService} from '../../../utils/HTTPServices/index.js';
+import I18n from '../../../config/i18n/index.js';
+import store from '../../../store/index.js'
+
 
 const MAX_POINTS = 100;
 
@@ -39,14 +42,15 @@ export default class ProgressCircle extends React.Component {
     let progress;
     if(this.state.cityOrPlace === 'place'){
       if(this.state.currentPlaces !== 0) progress = (
-        <Text style={styles.loaderText}>{(this.state.totalEstablishment) ?`Descargando ${this.state.currentPlaces} establecimientos de ${this.state.totalEstablishment}` : ""}</Text>
+        <Text style={styles.loaderText}>{(this.state.totalEstablishment) ? I18n.t("loader_first_fetch_download_progress", {locale: store.getState().ui.lang, current: this.state.currentPlaces , total: this.state.totalEstablishment }) : ""}</Text>
+
       )
       else progress = (
-        <Text style={styles.loaderText}>Guardando establecimientos</Text>
+        <Text style={styles.loaderText}>{I18n.t("loader_first_fetch_saving_places", {locale: store.getState().ui.lang})}</Text>
       )
     }
     else  progress = (
-      <Text style={styles.loaderText}>Descargando Ciudades</Text>
+      <Text style={styles.loaderText}>{I18n.t("loader_first_fetch_saving_cities", {locale: store.getState().ui.lang})}</Text>
     )
 
     return progress
@@ -59,9 +63,9 @@ export default class ProgressCircle extends React.Component {
       (this.props.downloading) ? (
         <View style={styles.animationContainer}>
 
-          <Text style={styles.loaderTitle}>{(this.props.firstFetch) ? 'Bienvenid@' : 'Descargando'}</Text>
+          <Text style={styles.loaderTitle}>{(this.props.firstFetch) ? I18n.t("loader_first_fetch_title", {locale: store.getState().ui.lang}) : I18n.t("loader_new_fetch_title", {locale: store.getState().ui.lang})}</Text>
           <View style={{paddingHorizontal: '20%'}}>
-            <Text style={styles.loaderText}>{(this.props.firstFetch) ? 'Estamos descargando todos nuestros establecimientos y ciudades, para que puedas disfrutar de una experiencia totalmente offline' : 'Estamos renovando nuestros establecimientos y ciudades'}</Text>
+            <Text style={styles.loaderText}>{(this.props.firstFetch) ? I18n.t("loader_first_fetch_content", {locale: store.getState().ui.lang}) : I18n.t("loader_new_fetch_content", {locale: store.getState().ui.lang})}</Text>
           </View>
           <Animation
             ref={animation => { this.animation = animation; }}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Text,View,StyleSheet,Image, Button, Linking, Picker, Modal, TouchableHighlight} from 'react-native'
-import {Toast, Icon} from 'native-base';
+import {Toast, Icon, Spinner} from 'native-base';
 import {connect} from 'react-redux'
 
 import {setLang, selectLookingFor} from '../../../constants/actions/index.js'
@@ -19,7 +19,8 @@ class SideBar extends Component {
     this.state ={
       language: props.ui.lang,
       modalVisible: false,
-      modalType: false
+      modalType: false,
+      showModalGPS: false
     }
   }
 
@@ -86,18 +87,76 @@ class SideBar extends Component {
   }
 
   _goToNearby = () =>{
+    this.setState({showModalGPS:true})
     this.props.dispatch(selectLookingFor(NEARBY))
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // alert('gps activado');
-        this.props.navigation.navigate('InfoCountry',{coords: position.coords})
+        this._getAddress(position.coords)
       },
       (error) => {
-        this.setState({showModal:true, modalType: true})
+        this.setState({modalVisible:true, modalType: true, showModalGPS:false})
         // alert('error yendo a geolocalizacion'+error.message);
       },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
     );
+  }
+
+  _getAddress = async (coords) =>{
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCjb5c-5XvzhvdMXCjIjNaK-Zdh-L_qVmM&latlng=${coords.latitude},${coords.longitude}&sensor=false`;
+      try {
+        let response = await fetch(url, {
+                              method: 'GET',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                              }})
+        let responseJson = await response.json();
+
+        if(responseJson.status !== "OK"){
+            // alert('FAIL GEOCODIGN');
+        }
+        else{
+          console.log(responseJson);
+          let address = {};
+          const address_components = responseJson.results[0].address_components;
+          let country;
+          address_components.forEach(element => {
+              address[element.types[0]] = element.long_name;
+              if(element.types[0] === "country") country = element.short_name
+          });
+
+
+          let addressFormated = {
+                formatted_address: responseJson.results[0].formatted_address,
+                address_parts: address
+            };
+
+          this._checkCountry(addressFormated, country, coords)
+
+        }
+      } catch (e) {
+        console.log(e);
+        this._checkCountry(undefined, undefined, coords)
+      }
+
+  }
+
+  _checkCountry = (address, country, coords) =>{
+    if(country !== undefined){
+      let isMember = true;
+      if(country !== "AG" && country !== "AR" && country !== "AW" && country !== "BB" && country !== "BZ" && country !== "BO" && country !== "CL" && country !== "CO" && country !== "CW" && country !== "DM" && country !== "EC" && country !== "SV" && country !== "GD" && country !== "GT" && country !== "GY" && country !== "HT" && country !== "HN" && country !== "JM" && country !== "MX" && country !== "PA" && country !== "PY" && country !== "PE" && country !== "PR" && country !== "DO" && country !== "VC" && country !== "LC" && country !== "SR" && country !== "TT" && country !== "UY" && country !== "VE") isMember = false
+
+      if(!isMember) {
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords, address: address})})
+      }
+      else {
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{coords: coords, country: country})})
+      }
+    }
+    else {
+      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords})})
+    }
   }
 
 	render() {
@@ -132,7 +191,7 @@ class SideBar extends Component {
               style={styles.bodyItem}
               >
               <Icon name='ios-information-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("goToAbout", {locale: this.props.ui.lang})}</Text>
+              <Text style={styles.bodyItemText}>{I18n.t("go_to_about", {locale: this.props.ui.lang})}</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -144,7 +203,7 @@ class SideBar extends Component {
               style={styles.bodyItem}
               >
               <Icon name='ios-add-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("goToSuggest", {locale: this.props.ui.lang})}</Text>
+              <Text style={styles.bodyItemText}>{I18n.t("go_to_suggest", {locale: this.props.ui.lang})}</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -168,7 +227,7 @@ class SideBar extends Component {
               style={styles.bodyItem}
               >
               <Icon name='md-refresh' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("refetch", {locale: this.props.ui.lang})}</Text>
+              <Text style={styles.bodyItemText}>{I18n.t("reload_bd", {locale: this.props.ui.lang})}</Text>
             </View>
           </TouchableHighlight>
           {/* <Text>{`cantidad de establecimientos ${Object.keys(this.props.db.places.data).length}`}</Text> */}
@@ -199,20 +258,20 @@ class SideBar extends Component {
             {this.state.modalType ? (
               <View style={styles.modalView}>
                 <View style={styles.modalViewTitle}>
-                  <Text style={{fontWeight:'bold',fontSize:16}}>GPS</Text>
+                  <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.ui.lang})}</Text>
                 </View>
                 <View style={styles.modalViewDescriptionGPS}>
                   <View style={styles.modalViewDescriptionIcon}>
                     <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                   </View>
-                    <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la búsqueda por geolocalización debes activar tu GPS</Text>
+                    <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("nearby_gps_popup_content", {locale: this.props.ui.lang})}</Text>
                 </View>
                 <View style={styles.modalViewActions}>
                   <View>
                     <Button
-                      onPress={() => this.setState({showModal:false})}
+                      onPress={() => this.setState({modalVisible:false})}
                       color="#e6334c"
-                      title="Volver"
+                      title={I18n.t("back_label_button", {locale: this.props.ui.lang})}
                     />
                   </View>
                 </View>
@@ -220,11 +279,11 @@ class SideBar extends Component {
             ) : (
               <View style={styles.modalView}>
                 <View style={styles.modalViewTitle}>
-                  <Text style={{fontWeight:'bold',fontSize:16}}>Sincronizar Datos Mas Recientes</Text>
+                  <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("reload_bd_popup_title", {locale: this.props.ui.lang})}</Text>
                 </View>
                 <View style={styles.modalViewDescription}>
-                  <Text style={{fontSize:12, color: '#7f7f7f'}}>{`Ultima Sincronización: ${this._getDate()}` }</Text>
-                  <Text>Estas seguro que quieres descargar nuevamentes la Base Datos? Esto podria llevar un momento, te aconsejamos conectarte a una red WIFI</Text>
+                  <Text style={{fontSize:12, color: '#7f7f7f'}}>{I18n.t("reload_bd_popup_last_date", {locale: this.props.ui.lang, date: this._getDate() })}</Text>
+                  <Text>{I18n.t("reload_bd_popup_content", {locale: this.props.ui.lang})}</Text>
                 </View>
                 <View style={styles.modalViewActions}>
                   <View style={{marginRight:'5%'}}>
@@ -244,6 +303,19 @@ class SideBar extends Component {
                 </View>
               </View>
             )}
+         </View>
+        </Modal>
+        <Modal
+          animationType={"fade"}
+          transparent={true}
+          visible={this.state.showModalGPS}
+          onRequestClose={() => {console.log("Modal has been closed.")}}
+          >
+         <View style={styles.modalContainer}>
+           <View style={styles.modalView}>
+             <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.ui.lang})}</Text>
+             <Spinner color='#e6334c'/>
+           </View>
          </View>
         </Modal>
       </View>

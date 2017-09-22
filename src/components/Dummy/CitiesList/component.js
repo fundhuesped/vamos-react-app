@@ -1,6 +1,8 @@
 import React from 'react';
 import {FlatList, Text, Linking,View} from 'react-native';
 import CityItem from '../CityItem/component.js'
+import I18n from '../../../config/i18n/index.js';
+import store from '../../../store/index.js'
 
 
 export default class CitiesList extends React.PureComponent {
@@ -61,7 +63,7 @@ export default class CitiesList extends React.PureComponent {
   };
 
 
-  _renderEmptyList = () => <Text style={{color: '#e6334c'}} onPress={this._goToSuggest}>No se encontraron establecimientos, sugiere uno</Text>
+  _renderEmptyList = () => <Text style={{color: '#e6334c'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label", {locale: store.getState().ui.lang})}</Text>
 
   render() {
     console.log(this.props);

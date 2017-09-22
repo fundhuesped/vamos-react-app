@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Dimensions, ScrollView, Modal } from 'react-native';
-import { Container, Header, Content, Button, Left, Right, Body, Icon } from 'native-base';
+import { Container, Header, Content, Button, Left, Right, Body, Icon, Spinner } from 'native-base';
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
@@ -34,25 +34,66 @@ export default class Landing extends React.Component {
   constructor(){
     super();
     this.state={
-      showModal: false
+      showModalErrorGPS: false,
+      showModalGPS: false
     }
   }
 
   _handleService = (service) => this.props._handleService(service)
 
   _goToGeolocation = () =>{
+    this.setState({showModalGPS:true})
     this._handleService(TEEN)
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // alert('gps activado');
-        this.props.navigation.navigate('SearchForGeolocation',{isTeen: true, coords:position.coords})
+        this._getAddress(position.coords)
       },
       (error) => {
         this.setState({showModal:true})
         // alert('error yendo a geolocalizacion'+error.message);
       },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      { enableHighAccuracy: false, timeout: 5000, maximumAge: 1000 },
     );
+  }
+
+  _getAddress = async (coords) =>{
+
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCjb5c-5XvzhvdMXCjIjNaK-Zdh-L_qVmM&latlng=${coords.latitude},${coords.longitude}&sensor=false`;
+    try {
+      let response = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                              'Accept': 'application/json',
+                              'Content-Type': 'application/json',
+                            }})
+      let responseJson = await response.json();
+
+      if(responseJson.status !== "OK"){
+          // alert('FAIL GEOCODIGN');
+      }
+      else{
+        console.log(responseJson);
+        let address = {};
+        const address_components = responseJson.results[0].address_components;
+        let country;
+        address_components.forEach(element => {
+            address[element.types[0]] = element.long_name;
+            if(element.types[0] === "country") country = element.short_name
+        });
+
+
+        let addressFormated = {
+              formatted_address: responseJson.results[0].formatted_address,
+              address_parts: address
+          };
+        this.setState({showModalGPS:false})
+        this.props.navigation.navigate('SearchForGeolocation',{isTeen: true, coords:coords, address: addressFormated})
+      }
+    } catch (e) {
+      console.log(e);
+      this.setState({showModalGPS:false})
+      this.props.navigation.navigate('SearchForGeolocation',{isTeen: true, coords:coords})
+    }
   }
 
   render() {
@@ -199,31 +240,44 @@ export default class Landing extends React.Component {
                 <Modal
                   animationType={"fade"}
                   transparent={true}
-                  visible={this.state.showModal}
+                  visible={this.state.showModalErrorGPS}
                   onRequestClose={() => {console.log("Modal has been closed.")}}
                   >
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>
                     <View style={styles.modalViewTitle}>
-                      <Text style={{fontWeight:'bold',fontSize:16}}>GPS</Text>
+                      <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.lang})}</Text>
                     </View>
                     <View style={styles.modalViewDescription}>
                       <View style={styles.modalViewDescriptionIcon}>
                         <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                       </View>
-                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la búsqueda por adolescente amigable debes activar tu GPS</Text>
+                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("friendly_gps_popup_content", {locale: this.props.lang})}</Text>
                     </View>
                     <View style={styles.modalViewActions}>
                       <View>
                         <Button
-                          onPress={() => this.setState({showModal:false})}
+                          onPress={() => this.setState({showModalErrorGPS:false})}
                           // style={{marginBottom:'5%'}}
                           >
-                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>Volver</Text>
+                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t("back_label_button", {locale: this.props.lang})}</Text>
                         </Button>
                       </View>
                     </View>
                   </View>
+                 </View>
+                </Modal>
+                <Modal
+                  animationType={"fade"}
+                  transparent={true}
+                  visible={this.state.showModalGPS}
+                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  >
+                 <View style={styles.modalContainer}>
+                   <View style={styles.modalView}>
+                     <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.lang})}</Text>
+                     <Spinner color='#e6334c'/>
+                   </View>
                  </View>
                 </Modal>
               </View>

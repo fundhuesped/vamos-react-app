@@ -94,7 +94,7 @@ export class HTTPServices {
 
     // console.log('FINALIZADO CHECKEANDO BD');
     // alert('FINALIZADO CHECKEANDO BD');
-    if(!failedPages.length) this.fetchCities({currentDataPlaces:failedPages,failedPages:newFailedPages})
+    if(failedPages.length !== 0) this.fetchCities({currentDataPlaces:failedPages,failedPages:newFailedPages})
   }
 
   fetchCities = async (places) => {

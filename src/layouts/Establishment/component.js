@@ -75,7 +75,7 @@ export default class Establishment extends React.Component {
       }
         break;
       case 'ssr':{
-        serviceData = getServiceData(MAC, width/12)
+        serviceData = getServiceData(SSR, width/12)
       }
         break;
 
@@ -243,7 +243,7 @@ export default class Establishment extends React.Component {
         }
         if(data.ile){
           servicesAvailable.push({
-            title: 'ILE',
+            title: 'ile',
             content:{
               id: "",
               name: "",
@@ -253,7 +253,7 @@ export default class Establishment extends React.Component {
         }
         if(data.dc){
           servicesAvailable.push({
-            title: 'DC',
+            title: 'dc',
             content:{
               id: "",
               name: "",
@@ -263,7 +263,7 @@ export default class Establishment extends React.Component {
         }
         if(data.mac){
           servicesAvailable.push({
-            title: 'MAC',
+            title: 'mac',
             content:{
               id: "",
               name: "",
@@ -273,7 +273,7 @@ export default class Establishment extends React.Component {
         }
         if(data.ssr){
           servicesAvailable.push({
-            title: 'SSR',
+            title: 'ssr',
             content:{
               id: "",
               name: "",
@@ -294,7 +294,7 @@ export default class Establishment extends React.Component {
         (feature === 'map') ? this.props.navigation.navigate('Map', {establishmentData: this.props.establishmentData}) : this.props.navigation.navigate('Evaluations', {servicesAvailable: this.props.servicesAvailable, establishmentId:this.props.establishmentData.placeData.placeId})
       }
       else {
-        (feature === 'map') ? this.setState({showModal:true, modalText:'Para acceder al mapa debes estar conectado a una red wifi o mediante datos'}) : this.setState({showModal:true, modalText:'Para poder evaluar un establecimientos debes estar conectado a una red wifi o mediante datos'})
+        (feature === 'map') ? this.setState({showModal:true, modalText: `${I18n.t("map_popup_content", {locale: this.props.lang})}`}) : this.setState({showModal:true, modalText:`${I18n.t("rate_popup_content", {locale: this.props.lang})}`})
       }
     });
   }
@@ -388,7 +388,7 @@ export default class Establishment extends React.Component {
                   {(data.distance !== undefined) ? (
                     <View style ={styles.establishmentDistance}>
                       <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                      <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{`${parseInt(data.distance*1000)} ${I18n.t("place_distance_unit", {locale: this.props.lang})}`}</Text>
+                      <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{I18n.t("place_distance_size", {distance: parseInt(this.props.data.distance*1000) ,locale: this.props.lang})}</Text>
                     </View>
                   )
                   : (null)}
@@ -557,10 +557,6 @@ export default class Establishment extends React.Component {
 
                           commentSearchArrayTranslated = commentSearchArray.map( (search) => I18n.t(search, {locale: this.props.lang}))
                           commentSearchTranslated = commentSearchArrayTranslated.join(', ')
-                      console.log(commentSearchArray);
-                      console.log(commentSearchArrayTranslated);
-                      console.log(commentSearchTranslated);
-
                       return (
                         <View style={styles.evaluationItem} key={index}>
                           <View style={{flexDirection:'row', flex:1}}>
@@ -570,7 +566,7 @@ export default class Establishment extends React.Component {
                             <Text style={[styles.fontColor, {flexWrap:'wrap', fontSize: 15, flex:1}]}>{comment.comentario}</Text>
                           </View>
                           <View>
-                            <Text style={[styles.fontColor, {flexWrap:'wrap',fontSize: 12}]}>{`Fue a buscar: ${commentSearchTranslated}`}</Text>
+                            <Text style={[styles.fontColor, {flexWrap:'wrap',fontSize: 12}]}>{`${I18n.t('comment_go_for_label', {locale: this.props.lang})} ${commentSearchTranslated}`}</Text>
                           </View>
                         </View>
                       )
@@ -587,7 +583,7 @@ export default class Establishment extends React.Component {
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>
                     <View style={styles.modalViewTitle}>
-                      <Text style={{fontWeight:'bold',fontSize:16}}>SIN CONEXIÓN</Text>
+                      <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t('map_popup_title', {locale: this.props.lang})}</Text>
                     </View>
                     <View style={styles.modalViewDescription}>
                       <View style={styles.modalViewDescriptionIcon}>
@@ -601,7 +597,7 @@ export default class Establishment extends React.Component {
                           onPress={() => this.setState({showModal:false})}
                           // style={{marginBottom:'5%'}}
                           >
-                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>Volver</Text>
+                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t('back_label_button', {locale: this.props.lang})}</Text>
                         </Button>
                       </View>
                     </View>

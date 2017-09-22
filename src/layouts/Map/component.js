@@ -88,7 +88,7 @@ export default class Map extends React.Component {
 
     setTimeout( () => {
       this.setState({loaded:true})
-    }, 1500);
+    }, 10);
   }
 
 
@@ -193,12 +193,9 @@ export default class Map extends React.Component {
                       key={index}
                       coordinate={marker.placeData}
                       onPress={(e) => this._scrollToAnimatedScrollView(e,index)}
-                      >
-                        <Image
-                          source={this.state.selectedMarkerIndex === index ? selectedIconMarker : iconMarker}
-                          style={styles.markerImage}
-                        />
-                    </MapView.Marker>
+                      image={this.state.selectedMarkerIndex === index ? selectedIconMarker : iconMarker}
+                    />
+
                   );
                 })}
               </MapView>

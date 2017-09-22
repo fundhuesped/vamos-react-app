@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
-import {View, Image, StyleSheet, Picker, Dimensions, Text, ScrollView, TextInput, TouchableHighlight} from 'react-native';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon,Spinner} from 'native-base';
+import {View, Image, StyleSheet, Picker, Dimensions, Text, ScrollView, TextInput, TouchableHighlight, Modal, Keyboard} from 'react-native';
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
@@ -43,7 +43,8 @@ export default class Evaluations extends React.Component {
       checkVote:true,
       checkGender:true,
       sendButtonDisabled: false,
-      showThanks: false
+      showThanks: false,
+      showModal: false
     }
   }
 
@@ -63,17 +64,9 @@ export default class Evaluations extends React.Component {
 
   _checkForm = () =>{
 
-    console.log(this.state.service.id);
-    console.log(this.state.serviceType);
-    console.log(this.state.vote);
-    console.log(this.state.commentInput);
-    console.log(this.state.gender);
-    console.log(this.state.ageInput);
-    console.log(this.state.nameInput);
-    console.log(this.state.emailInput);
-    console.log(this.state.phoneInput);
+    Keyboard.dismiss();
     if(this.state.service.id !== '' && this.state.serviceType !== '' && this.state.vote !== '' && this.state.gender !== '' && this.state.ageInput !== '') {
-
+      this.setState({showModal:true})
       let serviceSplit = this.state.service.id.split('/')
 
       try {
@@ -106,15 +99,15 @@ export default class Evaluations extends React.Component {
         })
         .then( (res) => {
           console.log(res)
-          if(res.ok) this.setState({showThanks: true})
+          if(res.ok) this.setState({showThanks: true, showModal:false})
         })
         .catch( (error) => {
           console.log(error)
-          this.setState({sendButtonDisabled:false})
+          this.setState({sendButtonDisabled:false, showModal:false})
         })
       } catch (e) {
         console.log(e);
-        this.setState({sendButtonDisabled:false})
+        this.setState({sendButtonDisabled:false, showModal:false})
       }
 
     }
@@ -171,6 +164,7 @@ export default class Evaluations extends React.Component {
             <Right style={{flex:1}}/>
           </Header>
           <Content
+            keyboardShouldPersistTaps='handled'
             contentContainerStyle ={{
               flex:1,
               backgroundColor:"#FFFFFF",
@@ -180,12 +174,14 @@ export default class Evaluations extends React.Component {
             <ScrollView
               style={{width: '100%'}}
               contentContainerStyle ={{alignItems: 'center'}}
+              keyboardShouldPersistTaps='handled'
               ref='scrollRef'
               >
                 {(this.state.showThanks) ? (
                   <View style={styles.evaluationsContainer}>
-                    <Text style={[styles.fontColor, {fontWeight:'bold',fontSize:16}]}>Muchas Gracias!</Text>
-                    <Text style={styles.fontColor}>Tus respuestas ayudan a que todas las personas accedamos a mejores servicios.</Text>
+                    <Text style={[styles.fontColor, {fontWeight:'bold',fontSize:16}]}>{I18n.t("success_evaluation_title", {locale: this.props.lang})}</Text>
+                    <Text style={styles.fontColor}>{I18n.t("success_evaluation_content", {locale: this.props.lang})}</Text>
+                    {/* <Text style={styles.fontColor}>{I18n.t("success_evaluation_title", {locale: this.props.lang})}</Text> */}
                     <View style={{justifyContent:'center', alignItems:'center', paddingVertical:'5%'}}>
                       <TouchableHighlight
                         onPress={() =>{this.props.navigation.goBack()}}
@@ -193,7 +189,7 @@ export default class Evaluations extends React.Component {
                         underlayColor="white"
                         style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, borderRadius: 5, height: 45, paddingVertical:'1%', justifyContent:'center', alignItems:'center', paddingHorizontal:20}}
                         >
-                          <Text style={{color: "#e6334c"}}>CERRAR</Text>
+                          <Text style={{color: "#e6334c"}}>{I18n.t("close_label_button", {locale: this.props.lang})}</Text>
                       </TouchableHighlight>
                     </View>
                   </View>
@@ -204,12 +200,12 @@ export default class Evaluations extends React.Component {
                       <Text style={styles.fontColor}>{I18n.t("evaluation_required_label", {locale: this.props.lang})}</Text>
                     </View>
                     <View style={styles.section}>
-                      <Text style={(this.state.checkserviceId) ? styles.fontColor : styles.fontColorInvalid}>Servicio*</Text>
+                      <Text style={(this.state.checkserviceId) ? styles.fontColor : styles.fontColorInvalid}>{I18n.t("evaluation_mandatory_service_label", {locale: this.props.lang})}</Text>
                       <View style={(this.state.checkserviceId) ? styles.pickerContainer : styles.pickerContainerInvalid}>
                         <Picker
                           selectedValue={this.state.service.id}
                           onValueChange={(itemValue, itemIndex) => this.setState({service: { id: itemValue}})}>
-                          <Picker.Item label="Selecciona un servicio" value="" color="rgba(0, 0, 0, 0.5)"/>
+                          <Picker.Item label={I18n.t("evaluation_mandatory_default_variable_service_picker", {locale: this.props.lang})} value="" color="rgba(0, 0, 0, 0.5)"/>
                           {this._renderServices()}
                         </Picker>
                       </View>
@@ -220,7 +216,7 @@ export default class Evaluations extends React.Component {
                         <Picker
                           selectedValue={this.state.serviceType}
                           onValueChange={(itemValue, itemIndex) => this.setState({serviceType:itemValue})}>
-                          <Picker.Item label="Selecciona un tipo de servicio" value="" color="rgba(0, 0, 0, 0.5)"/>
+                          <Picker.Item label={I18n.t("evaluation_mandatory_default_variable_type_service_picker", {locale: this.props.lang})} value="" color="rgba(0, 0, 0, 0.5)"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_59", {locale: this.props.lang})} value="evaluation_answeroption_59" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_60", {locale: this.props.lang})} value="evaluation_answeroption_60" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_61", {locale: this.props.lang})} value="evaluation_answeroption_61" color="#000"/>
@@ -240,7 +236,7 @@ export default class Evaluations extends React.Component {
                         <Picker
                           selectedValue={this.state.vote}
                           onValueChange={(itemValue, itemIndex) => this.setState({vote: itemValue})}>
-                          <Picker.Item label="Selecciona un valor" value="" color="rgba(0, 0, 0, 0.5)"/>
+                          <Picker.Item label={I18n.t("evaluation_mandatory_default_variable_rate_picker", {locale: this.props.lang})} value="" color="rgba(0, 0, 0, 0.5)"/>
                           <Picker.Item label="0" value={0} color="#000"/>
                           <Picker.Item label="1" value={1} color="#000"/>
                           <Picker.Item label="2" value={2} color="#000"/>
@@ -261,7 +257,7 @@ export default class Evaluations extends React.Component {
                         style={styles.commentInput}
                         onChangeText={(text) => this.setState({commentInput:text})}
                         value={this.state.commentInput}
-                        placeholder="Máximo 200 caracteres"
+                        placeholder={I18n.t("evaluation_max_characters_comment_input", {locale: this.props.lang})}
                         underlineColorAndroid='rgba(0,0,0,0)'
                         textAlignVertical={'top'}
                         multiline={true}
@@ -286,7 +282,7 @@ export default class Evaluations extends React.Component {
                         <Picker
                           selectedValue={this.state.gender}
                           onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
-                          <Picker.Item label="Selecciona un genero" value="" color="rgba(0, 0, 0, 0.5)"/>
+                          <Picker.Item label={I18n.t("evaluation_mandatory_default_variable_gender_picker", {locale: this.props.lang})} value="" color="rgba(0, 0, 0, 0.5)"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_9", {locale: this.props.lang})} value="evaluation_answeroption_9" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_10", {locale: this.props.lang})} value="evaluation_answeroption_10" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_38", {locale: this.props.lang})} value="evaluation_answeroption_38" color="#000"/>
@@ -359,6 +355,19 @@ export default class Evaluations extends React.Component {
                   </View>
                 )}
             </ScrollView>
+            <Modal
+              animationType={"fade"}
+              transparent={true}
+              visible={this.state.showModal}
+              onRequestClose={() => {console.log("Modal has been closed.")}}
+              >
+             <View style={styles.modalContainer}>
+               <View style={styles.modalView}>
+                 <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>Enviando evaluación</Text>
+                 <Spinner color='#e6334c'/>
+               </View>
+             </View>
+            </Modal>
           </Content>
         </Container>
       </StyleProvider>
@@ -433,5 +442,16 @@ const styles = StyleSheet.create({
     marginBottom: '3.5%',
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  modalContainer:{
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    justifyContent: 'center',
+    paddingHorizontal: '5%'
+  },
+  modalView:{
+    backgroundColor: '#FFFFFF',
+    padding: '5%',
+    borderRadius: 5,
   },
 })

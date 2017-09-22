@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
-import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal, Keyboard} from 'react-native';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner} from 'native-base';
+import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal, Keyboard,TouchableOpacity} from 'react-native';
 
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
@@ -33,22 +33,82 @@ export default class Services extends React.Component {
       showModal: false,
       filterCities: [],
       showList: false,
-      itemSelected: null
+      itemSelected: null,
+      showModalGPS: false
     }
   }
 
   _sendToInfoCountryGEOLOCATE = () =>{
+    this.setState({showModalGPS:true})
+    Keyboard.dismiss();
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // alert('gps activado');
-        this.props.navigation.navigate('InfoCountry',{coords: position.coords})
+      this._getAddress(position.coords)
       },
       (error) => {
-        this.setState({showModal:true})
+        this.setState({showModal:true,showModalGPS:false})
         // alert('error yendo a geolocalizacion'+error.message);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
     );
+  }
+
+  _getAddress = async (coords) =>{
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCjb5c-5XvzhvdMXCjIjNaK-Zdh-L_qVmM&latlng=${coords.latitude},${coords.longitude}&sensor=false`;
+      try {
+        let response = await fetch(url, {
+                              method: 'GET',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                              }})
+        let responseJson = await response.json();
+
+        if(responseJson.status !== "OK"){
+            // alert('FAIL GEOCODIGN');
+        }
+        else{
+          console.log(responseJson);
+          let address = {};
+          const address_components = responseJson.results[0].address_components;
+          let country;
+          address_components.forEach(element => {
+              address[element.types[0]] = element.long_name;
+              if(element.types[0] === "country") country = element.short_name
+          });
+
+
+          let addressFormated = {
+                formatted_address: responseJson.results[0].formatted_address,
+                address_parts: address
+            };
+
+          this._checkCountry(addressFormated, country, coords)
+
+        }
+      } catch (e) {
+        console.log(e);
+        this._checkCountry(undefined, undefined, coords)
+      }
+
+  }
+
+  _checkCountry = (address, country, coords) =>{
+    if(country !== undefined){
+      let isMember = true;
+      if(country !== "AG" && country !== "AR" && country !== "AW" && country !== "BB" && country !== "BZ" && country !== "BO" && country !== "CL" && country !== "CO" && country !== "CW" && country !== "DM" && country !== "EC" && country !== "SV" && country !== "GD" && country !== "GT" && country !== "GY" && country !== "HT" && country !== "HN" && country !== "JM" && country !== "MX" && country !== "PA" && country !== "PY" && country !== "PE" && country !== "PR" && country !== "DO" && country !== "VC" && country !== "LC" && country !== "SR" && country !== "TT" && country !== "UY" && country !== "VE") isMember = false
+
+      if(!isMember) {
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords, address: address})})
+      }
+      else {
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{coords: coords, country: country})})
+      }
+    }
+    else {
+      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords})})
+    }
   }
 
   _filterList = () =>{
@@ -122,7 +182,7 @@ export default class Services extends React.Component {
     setTimeout( () => {
       this.setState({textInput: ""})
       this.props.navigation.navigate('InfoCountry',{cityDepartment: this.state.itemSelected})
-    }, 500);
+    }, 250);
   }
 
   _renderListResults = () =>{
@@ -131,7 +191,10 @@ export default class Services extends React.Component {
     return (this.state.textInput !== "" && this.state.textInput.length > 1 && this.state.showList) ? (
       <View style={{flex: 1}}>
         <View style={styles.flatlistContainer}>
-          <CitiesList data={this.state.filterCities} onPressItem={this._onPressItem}/>
+          <CitiesList
+            data={this.state.filterCities}
+            onPressItem={this._onPressItem}
+          />
         </View>
       </View>
     ):(
@@ -193,76 +256,95 @@ export default class Services extends React.Component {
               alignItems: 'center'
               }}
           >
-            <View style={styles.container}>
-              <View style={styles.headerService}>
-                <View style={styles.headerServiceIcon}>
-                  {serviceData.svg}
-                </View>
-                <View style={styles.headerServiceTitleContainer}>
-                  <Text style={styles.headerServiceTitle}>{serviceData.title.toUpperCase()}</Text>
-                </View>
-              </View>
-              <View style={styles.infoContainer}>
-                <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
-              </View>
-              <View style={styles.inputContainer}>
-                <View style={styles.containerSearchCity}>
-                  <Icon name="md-search" style={{fontSize: 30, color: '#FFFFFF'}}/>
-                  <TextInput
-                    multiline={true}
-                    style={styles.textInput}
-                    onChangeText={(text) => this.setState({textInput:text, itemSelected: null}, this._filterList)}
-                    value={this.state.textInput}
-                    placeholder={I18n.t("search_department_description", {locale: this.props.lang})}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                    // onSubmitEditing={ () => alert('buscar')}
-                    onFocus={() => {if(this.state.itemSelected === null) this._isInputFocus(true)}}
-                    onBlur={() => this._isInputFocus(false)}
-                  />
-                </View>
-              </View>
-              {this._renderListResults()}
-                  <TouchableHighlight
-                    onPress={this._sendToInfoCountryGEOLOCATE}
-                    style={{borderRadius: 5, marginTop: '2.5%'}}
-                    activeOpacity={0.5}
-                    underlayColor="#e6334c"
-                    >
-                    <View style={styles.containerGeolocation}>
-                      <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
-                    </View>
-                  </TouchableHighlight>
-              <Modal
-                animationType={"fade"}
-                transparent={true}
-                visible={this.state.showModal}
-                onRequestClose={() => {console.log("Modal has been closed.")}}
-                >
-               <View style={styles.modalContainer}>
-                <View style={styles.modalView}>
-                  <View style={styles.modalViewTitle}>
-                    <Text style={{fontWeight:'bold',fontSize:16}}>GPS</Text>
+            <TouchableOpacity
+              style={{flex:1}}
+              activeOpacity={1}
+              onPress={() => this._isInputFocus(false)}
+              >
+              <View style={styles.container}>
+                <View style={styles.headerService}>
+                  <View style={styles.headerServiceIcon}>
+                    {serviceData.svg}
                   </View>
-                  <View style={styles.modalViewDescription}>
-                    <View style={styles.modalViewDescriptionIcon}>
-                      <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
-                    </View>
-                      <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder a la busqueda por geolocalización debes activar tu gps</Text>
-                  </View>
-                  <View style={styles.modalViewActions}>
-                    <View>
-                      <Button
-                        onPress={() => this.setState({showModal:false})}
-                        // style={{marginBottom:'5%'}}
-                        >
-                        <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>Volver</Text>
-                      </Button>
-                    </View>
+                  <View style={styles.headerServiceTitleContainer}>
+                    <Text style={styles.headerServiceTitle}>{serviceData.title.toUpperCase()}</Text>
                   </View>
                 </View>
-               </View>
-              </Modal>
-            </View>
+                <View style={styles.infoContainer}>
+                  <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
+                </View>
+                <View style={styles.inputContainer}>
+                  <View style={styles.containerSearchCity}>
+                    <Icon name="md-search" style={{fontSize: 30, color: '#FFFFFF'}}/>
+                    <TextInput
+                      multiline={true}
+                      style={styles.textInput}
+                      onChangeText={(text) => this.setState({textInput:text, itemSelected: null}, this._filterList)}
+                      value={this.state.textInput}
+                      placeholder={I18n.t("search_department_description", {locale: this.props.lang})}
+                      underlineColorAndroid='rgba(0,0,0,0)'
+                      // onSubmitEditing={ () => alert('buscar')}
+                      onFocus={() => {if(this.state.itemSelected === null) this._isInputFocus(true)}}
+                      // onBlur={() => this._isInputFocus(false)}
+                    />
+                  </View>
+                </View>
+                {this._renderListResults()}
+                    <TouchableHighlight
+                      onPress={this._sendToInfoCountryGEOLOCATE}
+                      style={{borderRadius: 5, marginTop: '2.5%'}}
+                      activeOpacity={0.5}
+                      underlayColor="#e6334c"
+                      >
+                      <View style={styles.containerGeolocation}>
+                        <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
+                      </View>
+                    </TouchableHighlight>
+                <Modal
+                  animationType={"fade"}
+                  transparent={true}
+                  visible={this.state.showModal}
+                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  >
+                 <View style={styles.modalContainer}>
+                  <View style={styles.modalView}>
+                    <View style={styles.modalViewTitle}>
+                      <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.lang})}</Text>
+                    </View>
+                    <View style={styles.modalViewDescription}>
+                      <View style={styles.modalViewDescriptionIcon}>
+                        <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
+                      </View>
+                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("search_gps_popup_content", {locale: this.props.lang})}</Text>
+                    </View>
+                    <View style={styles.modalViewActions}>
+                      <View>
+                        <Button
+                          onPress={() => this.setState({showModal:false})}
+                          // style={{marginBottom:'5%'}}
+                          >
+                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t("back_label_button", {locale: this.props.lang})}</Text>
+                        </Button>
+                      </View>
+                    </View>
+                  </View>
+                 </View>
+                </Modal>
+                <Modal
+                  animationType={"fade"}
+                  transparent={true}
+                  visible={this.state.showModalGPS}
+                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  >
+                 <View style={styles.modalContainer}>
+                   <View style={styles.modalView}>
+                     <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.lang})}</Text>
+                     <Spinner color='#e6334c'/>
+                   </View>
+                 </View>
+                </Modal>
+              </View>
+            </TouchableOpacity>
           </Content>
         </Container>
       </StyleProvider>

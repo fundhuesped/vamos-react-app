@@ -33,7 +33,8 @@ export default class SearchForGeolocation extends React.Component {
   componentDidMount = () => {
     console.log('MOUNT ', this.props);
     // setTimeout(() => { this.setState({loaded:true}) }, 1000);
-    if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true, address:this.props.address})
+    if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true})
+    this.setState({address:this.props.address})
   }
 
   componentWillReceiveProps = (nextProps) =>{
@@ -90,8 +91,8 @@ export default class SearchForGeolocation extends React.Component {
     this.props.navigation.dispatch(resetAction)
   }
 
-
   render() {
+
     let serviceData = getServiceData(this.props.serviceTypeData, width/10)
     let location ={
       pais: this.state.address,
@@ -159,6 +160,11 @@ export default class SearchForGeolocation extends React.Component {
                   {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
                 </View>
               ) : (null)}
+              {(this.props.serviceTypeData === TEEN) ? (
+                <View style={styles.infoContainer}>
+                  <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
+                </View>
+              ) : (null)}
               {(this.props.serviceTypeData !== TEEN) ? (
                 <TouchableHighlight
                   onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
@@ -210,13 +216,13 @@ export default class SearchForGeolocation extends React.Component {
                <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
                   <View style={styles.modalViewTitle}>
-                    <Text style={{fontWeight:'bold',fontSize:16}}>SIN CONEXIÓN</Text>
+                    <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("rate_popup_title", {locale: this.props.lang})}</Text>
                   </View>
                   <View style={styles.modalViewDescription}>
                     <View style={styles.modalViewDescriptionIcon}>
                       <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                     </View>
-                      <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>Para acceder al mapa debes estar conectado a una red wifi o mediante datos</Text>
+                      <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("map_popup_content", {locale: this.props.lang})}</Text>
                   </View>
                   <View style={styles.modalViewActions}>
                     <View>
@@ -224,7 +230,7 @@ export default class SearchForGeolocation extends React.Component {
                         onPress={() => this.setState({showModal:false})}
                         // style={{marginBottom:'5%'}}
                         >
-                        <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>Volver</Text>
+                        <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t("back_label_button", {locale: this.props.lang})}</Text>
                       </Button>
                     </View>
                   </View>
@@ -303,6 +309,14 @@ const styles = StyleSheet.create({
   isTeenContainer:{
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  infoContainer:{
+    marginTop: '2.5%'
+  },
+  infoContainerText:{
+    fontSize: 12,
+    color: "#655E5E",
+    textAlign: 'left'
   },
   modalContainer:{
     flex: 1,

@@ -69,7 +69,7 @@ export const getGralTextandILEForCountry = (country) =>{
     case "AW":
       {
         ILEService = false;
-        asocciationImageUrl =  ''
+        asocciationImageUrl =  require('../../assets/images/countryLogos/AW.jpg')
       }
       break;
     case "BB":
@@ -105,7 +105,7 @@ export const getGralTextandILEForCountry = (country) =>{
     case "CW":
       {
         ILEService = false;
-        asocciationImageUrl =  ''
+        asocciationImageUrl =  require('../../assets/images/countryLogos/CW.jpg')
       }
       break;
     case "DM":
@@ -302,13 +302,13 @@ export const getServiceData = (service, size) => {
         svg:<SVGTeenIcon height={size}
         width={size}/>,
         title: I18n.t("friendly_service_label", {locale: store.getState().ui.lang}),
-        subtitle: ""
+        subtitle: I18n.t("adol_desc_short", {locale: store.getState().ui.lang})
       }
       break;
     case NEARBY:
       serviceData = {
         svg:<Icon name='ios-pin' style={{fontSize: size, color:'#e6334c'}}/>,
-        title: "CERCANOS",
+        title: I18n.t("nearby", {locale: store.getState().ui.lang}).toUpperCase(),
         subtitle: ""
       }
       break;

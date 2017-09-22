@@ -40,7 +40,7 @@
       <!-- BEGIN GOOGLE MAPS CONFIG -->
       <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCRp8hQPPguJURPqyx0ptSzy4L5vU6AUhU"/>
+        android:value="AIzaSyCjb5c-5XvzhvdMXCjIjNaK-Zdh-L_qVmM"/>
       <!-- END GOOGLE MAPS CONFIG -->
     </application>
 

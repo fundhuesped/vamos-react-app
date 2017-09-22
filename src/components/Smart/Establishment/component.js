@@ -15,89 +15,6 @@ function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
 }
 
-let commentsAvailable = [
-  {
-    comentario: "",
-    establecimiento: "Centro Regional De Referencia Dr Ramon Carrillo",
-    que_busca: "Condones (preservativos)",
-    voto: 4
-  },
-  {
-    comentario: "",
-    establecimiento: "Centro Regional De Referencia Dr Ramon Carrillo",
-    que_busca: "Condones (preservativos)",
-    voto: 10
-  },
-  {
-    comentario: "Comentario super largo bien largo, largazooooooooooooooooooooooooooo viste",
-    establecimiento: "Centro Regional De Referencia Dr Ramon Carrillo",
-    que_busca: "Condones (preservativos)",
-    voto: 6
-  },
-]
-
-let establishmentData = {
-  distance: 1.3,
-  placeData:{
-    establecimiento: "establecimiento super largo de nombre super mas largo que estan largo ",
-    calle: 'calle bastante larga como para ser recontra larga',
-    altura: 2000,
-    rateReal: 7.5,
-    // rateReal: 0
-    responsable_distrib: 'Algun nombre fancy super largoo capaaz',
-    horario_distrib: "Lun a Vie de 7 a 13 hs.",
-    tel_distrib: "(0343) 4208825",
-    // mail_distrib: 'algo@otra.cosa',
-    mail_distrib: "",
-    web_distrib: 'establecimiento.com.ar',
-    cantidad_votos: 100
-
-  }
-}
-
-const servicesAvailable = [
-  {
-    title: 'condones',
-    content: {
-      "id": 6,
-      "name": "Condones",
-      "shortname": "condones"
-    },
-  },
-  {
-    title: 'prueba',
-    content: {
-      "id": 5,
-      "name": "Prueba VIH",
-      "shortname": "prueba"
-    },
-  },
-  {
-    title: 'ILE',
-    content: {
-      "id": 2,
-      "name": "Interrupción Legal de Embarazo",
-      "shortname": "ILE"
-    },
-  },
-  {
-    title: 'DC',
-    content: {
-      "id": 2,
-      "name": "Interrupción Legal de Embarazo",
-      "shortname": "DC"
-    },
-  },
-  {
-    title: 'MAC',
-    content: {
-      "id": 2,
-      "name": "Interrupción Legal de Embarazo",
-      "shortname": "MAC"
-    },
-  },
-]
-
 class Establishment extends React.Component {
 
   constructor(){
@@ -110,7 +27,6 @@ class Establishment extends React.Component {
 
   componentDidMount = () =>{
     this._getEstablishment()
-    console.log(this.props.navigation.state.params);
   }
 
   _getEstablishment = async () =>{
@@ -119,7 +35,7 @@ class Establishment extends React.Component {
     try {
       let responseComments = await fetch(urlComments)
       let responseCommentsJson = await responseComments.json();
-      console.log(responseCommentsJson);
+      // alert('comments'+" "+responseCommentsJson.length);
       // this.setState({comments:responseCommentsJson})
       let urlServices = `https://ippf-staging.com.ar/api/v2/service/getPlaceServices/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
       // let urlServices = `https://ippf-staging.com.ar/api/v2/service/getPlaceServices/106122`
@@ -137,15 +53,15 @@ class Establishment extends React.Component {
             }
           })
         })
-        console.log(services);
+        // alert('services'+" "+services.length);
         this.setState({services:services, comments:responseCommentsJson})
 
       } catch(error) {
-        console.log(error.message);
+          // alert('services error'+" "+error+" "+error.message);
         this.setState({services:[], comments:[]})
       }
     } catch(error) {
-      console.log(error);
+      // alert('comments error'+" "+error+" "+error.message);
       this.setState({services:[], comments:[]})
     }
 

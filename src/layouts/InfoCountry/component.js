@@ -45,7 +45,7 @@ export default class InfoCountry extends React.Component {
         style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
         onPress={this._goToSearch}
         >
-        <Text style={{color: "#e6334c", flexWrap:'wrap'}}>CONTINUAR CON LA BÚSQUEDA</Text>
+        <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
       </Button>
     )
     else {
@@ -56,7 +56,7 @@ export default class InfoCountry extends React.Component {
           style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
           onPress={this._goToSearch}
           >
-          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>CONTINUAR CON LA BÚSQUEDA</Text>
+          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
         </Button>
       )
       else button = (
@@ -66,7 +66,7 @@ export default class InfoCountry extends React.Component {
           style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
           onPress={() => this.props.navigation.goBack()}
           >
-          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>REALIZAR OTRA BÚSQUEDA</Text>
+          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("make_another_search_label_button", {locale: this.props.lang})}</Text>
         </Button>
       )
     }
@@ -86,13 +86,14 @@ export default class InfoCountry extends React.Component {
         </Text>
       )
     }else {
+      let url = textString[1]
       textComponent = (
         <View>
           <Text>
             {textString[0]}
           </Text>
           <Text
-            onPress={() => this._goURL(`https://www${textString[1]}`)}
+            onPress={() => this._goURL(`https://www${url}`)}
             style={{color: "#e6334c"}}
             >
             {`www${textString[1]}`}
@@ -101,6 +102,7 @@ export default class InfoCountry extends React.Component {
 
       )
     }
+
     return textComponent
   }
 
@@ -125,12 +127,10 @@ export default class InfoCountry extends React.Component {
   }
 
   _renderGralText = (service, ILECondition, text) =>{
-    let gralText;
+    let gralText = this._handleLinks(text)
 
-    if(service !== "LPI") gralText = this._handleLinks(text)
-    else {
-      if(ILECondition) gralText = this._handleLinks(text)
-      else gralText = null
+    if(service === "LPI") {
+      if(!ILECondition) gralText = null
     }
 
     return gralText;
@@ -157,7 +157,6 @@ export default class InfoCountry extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     let gralTextandILEForCountry = getGralTextandILEForCountry(this.props.country)
     return (
       <StyleProvider style={getTheme(platform)}>
@@ -202,7 +201,9 @@ export default class InfoCountry extends React.Component {
               >
               <View style={styles.container}>
                 <View style={styles.infoCountryHeader}>
-                  <Text style={{fontSize: 20, color: '#e6334c'}}>{`${I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()}`}</Text>
+                  <View style={{marginBottom: '2.5%'}}>
+                    <Text style={{fontSize: 22, color: '#e6334c'}}>{`${I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()}`}</Text>
+                  </View>
                   { this._renderAssociationImage(this.props.service, gralTextandILEForCountry.ILEService, gralTextandILEForCountry.asocciationImageUrl)}
                 </View>
                 <View style={styles.infoCountryBody}>
