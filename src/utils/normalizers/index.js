@@ -120,7 +120,7 @@ export const normalizePlace = (place) => {
     responsable_dc: place.responsable_dc ? String(place.responsable_dc) : "",
     web_dc: place.web_dc ? String(place.web_dc) : "",
     ubicacion_dc: place.ubicacion_dc ? String(place.ubicacion_dc) : "",
-    observaciones_dc: place.observaciones_dc ? String(place.observaciones_dc) : "",
+    comentarios_dc: place.comentarios_dc ? String(place.comentarios_dc) : "",
     tel_distrib: place.tel_distrib ? String(place.tel_distrib) : "",
     mail_distrib: place.mail_distrib ? String(place.mail_distrib) : "",
     horario_distrib: place.horario_distrib ? String(place.horario_distrib) : "",

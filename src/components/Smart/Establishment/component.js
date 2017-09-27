@@ -4,7 +4,7 @@ import {Text,Button,View} from 'react-native'
 
 import {connect} from 'react-redux'
 import {selectLookingFor, setLang} from '../../../constants/actions/index.js'
-
+import {URL} from '../../../config/HTTP/index.js'
 import DummyEstablishment from '../../../layouts/Establishment/component.js'
 
 import I18n from '../../../config/i18n/index.js';
@@ -21,7 +21,8 @@ class Establishment extends React.Component {
     super();
     this.state = {
       comments: null,
-      services: null
+      services: null,
+      averageVote: null,
     }
   }
 
@@ -29,16 +30,17 @@ class Establishment extends React.Component {
     this._getEstablishment()
   }
 
+  _reRenderComponent = () =>{
+    this.setState({comments:null,services:null})
+    this._getEstablishment();
+  }
+
   _getEstablishment = async () =>{
-    let urlComments = `https://ippf-staging.com.ar/api/v2/evaluacion/comentarios/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
-    // let urlComments = `https://ippf-staging.com.ar/api/v2/evaluacion/comentarios/106122`
+    let urlComments = `${URL}/api/v2/evaluacion/comentarios/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
     try {
       let responseComments = await fetch(urlComments)
       let responseCommentsJson = await responseComments.json();
-      // alert('comments'+" "+responseCommentsJson.length);
-      // this.setState({comments:responseCommentsJson})
-      let urlServices = `https://ippf-staging.com.ar/api/v2/service/getPlaceServices/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
-      // let urlServices = `https://ippf-staging.com.ar/api/v2/service/getPlaceServices/106122`
+      let urlServices = `${URL}/api/v2/service/getPlaceServices/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
       try {
         let responseServices = await fetch(urlServices)
         let responseServicesJson = await responseServices.json();
@@ -53,8 +55,14 @@ class Establishment extends React.Component {
             }
           })
         })
-        // alert('services'+" "+services.length);
-        this.setState({services:services, comments:responseCommentsJson})
+        let urlAverageVote = `${URL}/api/v2/evaluacion/promedio/${this.props.navigation.state.params.establishmentData.placeData.placeId}`
+        try {
+          let responseAverageVote = await fetch(urlAverageVote)
+          let responseAverageVoteJson = await responseAverageVote.json();
+          this.setState({services:services, comments:responseCommentsJson, averageVote:responseAverageVoteJson})
+        } catch (error) {
+          this.setState({services:[], comments:[]})
+        }
 
       } catch(error) {
           // alert('services error'+" "+error+" "+error.message);
@@ -75,9 +83,13 @@ class Establishment extends React.Component {
     <DummyEstablishment
       servicesAvailable={this.state.services}
       commentsAvailable={this.state.comments}
+      averageVote={this.state.averageVote}
       navigation={this.props.navigation}
       establishmentData={this.props.navigation.state.params.establishmentData}
-      lang={this.props.ui.lang}/>
+      lang={this.props.ui.lang}
+      lookingFor={this.props.ui.lookingFor}
+      reRenderFunction={this._reRenderComponent}
+    />
     : <ProgressCircle downloading={false}/>)
   }
 }

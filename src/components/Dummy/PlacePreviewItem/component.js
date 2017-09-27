@@ -190,7 +190,11 @@ export default class PlacePreviewItem extends React.PureComponent {
               <View style={[styles.bodyLocation, styles.marginSeparator]}>
                 <View style={[styles.bodyLocationAddress, styles.rowAlign]}>
                   <Icon name='ios-pin' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                  <Text numberOfLines={1} style={[styles.subtitle, styles.fontColor]}>{`${this.props.data.placeData.calle} ${this.props.data.placeData.altura}`}</Text>
+                  {(this.props.data.placeData.cruce !== "") ? (
+                    <Text numberOfLines={1} style={[styles.subtitle, styles.fontColor]}>{I18n.t("direcion_position_label", {calle: this.props.data.placeData.calle, altura: this.props.data.placeData.altura, piso: this.props.data.placeData.piso_dpto, interseccion: this.props.data.placeData.cruce  ,locale: store.getState().ui.lang})}</Text>
+                  ) : (
+                    <Text numberOfLines={1} style={[styles.subtitle, styles.fontColor]}>{`${this.props.data.placeData.calle} ${this.props.data.placeData.altura} ${this.props.data.placeData.piso_dpto}`}</Text>
+                  )}
                 </View>
                 {(this.props.data.distance !== undefined) ? (
                   <View style={[styles.bodyLocationDistance, styles.rowAlign]}>

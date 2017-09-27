@@ -14,12 +14,12 @@ import I18n from '../config/i18n';
 import { _createStore, _getStore, } from '../storage';
 import {updateStoreDB,updateStoreUI, startFetching, setLang} from '../constants/actions'
 
+import {tracker} from '../utils/analytics/index.js'
+
 // import DeviceInfo from 'react-native-device-info';
 /********************************************************/
 /* localStorage : Persisting fetched data on local DB   */
 /********************************************************/
-
-let tracker = new GoogleAnalyticsTracker(GA_TRACKING_ID);
 
 // gets the current screen from navigation state
 _getCurrentRouteName = (navigationState) => {
@@ -50,38 +50,31 @@ export default class App extends React.Component {
     this.state = { rehydrated: false }
   }
 
-  componentWillMount = () => {
-
+  componentDidMount = () => {
     let storeRealm = _getStore("1");
     if(storeRealm === undefined) {
-      console.log('creando store');
       _createStore('1')
-      // alert('creando store');
-      store.dispatch(setLang(I18n.currentLocale()))
-      // alert(I18n.currentLocale())
+      let langDefault = I18n.currentLocale(),
+          lang;
+      if(langDefault.includes('es')) lang = "es-ES"
+      else lang = "en-US"
+      store.dispatch(setLang(lang))
     }
     else {
-      // alert('cargando store '+storeRealm.places.length);
-      console.log('cargando store '+storeRealm.places.length);
-      // store.dispatch(updateStoreDB(Array.from(storeRealm.places)))
-      console.log(Array.from(storeRealm.cities))
       store.dispatch(updateStoreDB({places:storeRealm.places, createdTimestamp:storeRealm.createdTimestamp, cities:storeRealm.cities}))
       store.dispatch(updateStoreUI(storeRealm.lang))
-      // alert(I18n.currentLocale())
 
     }
-  }
-
-  componentDidMount = () => setTimeout( () => {
+    setTimeout( () => {
     this.setState({rehydrated: true})
   }, 10);
+}
 
   componentWillUnmount = () =>{
     console.log('unmount');
   }
 
   render() {
-    // return <ProgressCircle/>
     return (this.state.rehydrated) ? (
       <Provider store={store}>
           <Root>
@@ -90,11 +83,7 @@ export default class App extends React.Component {
                 const currentScreen = _getCurrentRouteName(currentState);
                 const prevScreen = _getCurrentRouteName(prevState);
                 if (prevScreen !== currentScreen) {
-                  // console.log(tracker);
-                  // tracker.trackScreenView(currentScreen);
-                  // tracker.trackEvent('Customer', 'New');
-                  //
-                  // console.log(DeviceInfo.getUserAgent());
+                  tracker.trackScreenView(currentScreen);
                 }
               }}
             />
@@ -103,23 +92,3 @@ export default class App extends React.Component {
     ): <ProgressCircle firstFetch={false} downloading={false}/>
   }
 }
-
-// export default() => (
-//   <Provider store={store}>
-//       <Root>
-//         <AppNavigator
-//           onNavigationStateChange={(prevState, currentState) => {
-//             const currentScreen = _getCurrentRouteName(currentState);
-//             const prevScreen = _getCurrentRouteName(prevState);
-//             if (prevScreen !== currentScreen) {
-//               // console.log(tracker);
-//               tracker.trackScreenView(currentScreen);
-//               // tracker.trackEvent('Customer', 'New');
-//               //
-//               // console.log(DeviceInfo.getUserAgent());
-//             }
-//           }}
-//         />
-//       </Root>
-//   </Provider>
-// )

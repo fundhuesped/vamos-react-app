@@ -9,7 +9,8 @@ import {
   ScrollView,
   Animated,
   Image,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
@@ -106,20 +107,46 @@ export default class Map extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'})
       ]
     })
     this.props.navigation.dispatch(resetAction)
   }
 
+  _onPressZoomIn = () => {
+       region = {
+           latitude: this.state.region.latitude,
+           longitude: this.state.region.longitude,
+           latitudeDelta: this.state.region.latitudeDelta / 10,
+           longitudeDelta: this.state.region.longitudeDelta / 10
+           }
+           this.setState({region:{
+             latitude: region.latitude,
+             longitude: region.longitude,
+             latitudeDelta: region.latitudeDelta,
+             longitudeDelta: region.longitudeDelta
+           }})
+       this.map.animateToRegion(region, 100);
+   }
+
+   _onPressZoomOut = () => {
+      region = {
+        latitude: this.state.region.latitude,
+        longitude: this.state.region.longitude,
+        latitudeDelta: this.state.region.latitudeDelta * 10,
+        longitudeDelta: this.state.region.longitudeDelta * 10
+      }
+      this.setState({region:{
+        latitude: region.latitude,
+        longitude: region.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta
+      }})
+       this.map.animateToRegion(region, 100);
+   }
+
 
   render() {
-    console.log(this.state.region.latitude);
-    console.log(this.state.region.longitude);
-    console.log(this.state.region.latitudeDelta);
-    console.log(this.state.region.longitudeDelta);
-    console.log(this.state.location);
-    console.log(this.state.errorMessage);
 
     const interpolations = this.props.store.map((marker, index) => {
         const inputRange = [
@@ -152,7 +179,12 @@ export default class Map extends React.Component {
                 >
                 <Button
                   transparent
-                  onPress={()=>{this.props.navigation.goBack()}}
+                  onPress={() =>{
+                    if(typeof this.props.cleanState === 'function'){
+                        this.props.cleanState();
+                    }
+                    this.props.navigation.goBack()
+                  }}
                   >
                   <Icon name="ios-arrow-back"/>
                 </Button>
@@ -175,6 +207,7 @@ export default class Map extends React.Component {
               ref={map => this.map = map}
               initialRegion={this.state.region}
               style={styles.container}
+              // liteMode={true}
               >
                 {this.props.store.map((marker, index) => {
                   const scaleStyle = {
@@ -230,6 +263,28 @@ export default class Map extends React.Component {
                   </View>
                 ))}
               </Animated.ScrollView>
+              <View style={{position: 'absolute', top: 90, left: 20, backgroundColor: 'rgba(0,0,0,0.3)', width:30, alignItems:'center', borderRadius:5}}>
+                <TouchableOpacity
+                      style={styles.zoomIn}
+                      onPress={()=>{this._onPressZoomIn()}}
+                      >
+                      <Icon
+                          name="ios-add-outline"
+                          style={styles.icon}
+                          size={30}
+                          />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                      style={styles.zoomOut}
+                      onPress={()=>{this._onPressZoomOut()}}
+                      >
+                      <Icon
+                          name="ios-remove-outline"
+                          style={styles.icon}
+                          size={30}
+                          />
+                  </TouchableOpacity>
+              </View>
           </Container>
         </StyleProvider>
       ) : (<ProgressCircle downloading={false}/>)

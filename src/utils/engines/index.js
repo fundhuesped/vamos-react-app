@@ -323,9 +323,9 @@ export const getServiceData = (service, size) => {
 
 export class Engine {
 
-  constructor(store, lookingFor) {
-    this.Store = store ;
-    this.Data = [];
+  constructor(Store, lookingFor) {
+    this.Store = Store ;
+    this.Data = store.getState().ui.resultList;
     // this.coordsOrigin = coords;
     this.Service = lookingFor;
 
@@ -333,48 +333,62 @@ export class Engine {
   }
 
   searchForGeolocation = (coordsOrigin) => {
-    console.log('SEARCHENGINE GEOLOCATE');
-    // alert(this.Store.length)
-    // let coordsOriginMock = {
-    //   latitude: -34.4860687255859,
-    //   longitude: -58.7250442504883
-    // };
+
     let filterData = Object.values(this.Store).filter((place) => {
-      // let distance = HaversineFormula(place, coordsOriginMock);
-      let distance = HaversineFormula(place, coordsOrigin);
+
       switch (this.Service) {
         case CON:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.condones) return place;
+            if(place.condones){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
+
             break;
           }
         case VIH:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.prueba) return place;
+            if(place.prueba){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
             break;
           }
         case SSR:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.ssr) return place;
+            if(place.ssr){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
             break;
           }
         case MAC:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.mac) return place;
+            if(place.mac){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
             break;
           }
         case LPI:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.ile) return place;
+            if(place.ile){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
             break;
           }
         case DC:
           {
-            if (distance <= DISTANCE_KM && distance !== 0 && place.dc) return place;
+            if(place.dc){
+              let distance = HaversineFormula(place, coordsOrigin);
+              if (distance <= DISTANCE_KM && distance !== 0) return place;
+            }
             break;
           }
         case NEARBY:
           {
+            let distance = HaversineFormula(place, coordsOrigin);
             if (distance <= DISTANCE_KM && distance !== 0) return place;
             break;
           }
@@ -393,20 +407,15 @@ export class Engine {
     console.log(filterData);
     this.Data = filterData;
     // alert(this.Store.length)
-    this.sortEngine(DISTANCE);
+    this.sortEngine("ALL");
   }
 
   searchForTeen = (coordsOrigin) =>{
-    console.log('SEARCHENGINE TEEN');
-    // let coordsOriginMock = {
-    //   latitude: -34.4860687255859,
-    //   longitude: -58.7250442504883
-    // };
     let filterData = Object.values(this.Store).filter((place) => {
-      // let distance = HaversineFormula(place, coordsOriginMock);
-      let distance = HaversineFormula(place, coordsOrigin);
-
-      if (distance <= DISTANCE_KM && distance !== 0 && isTeen(place)) return place;
+      if(isTeen(place)){
+        let distance = HaversineFormula(place, coordsOrigin);
+        if (distance <= DISTANCE_KM && distance !== 0) return place;
+      }
 
     }).map( (place) =>{
       let distance = HaversineFormula(place, coordsOrigin);
@@ -416,22 +425,18 @@ export class Engine {
       }
     })
 
-    console.log(filterData);
     this.Data = filterData;
-    // alert(this.Data.length)
-    this.sortEngine(DISTANCE);
+    this.sortEngine("ALL");
   }
 
   searchForAutocomplete = (location) =>{
-    console.log('SEARCHENGINE AUTOCOMPLETE');
 
     let filterData;
-
     filterData = Object.values(this.Store).filter((place) => {
       switch (this.Service) {
         case CON:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.condones) return place;
             }
             else {
@@ -441,7 +446,7 @@ export class Engine {
           }
         case VIH:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.prueba) return place;
             }
             else {
@@ -451,7 +456,7 @@ export class Engine {
           }
         case SSR:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.ssr) return place;
             }
             else {
@@ -461,7 +466,7 @@ export class Engine {
           }
         case MAC:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.mac) return place;
             }
             else {
@@ -471,7 +476,7 @@ export class Engine {
           }
         case LPI:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.ile) return place;
             }
             else {
@@ -481,7 +486,7 @@ export class Engine {
           }
         case DC:
           {
-            if(location.idPartido !== undefined){
+            if(location.idPartido){
               if (place.idCiudad === location.idObject && place.dc) return place;
             }
             else {
@@ -501,12 +506,11 @@ export class Engine {
     console.log(filterData);
     this.Data = filterData;
     // alert(this.Data.length)
-    store.dispatch(setResultList(filterData))
+    this.sortEngine("ALL");
   }
 
   sortEngine = (sortType, value) =>{
     if(sortType === RATE) {
-      console.log('filtrar por rate');
       let ponderedDataset = this.Data.sort((a, b) => {
         return b.placeData.rateReal - a.placeData.rateReal
       })
@@ -514,17 +518,19 @@ export class Engine {
       store.dispatch(setResultList(ponderedDataset))
     }
     else if(sortType === DISTANCE) {
-      console.log('filtrar por distancia');
       let ponderedDataset = this.Data.sort((a, b) => {
         return a.distance - b.distance
       })
 
-      console.log(ponderedDataset);
       store.dispatch(setResultList(ponderedDataset))
 
     }
+    else if(sortType === "ALL") {
+      let ponderedDataset = this.Data.sort((a, b) => a.placeData.establecimiento.toLowerCase().localeCompare(b.placeData.establecimiento.toLowerCase()))
+
+      store.dispatch(setResultList(ponderedDataset))
+    }
     else if(sortType === TEEN) {
-      console.log('filtro por teen');
       let filterForTeen = []
       if(value) {
 
@@ -534,14 +540,12 @@ export class Engine {
         filterForTeen = this.Data;
       }
 
-      console.log(filterForTeen);
       store.dispatch(setResultList(filterForTeen))
     }
     else console.log('cualquiera');
   }
 
   cleanResultList = () =>{
-    console.log('CLEAN RESULTLIST');
     store.dispatch(setResultList([{empty:true}]))
   }
 }

@@ -7,6 +7,7 @@ import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
+import {URL} from '../../config/HTTP/index.js';
 
 import {
   CON,
@@ -70,7 +71,7 @@ export default class Evaluations extends React.Component {
       let serviceSplit = this.state.service.id.split('/')
 
       try {
-        fetch("https://ippf-staging.com.ar/api/v2/evaluacion/votar",
+        fetch(`${URL}/api/v2/evaluacion/votar`,
         {
             headers: {
               'Accept': 'application/json',
@@ -128,7 +129,7 @@ export default class Evaluations extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'})
       ]
     })
     this.props.navigation.dispatch(resetAction)
@@ -145,7 +146,12 @@ export default class Evaluations extends React.Component {
               <Left style={{flex:1}}>
                 <Button
                   transparent
-                  onPress={()=>{this.props.navigation.goBack()}}
+                  onPress={() =>{
+                    if(typeof this.props.reRenderFunction === 'function'){
+                        this.props.cleanState();
+                    }
+                    this.props.navigation.goBack()
+                  }}
                   >
                   <Icon name="ios-arrow-back"/>
                 </Button>
@@ -184,7 +190,13 @@ export default class Evaluations extends React.Component {
                     {/* <Text style={styles.fontColor}>{I18n.t("success_evaluation_title", {locale: this.props.lang})}</Text> */}
                     <View style={{justifyContent:'center', alignItems:'center', paddingVertical:'5%'}}>
                       <TouchableHighlight
-                        onPress={() =>{this.props.navigation.goBack()}}
+                        onPress={() =>{
+                          if(typeof this.props.reRenderFunction === 'function'){
+                              this.props.reRenderFunction();
+                              this.props.cleanState();
+                          }
+                          this.props.navigation.goBack()
+                        }}
                         activeOpacity={0.5}
                         underlayColor="white"
                         style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, borderRadius: 5, height: 45, paddingVertical:'1%', justifyContent:'center', alignItems:'center', paddingHorizontal:20}}
@@ -344,7 +356,12 @@ export default class Evaluations extends React.Component {
                         </View>
                       </TouchableHighlight>
                       <TouchableHighlight
-                        onPress={() =>{this.props.navigation.goBack()}}
+                        onPress={() =>{
+                          if(typeof this.props.reRenderFunction === 'function'){
+                              this.props.cleanState();
+                          }
+                          this.props.navigation.goBack()
+                        }}
                         activeOpacity={0.5}
                         underlayColor="white"
                         style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1, justifyContent:'center', alignItems:'center', borderRadius: 5, height: 45, paddingVertical:'1%'}}
@@ -396,7 +413,9 @@ const styles = StyleSheet.create({
   pickerContainerInvalid:{
     marginTop: '2%',
     borderRadius: 5,
-    backgroundColor:'#e6334c',
+    backgroundColor:'#FFFFFF',
+    borderColor: '#e6334c',
+    borderWidth: 1,
     height: 50,
   },
   commentInput:{

@@ -158,7 +158,7 @@ export default {
   "neighborhood": "Barrio, Ciudad o Localidad",
   "responsable": "Responsable",
   "select_location": "Elegir ubicación",
-  "search_department_description": "Escribe el nombre del Departamento o Partido",
+  "search_department_description": "Ingresa tu barrio, ciudad, partido o departamento",
   "not_found_result_label": "No encontramos resultados...",
   "Mas info en": "Más info en",
   "about_usefull_information": "Información útil",
@@ -496,8 +496,8 @@ export default {
   "ile_trinidadandtobago": "Infórmate sobre salud sexual y reproductiva visitando la página web de FPATT, la asociación miembro de IPPF/RHO en Trinidad y Tobago: www.ttfpa.org",
   "ile_uruguay": "Infórmate sobre salud sexual y reproductiva visitando la página web de IS, la asociación miembro de IPPF/RHO en Uruguay: www.iniciativas.org.uy",
   "ile_venezuela": "Infórmate sobre salud sexual y reproductiva visitando la página web de PLAFAM, la asociación miembro de IPPF/RHO en Venezuela: www.plafam.org.ve",
-  "web_url": "https://ippf-staging.com.ar",
-  "web_url_label": "www.ippf-staging.com.ar",
+  "web_url": "https://vamoslac.org/",
+  "web_url_label": "www.vamoslac.org",
   "intro text": "Vamos es una plataforma colaborativa. Si encuentras un error en los datos o en el funcionamiento de la plataforma envíanos un mensaje.",
   "mundo_antic_resultado": "<Número> lugares de entrega de métodos anticonceptivos en <Ciudad>",
   "mundo_antic_sin_resultado": "No tenemos registrados lugares de entrega de métodos anticonceptivos en <Ciudad>",
@@ -578,5 +578,8 @@ export default {
   "spinner_sending_evaluation_label": "Enviando evaluación",
   "spinner_getting_coordenates_label": "Obteniendo coordenadas",
   "comment_go_for_label": "Fué a buscar:",
-  "close_label_button": "Cerrar"
+  "close_label_button": "Cerrar",
+  search_by_location_title: 'Busca por localización',
+  social_share_text_not_encode: "Usando #VAMOS encontré {{establishment}} en {{nombre_partido}}",
+  direcion_position_label: "{{calle}} {{altura}} {{piso}} y {{interseccion}}"
 };

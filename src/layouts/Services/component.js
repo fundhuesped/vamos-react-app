@@ -12,6 +12,14 @@ import CitiesList from '../../components/Dummy/CitiesList/component.js'
 
 import {getServiceData} from '../../utils/engines/index.js'
 
+import {Engine} from '../../utils/engines'
+
+import {selectSearchEngine, setCurrentLocation} from '../../constants/actions/index.js'
+
+import {TIME_STAMP_GPS_MIN} from '../../config/HTTP/index.js';
+
+import {AUTOCOMPLETE, GEOLOCATE} from '../../constants/action-types/index.js'
+
 import {
   CON,
   VIH,
@@ -41,17 +49,36 @@ export default class Services extends React.Component {
   _sendToInfoCountryGEOLOCATE = () =>{
     this.setState({showModalGPS:true})
     Keyboard.dismiss();
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // alert('gps activado');
-      this._getAddress(position.coords)
-      },
-      (error) => {
-        this.setState({showModal:true,showModalGPS:false})
-        // alert('error yendo a geolocalizacion'+error.message);
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
-    );
+    if(this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined){
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.props.dispatch(setCurrentLocation(position.coords.latitude, position.coords.longitude))
+          this._getAddress(position.coords)
+        },
+        (error) => {
+          this.setState({showModal:true, showModalGPS: false})
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
+      );
+    }
+    else {
+      let currentTime = new Date(),
+          timeStamp = this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp;
+
+      if(currentTime.getTime() - timeStamp.getTime() >= TIME_STAMP_GPS_MIN*60*1000){
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.props.dispatch(setCurrentLocation(position.coords.latitude, position.coords.longitude))
+            this._getAddress(position.coords)
+          },
+          (error) => {
+            this.setState({showModal:false})
+          },
+          { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
+        );
+      }
+      else this._getAddress(this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation)
+    }
   }
 
   _getAddress = async (coords) =>{
@@ -78,36 +105,38 @@ export default class Services extends React.Component {
               if(element.types[0] === "country") country = element.short_name
           });
 
-
           let addressFormated = {
                 formatted_address: responseJson.results[0].formatted_address,
                 address_parts: address
             };
 
-          this._checkCountry(addressFormated, country, coords)
+          this._checkCountry(addressFormated, country)
 
         }
       } catch (e) {
         console.log(e);
-        this._checkCountry(undefined, undefined, coords)
+        this._checkCountry(undefined, undefined)
       }
 
+    this.Engine = new Engine(this.props.db.places.data, this.props.ui.lookingFor);
+    this.props.dispatch(selectSearchEngine(GEOLOCATE))
+    this.Engine.searchForGeolocation(coords);
   }
 
-  _checkCountry = (address, country, coords) =>{
+  _checkCountry = (address, country) =>{
     if(country !== undefined){
       let isMember = true;
       if(country !== "AG" && country !== "AR" && country !== "AW" && country !== "BB" && country !== "BZ" && country !== "BO" && country !== "CL" && country !== "CO" && country !== "CW" && country !== "DM" && country !== "EC" && country !== "SV" && country !== "GD" && country !== "GT" && country !== "GY" && country !== "HT" && country !== "HN" && country !== "JM" && country !== "MX" && country !== "PA" && country !== "PY" && country !== "PE" && country !== "PR" && country !== "DO" && country !== "VC" && country !== "LC" && country !== "SR" && country !== "TT" && country !== "UY" && country !== "VE") isMember = false
 
       if(!isMember) {
-        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords, address: address})})
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{address: address})})
       }
       else {
-        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{coords: coords, country: country})})
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{country: country, address: address})})
       }
     }
     else {
-      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords})})
+      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation')})
     }
   }
 
@@ -115,7 +144,7 @@ export default class Services extends React.Component {
     if(this.state.itemSelected === null) this._isInputFocus(true)
     if(this.state.textInput.length > 1){
       console.log('filtrando');
-      let cities = this.props.cities,
+      let cities = this.props.db.cities,
           filterCities = cities.filter((city) => {
           let cityString,
               departmentString;
@@ -157,7 +186,7 @@ export default class Services extends React.Component {
               textInputString = textInputString.replace(/[çćč]/g,"c")
 
           if(cityString.includes(textInputString) || departmentString.includes(textInputString)) return city;
-      });
+      }).reverse();
 
       this.setState({filterCities})
       console.log(filterCities);
@@ -181,8 +210,11 @@ export default class Services extends React.Component {
   _sendToInfoCountryAUTOCOMPLETE = () =>{
     setTimeout( () => {
       this.setState({textInput: ""})
+      this.Engine = new Engine(this.props.db.places.data, this.props.ui.lookingFor);
+      this.props.dispatch(selectSearchEngine(AUTOCOMPLETE))
+      this.Engine.searchForAutocomplete(this.state.itemSelected);
       this.props.navigation.navigate('InfoCountry',{cityDepartment: this.state.itemSelected})
-    }, 250);
+    }, 10);
   }
 
   _renderListResults = () =>{
@@ -208,7 +240,7 @@ export default class Services extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'}),
       ]
     })
     this.props.navigation.dispatch(resetAction)
@@ -281,7 +313,7 @@ export default class Services extends React.Component {
                       style={styles.textInput}
                       onChangeText={(text) => this.setState({textInput:text, itemSelected: null}, this._filterList)}
                       value={this.state.textInput}
-                      placeholder={I18n.t("search_department_description", {locale: this.props.lang})}
+                      placeholder={I18n.t("search_department_description", {locale: this.props.ui.lang})}
                       underlineColorAndroid='rgba(0,0,0,0)'
                       // onSubmitEditing={ () => alert('buscar')}
                       onFocus={() => {if(this.state.itemSelected === null) this._isInputFocus(true)}}
@@ -298,6 +330,9 @@ export default class Services extends React.Component {
                       >
                       <View style={styles.containerGeolocation}>
                         <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
+                        <View style={{marginLeft: '7%'}}>
+                          <Text style={{color: 'rgba(0,0,0,0.4)'}}>{I18n.t("search_by_location_title", {locale: this.props.ui.lang})}</Text>
+                        </View>
                       </View>
                     </TouchableHighlight>
                 <Modal
@@ -309,13 +344,13 @@ export default class Services extends React.Component {
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>
                     <View style={styles.modalViewTitle}>
-                      <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.lang})}</Text>
+                      <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.ui.lang})}</Text>
                     </View>
                     <View style={styles.modalViewDescription}>
                       <View style={styles.modalViewDescriptionIcon}>
                         <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
                       </View>
-                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("search_gps_popup_content", {locale: this.props.lang})}</Text>
+                        <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("search_gps_popup_content", {locale: this.props.ui.lang})}</Text>
                     </View>
                     <View style={styles.modalViewActions}>
                       <View>
@@ -323,7 +358,7 @@ export default class Services extends React.Component {
                           onPress={() => this.setState({showModal:false})}
                           // style={{marginBottom:'5%'}}
                           >
-                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t("back_label_button", {locale: this.props.lang})}</Text>
+                          <Text style={{color:'#FFFFFF',marginHorizontal: '20%'}}>{I18n.t("back_label_button", {locale: this.props.ui.lang})}</Text>
                         </Button>
                       </View>
                     </View>
@@ -338,7 +373,7 @@ export default class Services extends React.Component {
                   >
                  <View style={styles.modalContainer}>
                    <View style={styles.modalView}>
-                     <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.lang})}</Text>
+                     <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.ui.lang})}</Text>
                      <Spinner color='#e6334c'/>
                    </View>
                  </View>
@@ -415,8 +450,9 @@ const styles = StyleSheet.create({
     height: 55,
     paddingVertical: '2.5%',
     paddingLeft: '5%',
-    justifyContent: 'center',
-    backgroundColor: '#e6334c'
+    alignItems: 'center',
+    backgroundColor: '#e6334c',
+    flexDirection: 'row',
   },
   flatlistContainer:{
     height: 200,

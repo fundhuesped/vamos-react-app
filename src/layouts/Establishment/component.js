@@ -13,6 +13,7 @@ import SVGWhatsappIcon from '../../components/Dummy/SVG/WhatsappIcon/component.j
 import Accordion from 'react-native-collapsible/Accordion';
 
 import I18n from '../../config/i18n/index.js';
+import {URL} from '../../config/HTTP/index.js'
 
 import {getServiceData} from '../../utils/engines/index.js'
 
@@ -36,7 +37,8 @@ export default class Establishment extends React.Component {
     super();
     this.state = {
       showModal: false,
-      modalText: ''
+      modalText: '',
+      disabledButton: false,
     }
   }
 
@@ -116,7 +118,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_testeo,
             email: data.placeData.mail_testeo,
             web: data.placeData.web_testeo,
-            phone: data.placeData.tel_testeo
+            phone: data.placeData.tel_testeo,
+            infoPrueba: data.placeData.observaciones_testeo
           }
         }
           break;
@@ -136,7 +139,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_dc,
             email: data.placeData.mail_dc,
             web: data.placeData.web_dc,
-            phone: data.placeData.tel_dc
+            phone: data.placeData.tel_dc,
+            infoDC: data.placeData.comentarios_dc
           }
         }
           break;
@@ -209,6 +213,24 @@ export default class Establishment extends React.Component {
                 style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
                 onPress={() => this._goURL(`tel:${service.phone}`)}
                 >{service.phone}</Text>
+            </View>
+          ): null
+          }
+          {(service.infoDC !== "" && service.infoDC !== undefined) ? (
+            <View style={styles.serviceAditionalInfoItem}>
+              <Icon name='ios-information-circle-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                >{service.infoDC}</Text>
+            </View>
+          ): null
+          }
+          {(service.infoPrueba !== "" && service.infoPrueba !== undefined) ? (
+            <View style={styles.serviceAditionalInfoItem}>
+              <Icon name='ios-information-circle-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                >{service.infoPrueba}</Text>
             </View>
           ): null
           }
@@ -287,11 +309,12 @@ export default class Establishment extends React.Component {
     }
 
   _checkConection = (feature) =>{
+    this.setState({disabledButton: true})
     NetInfo.isConnected.fetch().then(isConnected => {
       let conection = isConnected ? 'online' : 'offline'
       console.log('First, is ' + conection);
       if(isConnected){
-        (feature === 'map') ? this.props.navigation.navigate('Map', {establishmentData: this.props.establishmentData}) : this.props.navigation.navigate('Evaluations', {servicesAvailable: this.props.servicesAvailable, establishmentId:this.props.establishmentData.placeData.placeId})
+        (feature === 'map') ? this.props.navigation.navigate('Map', {establishmentData: this.props.establishmentData, cleanState: this._cleanState}) : this.props.navigation.navigate('Evaluations', {servicesAvailable: this.props.servicesAvailable, establishment:this.props.establishmentData.placeData, reRenderFunction: this.props.reRenderFunction, cleanState: this._cleanState})
       }
       else {
         (feature === 'map') ? this.setState({showModal:true, modalText: `${I18n.t("map_popup_content", {locale: this.props.lang})}`}) : this.setState({showModal:true, modalText:`${I18n.t("rate_popup_content", {locale: this.props.lang})}`})
@@ -299,12 +322,36 @@ export default class Establishment extends React.Component {
     });
   }
 
+  _cleanState = () => this.setState({disabledButton:false})
+
   _socialShare = (social) =>{
     let url;
     switch (social) {
       case 'whatsapp':{
         url = `whatsapp://send?text=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
-        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20https://ippf-staging.com.ar/share/${this.props.establishmentData.placeData.placeId}`
+        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20${URL}/share/${this.props.establishmentData.placeData.placeId}`
+        break;
+      }
+      case 'twitter':{
+        url = `https://twitter.com/intent/tweet?text=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20${URL}/share/${this.props.establishmentData.placeData.placeId}`
+        break;
+      }
+      case 'facebook':{
+        let app_id = 1964173333831483,
+            link = `${URL}/share/${this.props.establishmentData.placeData.placeId}`;
+
+        url = `https://www.facebook.com/dialog/share?app_id=${app_id}&display=popup&href=${encodeURIComponent(link)}&quote=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}`
+        break;
+      }
+      case 'messenger':{
+        let link = `${I18n.t("social_share_text_not_encode", { establishment: this.props.establishmentData.placeData.establecimiento,
+        nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })} ${URL}/share/${this.props.establishmentData.placeData.placeId}`,
+        app_id = 1964173333831483
+
+        url = `fb-messenger://share?link=${encodeURIComponent(link)}&app_id=${encodeURIComponent(app_id)}`
+
         break;
       }
 
@@ -329,15 +376,71 @@ export default class Establishment extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'})
       ]
     })
     this.props.navigation.dispatch(resetAction)
   }
 
+  _getIndexOfService = () => {
+    let index = 0,
+        arrayServices = this._getServicesAvailable(),
+        lookingFor = this.props.lookingFor;
+
+        arrayServices.map( (service,i) =>{
+          if(lookingFor === CON && service.title.toLowerCase() === 'condones') index = i;
+          if(lookingFor === DC && service.title.toLowerCase() === 'dc') index = i;
+          if(lookingFor === LPI && service.title.toLowerCase() === 'ile') index = i;
+          if(lookingFor === MAC && service.title.toLowerCase() === 'mac') index = i;
+          if(lookingFor === SSR && service.title.toLowerCase() === 'ssr') index = i;
+          if(lookingFor === VIH && service.title.toLowerCase() === 'prueba') index = i;
+        })
+
+    return index;
+  }
+
+  _renderAverageVote = () =>{
+    let averageVote = this.props.averageVote,
+        averageVoteComponent;
+    if(averageVote !== null){
+      averageVoteComponent = (
+        <View style={{flexDirection:'row', alignItems:'center'}}>
+          <View style={{marginRight:'2%'}}>
+            <Text style={{color: "#e6334c", fontSize: 18, fontWeight: 'bold'}}>{Math.round(averageVote*10)/10}</Text>
+          </View>
+          {(Math.round(averageVote*10)/10 !== 1) ? (
+            <Text style={{color: "#e6334c"}}>{I18n.t("point_plural", {locale: this.props.lang})}</Text>
+          ) : (
+            <Text style={{color: "#e6334c"}}>{I18n.t("point_singular", {locale: this.props.lang})}</Text>
+          )}
+
+        </View>)
+    }
+    else {
+      if(this.props.establishmentData.placeData.rateReal) averageVoteComponent = (
+        <View style={{flexDirection:'row', alignItems:'center'}}>
+          <View style={{marginRight:'2%'}}>
+            <Text style={{color: "#e6334c", fontSize: 18, fontWeight: 'bold'}}>{Math.round(this.props.establishmentData.placeData.rateReal*10)/10}</Text>
+          </View>
+          {(Math.round(this.props.establishmentData.placeData.rateReal*10)/10 !== 1) ? (
+            <Text style={{color: "#e6334c"}}>{I18n.t("point_plural", {locale: this.props.lang})}</Text>
+          ) : (
+            <Text style={{color: "#e6334c"}}>{I18n.t("point_singular", {locale: this.props.lang})}</Text>
+          )}
+
+        </View>
+      )
+      else averageVoteComponent = (
+        <Text style={{color: "#e6334c"}}>{I18n.t("without_evaluations", {locale: this.props.lang})}</Text>
+      )
+    }
+
+    return averageVoteComponent;
+  }
 
   render() {
-    let data = this.props.establishmentData
+    let data = this.props.establishmentData,
+        indexService = this._getIndexOfService();
     return (
       <StyleProvider style={getTheme(platform)}>
         <Container>
@@ -383,22 +486,27 @@ export default class Establishment extends React.Component {
                   </View>
                   <View style ={styles.establishmentAddress}>
                     <Icon name='ios-pin' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                    <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{`${data.placeData.calle} ${data.placeData.altura}`}</Text>
+                    {(data.placeData.cruce !== "") ? (
+                      <Text style={[styles.subtitle, styles.fontColor]}>{I18n.t("direcion_position_label", {calle: data.placeData.calle, altura: data.placeData.altura, piso: data.placeData.piso_dpto, interseccion: data.placeData.cruce  ,locale: this.props.lang})}</Text>
+                    ) : (
+                      <Text style={[styles.subtitle, styles.fontColor]}>{`${data.placeData.calle} ${data.placeData.altura} ${data.placeData.piso_dpto}`}</Text>
+                    )}
                   </View>
                   {(data.distance !== undefined) ? (
                     <View style ={styles.establishmentDistance}>
                       <Icon name='ios-walk' style={{fontSize:14,marginRight:'2%', color:'#655E5E'}}/>
-                      <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{I18n.t("place_distance_size", {distance: parseInt(this.props.data.distance*1000) ,locale: this.props.lang})}</Text>
+                      <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{I18n.t("place_distance_size", {distance: parseInt(data.distance*1000) ,locale: this.props.lang})}</Text>
                     </View>
                   )
                   : (null)}
+                  {(data.placeData.tipo !== "") ? <Text style={[{fontSize:14, flex: 1}, styles.fontColor]}>{data.placeData.tipo}</Text> : null}
                 </View>
                 <View style={styles.establishmentAdicionalInfo}>
                   <TouchableHighlight
                     activeOpacity={0.5}
                     underlayColor="white"
                     style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1, marginRight: '2.5%', justifyContent:'center', alignItems:'center', borderRadius: 5, height: 45, paddingVertical:'1%', paddingHorizontal:'2.5%'}}
-                    onPress={() => this._checkConection('map')}
+                    onPress={() => {(!this.state.disabledButton) ? this._checkConection('map') : null}}
                     >
                     <View style={{flexDirection: 'row', alignItems:'center', flex: 1, justifyContent:'space-between'}}>
                       <View style={{flex: 1, alignItems:'center'}}>
@@ -414,21 +522,7 @@ export default class Establishment extends React.Component {
                     // underlayColor="white"
                     style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1, justifyContent:'center', alignItems:'center', borderRadius: 5, height: 45, paddingVertical:'1%'}}
                     >
-                    {(data.placeData.rateReal) ?
-                      <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <View style={{marginRight:'2%'}}>
-                          <Text style={{color: "#e6334c", fontSize: 18, fontWeight: 'bold'}}>{Math.round(data.placeData.rateReal*10)/10}</Text>
-                        </View>
-                        {(Math.round(data.placeData.rateReal*10)/10 !== 1) ? (
-                          <Text style={{color: "#e6334c"}}>{I18n.t("point_plural", {locale: this.props.lang})}</Text>
-                        ) : (
-                          <Text style={{color: "#e6334c"}}>{I18n.t("point_singular", {locale: this.props.lang})}</Text>
-                        )}
-
-                      </View>:
-                      <Text style={{color: "#e6334c"}}>{I18n.t("without_evaluations", {locale: this.props.lang})}</Text>
-                  }
-
+                      {this._renderAverageVote()}
                   </TouchableHighlight>
                 </View>
                 <View style={styles.establishmentServices}>
@@ -437,6 +531,7 @@ export default class Establishment extends React.Component {
                     renderHeader={this._renderHeader}
                     renderContent={this._renderContent}
                     underlayColor="rgba(0, 0, 0, 0)"
+                    initiallyActiveSection={indexService}
                     // underlayColor="rgba(230, 51, 76, 0.5)"
                   />
                 </View>
@@ -479,6 +574,7 @@ export default class Establishment extends React.Component {
                           paddingLeft: 0,
                           paddingBottom: 0,
                         }}
+                        onPress={() => this._socialShare('messenger')}
                       >
                         <SVGMessengerIcon
                           height={25}
@@ -499,6 +595,7 @@ export default class Establishment extends React.Component {
                           paddingLeft: 0,
                           paddingBottom: 0,
                         }}
+                        onPress={() => this._socialShare('facebook')}
                       >
                         <SVGFacebookIcon
                           height={25}
@@ -519,6 +616,7 @@ export default class Establishment extends React.Component {
                           paddingLeft: 0,
                           paddingBottom: 0,
                         }}
+                        onPress={() => this._socialShare('twitter')}
                       >
                         <SVGTwitterIcon
                           height={25}
@@ -533,7 +631,7 @@ export default class Establishment extends React.Component {
                     <Button
                       bordered
                       style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-                      onPress={() => this._checkConection('evaluation')}
+                      onPress={() => {(!this.state.disabledButton) ? this._checkConection('evaluation') : null}}
                       >
                       <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("rate_this_place", {locale: this.props.lang})}</Text>
                     </Button>

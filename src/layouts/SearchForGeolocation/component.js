@@ -23,32 +23,32 @@ export default class SearchForGeolocation extends React.Component {
     super();
     this.state={
       loaded: false,
-      sortEngine: DISTANCE,
+      sortEngine: "ALL",
       address: 'Obteniendo dirección',
       showModal: false,
-      isTeen: false
+      isTeen: false,
+      disabledButtonMap: false
     }
   }
 
   componentDidMount = () => {
-    console.log('MOUNT ', this.props);
-    // setTimeout(() => { this.setState({loaded:true}) }, 1000);
     if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true})
     this.setState({address:this.props.address})
   }
 
   componentWillReceiveProps = (nextProps) =>{
     if(nextProps.store[0] === undefined || nextProps.store[0].empty === undefined ) this.setState({loaded:true})
-    console.log('NEXTPROPS ', nextProps);
   }
 
   _goToMap = () =>{
+    this.setState({disabledButtonMap: true})
     NetInfo.isConnected.fetch().then(isConnected => {
       let conection = isConnected ? 'online' : 'offline'
-      console.log('First, is ' + conection);
-      isConnected ? this.props.navigation.navigate('Map',{coords: this.props.coords }) : this.setState({showModal:true})
+      isConnected ? this.props.navigation.navigate('Map',{coords: this.props.coords, cleanState: this._cleanState }) : this.setState({showModal:true, disabledButtonMap: true})
     });
   }
+
+  _cleanState = () => this.setState({disabledButtonMap:false})
 
   _renderView = () =>{
     let view;
@@ -61,7 +61,7 @@ export default class SearchForGeolocation extends React.Component {
         )
       }else {
         view = (
-          <View>
+          <View style={{marginTop: '5%'}}>
             <Text style={{color:'#655E5E'}}>
               No hay establecimientos cercanos
             </Text>
@@ -85,7 +85,7 @@ export default class SearchForGeolocation extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'})
       ]
     })
     this.props.navigation.dispatch(resetAction)
@@ -160,50 +160,68 @@ export default class SearchForGeolocation extends React.Component {
                   {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
                 </View>
               ) : (null)}
-              {(this.props.serviceTypeData === TEEN) ? (
-                <View style={styles.infoContainer}>
-                  <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
-                </View>
-              ) : (null)}
-              {(this.props.serviceTypeData !== TEEN) ? (
-                <TouchableHighlight
-                  onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
-                  activeOpacity={0}
-                  underlayColor="#FFFFFF"
-                  style={{marginTop: '10%'}}
-                  >
-                  <View style={styles.isTeenContainer}>
-                    <CheckBox
-                      onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
-                      checked={this.state.isTeen}
-                      color={"#e6334c"}
-                    />
-                    <Text style={[{marginLeft: 20, flex:1}, styles.serviceBreadcrumbLocationText]}>{I18n.t("only_teenager_friendly", {locale: this.props.lang})}</Text>
+              { (this.props.store.length !== 0) ?
+                <View>
+                  {(this.props.serviceTypeData === TEEN) ? (
+                  <View style={styles.infoContainer}>
+                    <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
                   </View>
-                </TouchableHighlight>
-              ) : (null)}
-              <View style={styles.serviceContainerSort}>
-                <Text style={{flex:1, color:'#655E5E'}}>{`${I18n.t("sort_label_text", {locale: this.props.lang})}`}</Text>
-                <View style={styles.serviceContainerSortInput}>
-                  <Picker
-                    selectedValue={this.state.sortEngine}
-                    onValueChange={(itemValue, itemIndex) => this.setState({sortEngine: itemValue}, ()=>{this.props._changeSortValue(itemValue)})}>
-                    <Picker.Item label={I18n.t("sort_closest_option", {locale: this.props.lang})} value={DISTANCE} color="#000"/>
-                    <Picker.Item label={I18n.t("sort_better_option", {locale: this.props.lang})} value={RATE} color="#000"/>
-                  </Picker>
+                ) : (null)}
+                {(this.props.serviceTypeData !== TEEN) ? (
+                  <TouchableHighlight
+                    onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
+                    activeOpacity={0}
+                    underlayColor="#FFFFFF"
+                    style={{marginTop: '10%'}}
+                    >
+                    <View style={styles.isTeenContainer}>
+                      <CheckBox
+                        onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
+                        checked={this.state.isTeen}
+                        color={"#e6334c"}
+                      />
+                      <Text style={[{marginLeft: 20, flex:1}, styles.serviceBreadcrumbLocationText]}>{I18n.t("only_teenager_friendly", {locale: this.props.lang})}</Text>
+                    </View>
+                  </TouchableHighlight>
+                ) : (null)}
+                <View style={styles.serviceContainerSort}>
+                  <Text style={{flex:1, color:'#655E5E'}}>{`${I18n.t("sort_label_text", {locale: this.props.lang})}`}</Text>
+                  <View style={styles.serviceContainerSortInput}>
+
+
+                      {(this.props.searchEngine) ?
+                        (
+                          <Picker
+                            selectedValue={this.state.sortEngine}
+                            onValueChange={(itemValue, itemIndex) => this.setState({sortEngine: itemValue}, ()=>{this.props._changeSortValue(itemValue)})}>
+                            <Picker.Item label={I18n.t("all", {locale: this.props.lang})} value={"ALL"} color="#000"/>
+                            <Picker.Item label={I18n.t("sort_closest_option", {locale: this.props.lang})} value={DISTANCE} color="#000"/>
+                            <Picker.Item label={I18n.t("sort_better_option", {locale: this.props.lang})} value={RATE} color="#000"/>
+                          </Picker>
+                        ) : (
+                          <Picker
+                            selectedValue={this.state.sortEngine}
+                            onValueChange={(itemValue, itemIndex) => this.setState({sortEngine: itemValue}, ()=>{this.props._changeSortValue(itemValue)})}>
+                            <Picker.Item label={I18n.t("all", {locale: this.props.lang})} value={"ALL"} color="#000"/>
+                            <Picker.Item label={I18n.t("sort_better_option", {locale: this.props.lang})} value={RATE} color="#000"/>
+                          </Picker>
+                        )}
+
+                  </View>
+                </View>
+                <View style={styles.serviceGeolocation}>
+                  <Button
+                    bordered
+                    block
+                    style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2}}
+                    onPress={(!this.state.disabledButtonMap) ? this._goToMap : null}
+                    >
+                    <Icon name='md-pin' style={{fontSize: 25, color: '#e6334c'}}/>
+                    <Text style={{color: "#e6334c"}}>{I18n.t("panel_detail_general_map_localization", {locale: this.props.lang})}</Text>
+                  </Button>
                 </View>
               </View>
-              <View style={styles.serviceGeolocation}>
-                <Button
-                  bordered
-                  block
-                  style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2}}
-                  onPress={this._goToMap}
-                  >
-                  <Icon name='md-pin' style={{fontSize: 25, color: '#e6334c'}}/>
-                  <Text style={{color: "#e6334c"}}>{I18n.t("panel_detail_general_map_localization", {locale: this.props.lang})}</Text>
-                </Button>
-              </View>
+              : null}
               <View style={styles.flatlistContainer}>
                 {this._renderView()}
               </View>

@@ -8,6 +8,8 @@ import DummyServices from '../../../layouts/Services/component.js'
 
 import {getServiceData} from '../../../utils/engines/index.js'
 
+import {tracker} from '../../../utils/analytics/index.js'
+
 import {
   CON,
   VIH,
@@ -31,7 +33,13 @@ class SmartServices extends React.Component {
   }
 
   render() {
-    return (<DummyServices navigation={this.props.navigation} serviceTypeData={(this.props.ui.lookingFor === this.props.navigation.state.params.service) ? this.props.ui.lookingFor : CON } lang={this.props.ui.lang} cities={this.props.db.cities}/>)
+    tracker.trackEvent('servicio', this.props.ui.lookingFor);
+    return (<DummyServices
+      navigation={this.props.navigation} serviceTypeData={(this.props.ui.lookingFor === this.props.navigation.state.params.service) ? this.props.ui.lookingFor : CON }
+      db={this.props.db}
+      ui={this.props.ui}
+      dispatch={this.props.dispatch}
+    />)
   }
 }
 

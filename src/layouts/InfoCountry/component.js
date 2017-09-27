@@ -8,6 +8,8 @@ import platform from '../../config/styles/native-base-theme/variables/platform';
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
 
+import {tracker} from '../../utils/analytics/index.js'
+
 import {getGralTextandILEForCountry} from '../../utils/engines/index.js'
 
 import {getServiceData} from '../../utils/engines/index.js'
@@ -27,14 +29,24 @@ const {width, height} = Dimensions.get('window');
 
 export default class InfoCountry extends React.Component {
 
+  constructor(){
+    super();
+    this.state = {disabledButton: false}
+  }
+
   _goToSearch = () =>{
+    this.setState({disabledButton: true}, () => setTimeout(() => {
+      this._cleanState();
+    }, 1000))
     if(this.props.cityDepartment !== undefined){
-      this.props.navigation.navigate('SearchForGeolocation',{cityDepartment: this.props.cityDepartment})
+      this.props.navigation.navigate('SearchForGeolocation',{cityDepartment: this.props.cityDepartment, country: I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()})
     }
     else {
-      this.props.navigation.navigate('SearchForGeolocation',{coords: this.props.coords, address:this.props.address})
+      this.props.navigation.navigate('SearchForGeolocation',{country: I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase(), address:this.props.address})
     }
   }
+
+  _cleanState = () => this.setState({disabledButton:false})
 
   _renderButton = (ILEService) => {
     let button;
@@ -43,7 +55,7 @@ export default class InfoCountry extends React.Component {
         bordered
         block
         style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-        onPress={this._goToSearch}
+        onPress={(!this.state.disabledButton) ? this._goToSearch : null}
         >
         <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
       </Button>
@@ -54,7 +66,7 @@ export default class InfoCountry extends React.Component {
           bordered
           block
           style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-          onPress={this._goToSearch}
+          onPress={(!this.state.disabledButton) ? this._goToSearch : null}
           >
           <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
         </Button>
@@ -120,7 +132,7 @@ export default class InfoCountry extends React.Component {
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: 'Landing'})
+        NavigationActions.navigate({ routeName: 'Drawer'})
       ]
     })
     this.props.navigation.dispatch(resetAction)
@@ -158,6 +170,7 @@ export default class InfoCountry extends React.Component {
 
   render() {
     let gralTextandILEForCountry = getGralTextandILEForCountry(this.props.country)
+    tracker.trackEvent('asociacion_miembro', I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase());
     return (
       <StyleProvider style={getTheme(platform)}>
         <Container>

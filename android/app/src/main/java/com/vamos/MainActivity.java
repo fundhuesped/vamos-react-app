@@ -1,4 +1,4 @@
-package com.vamos;
+package com.vamoslac.myapp;
 
 import com.facebook.react.ReactActivity;
 

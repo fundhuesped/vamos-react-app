@@ -17,7 +17,6 @@ function mapStateToProps(store) {
 
 class SmartMap extends React.Component {
 
-
   render() {
     let coords;
     if(this.props.navigation.state.params.establishmentData === undefined){
@@ -28,10 +27,11 @@ class SmartMap extends React.Component {
 
     return ((true) ?
     <DummyMap
-      // coords={(this.props.navigation.state.params === undefined) ? coords : {latitude: this.props.navigation.state.params.establishmentData.placeData.latitude, longitude: this.props.navigation.state.params.establishmentData.placeData.longitude }}
       coords={coords}
       navigation={this.props.navigation}
-      store={(this.props.navigation.state.params.establishmentData === undefined) ? this.props.ui.resultList : [this.props.navigation.state.params.establishmentData]}/>
+      store={(this.props.navigation.state.params.establishmentData === undefined) ? this.props.ui.resultList : [this.props.navigation.state.params.establishmentData]}
+      cleanState={this.props.navigation.state.params.cleanState}
+    />
       : <ProgressCircle downloading={false}/>
     )
   }

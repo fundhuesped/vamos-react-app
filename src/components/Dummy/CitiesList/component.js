@@ -3,6 +3,7 @@ import {FlatList, Text, Linking,View} from 'react-native';
 import CityItem from '../CityItem/component.js'
 import I18n from '../../../config/i18n/index.js';
 import store from '../../../store/index.js'
+import {URL} from '../../../config/HTTP/index.js'
 
 
 export default class CitiesList extends React.PureComponent {
@@ -31,7 +32,7 @@ export default class CitiesList extends React.PureComponent {
   );
 
   _goToSuggest = () =>{
-    let url = 'https://donde.huesped.org.ar/form';
+    let url = `${URL}/form`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);

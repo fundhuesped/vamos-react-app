@@ -60,7 +60,7 @@ class SmartInfoCountry extends React.Component {
 
       this.setState({country: country, loaded:true})
     }else {
-      this.setState({country: (this.props.navigation.state.params.country)  ? this.props.navigation.state.params.country : '' , loaded:true})
+      this.setState({country: (this.props.navigation.state.params.country)  ? this.props.navigation.state.params.country : '' , loaded:true, address: this.props.navigation.state.params.address})
     }
   }
 

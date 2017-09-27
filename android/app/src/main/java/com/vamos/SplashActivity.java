@@ -1,4 +1,4 @@
-package com.vamos;
+package com.vamoslac.myapp;
 
 /**
  * Created by fede on 9/9/17.

@@ -83,7 +83,7 @@ class Place {
       responsable_dc: 'string',
       web_dc: 'string',
       ubicacion_dc: 'string',
-      observaciones_dc: 'string',
+      comentarios_dc: 'string',
       tel_distrib: 'string',
       mail_distrib: 'string',
       horario_distrib: 'string',

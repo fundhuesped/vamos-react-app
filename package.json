@@ -8,6 +8,7 @@
     "android": "react-native run-android && open 'rndebugger://set-debugger-loc?port=8081'"
   },
   "dependencies": {
+    "babel-plugin-transform-remove-console": "^6.8.5",
     "color": "^2.0.0",
     "lottie-react-native": "^2.2.0",
     "native-base": "^2.3.1",

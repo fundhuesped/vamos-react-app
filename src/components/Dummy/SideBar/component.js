@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import {Text,View,StyleSheet,Image, Button, Linking, Picker, Modal, TouchableHighlight} from 'react-native'
+import {Text,View,StyleSheet,Image, Button, Linking, Picker, Modal, TouchableHighlight, ScrollView} from 'react-native'
 import {Toast, Icon, Spinner} from 'native-base';
 import {connect} from 'react-redux'
-
-import {setLang, selectLookingFor} from '../../../constants/actions/index.js'
-import {EN, ES, NEARBY} from '../../../constants/action-types/index.js'
+import {URL,TIME_STAMP_GPS_MIN} from '../../../config/HTTP/index.js'
+import {setLang, selectLookingFor,setCurrentLocation,selectSearchEngine} from '../../../constants/actions/index.js'
+import {EN, ES, NEARBY, GEOLOCATE} from '../../../constants/action-types/index.js'
 import I18n from '../../../config/i18n/index.js';
 import {HTTPService} from '../../../utils/HTTPServices/index.js';
+import {Engine} from '../../../utils/engines'
 
 function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
@@ -23,9 +24,6 @@ class SideBar extends Component {
       showModalGPS: false
     }
   }
-
-  // componentDidMount = () => this.setState({language:I18n.currentLocale()})
-  // componentDidMount = () => console.log(this.props.ui.lang);
 
   _setModalVisible = (visible,isFetching) => (!isFetching) ? this.setState({modalVisible: visible}) : this.setState({modalVisible: visible}, () => {
     HTTPService.cleanState();
@@ -51,7 +49,7 @@ class SideBar extends Component {
   _refetch = () => this._setModalVisible(false,true)
 
   _goToAbout = () =>{
-    let url = 'https://ippf-staging.com.ar/#/acerca';
+    let url = `${URL}/#/acerca`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
@@ -62,7 +60,18 @@ class SideBar extends Component {
   }
 
   _goToSuggest = () =>{
-    let url = 'https://ippf-staging.com.ar/form';
+    let url = `${URL}/form`;
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
+  _goToList = () =>{
+    let url = `${URL}/listado-paises`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
@@ -89,18 +98,38 @@ class SideBar extends Component {
   _goToNearby = () =>{
     this.setState({showModalGPS:true})
     this.props.dispatch(selectLookingFor(NEARBY))
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // alert('gps activado');
-        this._getAddress(position.coords)
-      },
-      (error) => {
-        this.setState({modalVisible:true, modalType: true, showModalGPS:false})
-        // alert('error yendo a geolocalizacion'+error.message);
-      },
-      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
-    );
+    if(this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined){
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.props.dispatch(setCurrentLocation(position.coords.latitude, position.coords.longitude))
+          this._getAddress(position.coords)
+        },
+        (error) => {
+          this.setState({modalVisible:true, modalType: true, showModalGPS:false})
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
+      );
+    }
+    else {
+      let currentTime = new Date(),
+          timeStamp = this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp;
+
+      if(currentTime.getTime() - timeStamp.getTime() >= TIME_STAMP_GPS_MIN*60*1000){
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.props.dispatch(setCurrentLocation(position.coords.latitude, position.coords.longitude))
+            this._getAddress(position.coords)
+          },
+          (error) => {
+            this.setState({modalVisible:true, modalType: true, showModalGPS:false})
+          },
+          { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
+        );
+      }
+      else this._getAddress(this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation)
+    }
   }
+
 
   _getAddress = async (coords) =>{
     let url = `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCjb5c-5XvzhvdMXCjIjNaK-Zdh-L_qVmM&latlng=${coords.latitude},${coords.longitude}&sensor=false`;
@@ -117,7 +146,6 @@ class SideBar extends Component {
             // alert('FAIL GEOCODIGN');
         }
         else{
-          console.log(responseJson);
           let address = {};
           const address_components = responseJson.results[0].address_components;
           let country;
@@ -132,193 +160,212 @@ class SideBar extends Component {
                 address_parts: address
             };
 
-          this._checkCountry(addressFormated, country, coords)
+          this._checkCountry(addressFormated, country)
 
         }
       } catch (e) {
         console.log(e);
-        this._checkCountry(undefined, undefined, coords)
+        this._checkCountry(undefined, undefined)
       }
 
+      this.Engine = new Engine(this.props.db.places.data, NEARBY);
+      this.props.dispatch(selectSearchEngine(GEOLOCATE))
+      this.Engine.searchForGeolocation(coords);
   }
 
-  _checkCountry = (address, country, coords) =>{
+  _checkCountry = (address, country) =>{
     if(country !== undefined){
       let isMember = true;
       if(country !== "AG" && country !== "AR" && country !== "AW" && country !== "BB" && country !== "BZ" && country !== "BO" && country !== "CL" && country !== "CO" && country !== "CW" && country !== "DM" && country !== "EC" && country !== "SV" && country !== "GD" && country !== "GT" && country !== "GY" && country !== "HT" && country !== "HN" && country !== "JM" && country !== "MX" && country !== "PA" && country !== "PY" && country !== "PE" && country !== "PR" && country !== "DO" && country !== "VC" && country !== "LC" && country !== "SR" && country !== "TT" && country !== "UY" && country !== "VE") isMember = false
 
       if(!isMember) {
-        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords, address: address})})
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{address: address})})
       }
       else {
-        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{coords: coords, country: country})})
+        this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('InfoCountry',{country: country})})
       }
     }
     else {
-      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation',{coords: coords})})
+      this.setState({showModalGPS:false}, () => {this.props.navigation.navigate('SearchForGeolocation')})
     }
   }
 
 	render() {
 		return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image
-            source={require('../../../assets/images/vamos_logo.png')}
-            style={styles.logo}
-            resizeMode="cover"
-          />
-        </View>
-        <View style={styles.body}>
-          <View style={styles.bodyItem}>
-            <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
-            {/* <Text style={styles.bodyItemText}>{I18n.t("language", {locale: this.props.ui.lang})}</Text> */}
-            <View style={{width: 100, paddingTop:3}}>
-              <Picker
-                selectedValue={this.state.language}
-                onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue}, ()=>{this.props.dispatch(setLang(itemValue))})}>
-                <Picker.Item label="ES" value={ES} color="#e6334c"/>
-                <Picker.Item label="EN" value={EN} color="#e6334c"/>
-              </Picker>
-            </View>
-          </View>
-          <TouchableHighlight
-            onPress={this._goToAbout}
-            activeOpacity={0.5}
-            underlayColor="white"
-            >
-            <View
-              style={styles.bodyItem}
-              >
-              <Icon name='ios-information-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("go_to_about", {locale: this.props.ui.lang})}</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this._goToSuggest}
-            activeOpacity={0.5}
-            underlayColor="white"
-            >
-            <View
-              style={styles.bodyItem}
-              >
-              <Icon name='ios-add-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("go_to_suggest", {locale: this.props.ui.lang})}</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this._goToNearby}
-            activeOpacity={0.5}
-            underlayColor="white"
-            >
-            <View
-              style={styles.bodyItem}
-              >
-              <Icon name='ios-pin' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("nearby", {locale: this.props.ui.lang})}</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={this._reloadBD}
-            activeOpacity={0.5}
-            underlayColor="white"
-            >
-            <View
-              style={styles.bodyItem}
-              >
-              <Icon name='md-refresh' style={{fontSize: 24, color:'#e6334c'}}/>
-              <Text style={styles.bodyItemText}>{I18n.t("reload_bd", {locale: this.props.ui.lang})}</Text>
-            </View>
-          </TouchableHighlight>
-          {/* <Text>{`cantidad de establecimientos ${Object.keys(this.props.db.places.data).length}`}</Text> */}
-        </View>
-        <View style={styles.footer}>
-          <View style={styles.footerImage}>
+        <View style={styles.container}>
+          <View style={styles.header}>
             <Image
-              source={require('../../../assets/images/ippf_logo.png')}
+              source={require('../../../assets/images/vamos_logo.png')}
               style={styles.logo}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
-          <View style={styles.footerImage}>
-            <Image
-              source={require('../../../assets/images/huesped_logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
+          <ScrollView
+            // style={{width: '100%'}}
+            // contentContainerStyle ={{alignItems: 'left'}}
+          >
+            <View style={styles.body}>
+              <View style={styles.bodyItem}>
+                <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
+                {/* <Text style={styles.bodyItemText}>{I18n.t("language", {locale: this.props.ui.lang})}</Text> */}
+                <View style={{width: 100, paddingTop:3}}>
+                  <Picker
+                    selectedValue={this.state.language}
+                    onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue}, ()=>{this.props.dispatch(setLang(itemValue))})}>
+                    <Picker.Item label="ES" value={ES} color="#e6334c"/>
+                    <Picker.Item label="EN" value={EN} color="#e6334c"/>
+                  </Picker>
+                </View>
+              </View>
+              <TouchableHighlight
+                onPress={this._goToAbout}
+                activeOpacity={0.5}
+                underlayColor="white"
+                >
+                <View
+                  style={styles.bodyItem}
+                  >
+                  <Icon name='ios-information-circle' style={{fontSize: 24, color:'#e6334c'}}/>
+                  <Text style={styles.bodyItemText}>{I18n.t("go_to_about", {locale: this.props.ui.lang})}</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={this._goToSuggest}
+                activeOpacity={0.5}
+                underlayColor="white"
+                >
+                <View
+                  style={styles.bodyItem}
+                  >
+                  <Icon name='ios-add-circle' style={{fontSize: 24, color:'#e6334c'}}/>
+                  <Text style={styles.bodyItemText}>{I18n.t("go_to_suggest", {locale: this.props.ui.lang})}</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={this._goToNearby}
+                activeOpacity={0.5}
+                underlayColor="white"
+                >
+                <View
+                  style={styles.bodyItem}
+                  >
+                  <Icon name='ios-pin' style={{fontSize: 24, color:'#e6334c'}}/>
+                  <Text style={styles.bodyItemText}>{I18n.t("nearby", {locale: this.props.ui.lang})}</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={this._reloadBD}
+                activeOpacity={0.5}
+                underlayColor="white"
+                >
+                <View
+                  style={styles.bodyItem}
+                  >
+                  <Icon name='md-refresh' style={{fontSize: 24, color:'#e6334c'}}/>
+                  <Text style={styles.bodyItemText}>{I18n.t("reload_bd", {locale: this.props.ui.lang})}</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={this._goToList}
+                activeOpacity={0.5}
+                underlayColor="white"
+                >
+                <View
+                  style={styles.bodyItem}
+                  >
+                  <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
+                  <Text style={styles.bodyItemText}>{I18n.t("list", {locale: this.props.ui.lang})}</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </ScrollView>
+          <View style={styles.footer}>
+            <View style={styles.footerImage}>
+              <Image
+                source={require('../../../assets/images/ippf_logo.png')}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={styles.footerImage}>
+              <Image
+                source={require('../../../assets/images/huesped_logo.png')}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+            </View>
           </View>
-        </View>
-        <Modal
-          animationType={"fade"}
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {console.log("Modal has been closed.")}}
-          >
-         <View style={styles.modalContainer}>
-            {this.state.modalType ? (
-              <View style={styles.modalView}>
-                <View style={styles.modalViewTitle}>
-                  <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.ui.lang})}</Text>
-                </View>
-                <View style={styles.modalViewDescriptionGPS}>
-                  <View style={styles.modalViewDescriptionIcon}>
-                    <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
+          <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {console.log("Modal has been closed.")}}
+            >
+           <View style={styles.modalContainer}>
+              {this.state.modalType ? (
+                <View style={styles.modalView}>
+                  <View style={styles.modalViewTitle}>
+                    <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("nearby_gps_popup_title", {locale: this.props.ui.lang})}</Text>
                   </View>
-                    <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("nearby_gps_popup_content", {locale: this.props.ui.lang})}</Text>
-                </View>
-                <View style={styles.modalViewActions}>
-                  <View>
-                    <Button
-                      onPress={() => this.setState({modalVisible:false})}
-                      color="#e6334c"
-                      title={I18n.t("back_label_button", {locale: this.props.ui.lang})}
-                    />
+                  <View style={styles.modalViewDescriptionGPS}>
+                    <View style={styles.modalViewDescriptionIcon}>
+                      <Icon name="md-warning" style={{fontSize: 50, color: '#e6334c'}}/>
+                    </View>
+                      <Text style={{flex: 1, color:'#5d5d5d', fontSize: 16}}>{I18n.t("nearby_gps_popup_content", {locale: this.props.ui.lang})}</Text>
                   </View>
-                </View>
-              </View>
-            ) : (
-              <View style={styles.modalView}>
-                <View style={styles.modalViewTitle}>
-                  <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("reload_bd_popup_title", {locale: this.props.ui.lang})}</Text>
-                </View>
-                <View style={styles.modalViewDescription}>
-                  <Text style={{fontSize:12, color: '#7f7f7f'}}>{I18n.t("reload_bd_popup_last_date", {locale: this.props.ui.lang, date: this._getDate() })}</Text>
-                  <Text>{I18n.t("reload_bd_popup_content", {locale: this.props.ui.lang})}</Text>
-                </View>
-                <View style={styles.modalViewActions}>
-                  <View style={{marginRight:'5%'}}>
-                    <Button
-                      onPress={this._refetch}
-                      color="#e6334c"
-                      title={I18n.t("confirm", {locale: this.props.ui.lang})}
-                    />
-                  </View>
-                  <View>
-                    <Button
-                      onPress={() => this._setModalVisible(false,false)}
-                      color="#e6334c"
-                      title={I18n.t("cancel", {locale: this.props.ui.lang})}
-                    />
+                  <View style={styles.modalViewActions}>
+                    <View>
+                      <Button
+                        onPress={() => this.setState({modalVisible:false})}
+                        color="#e6334c"
+                        title={I18n.t("back_label_button", {locale: this.props.ui.lang})}
+                      />
+                    </View>
                   </View>
                 </View>
-              </View>
-            )}
-         </View>
-        </Modal>
-        <Modal
-          animationType={"fade"}
-          transparent={true}
-          visible={this.state.showModalGPS}
-          onRequestClose={() => {console.log("Modal has been closed.")}}
-          >
-         <View style={styles.modalContainer}>
-           <View style={styles.modalView}>
-             <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.ui.lang})}</Text>
-             <Spinner color='#e6334c'/>
+              ) : (
+                <View style={styles.modalView}>
+                  <View style={styles.modalViewTitle}>
+                    <Text style={{fontWeight:'bold',fontSize:16}}>{I18n.t("reload_bd_popup_title", {locale: this.props.ui.lang})}</Text>
+                  </View>
+                  <View style={styles.modalViewDescription}>
+                    <Text style={{fontSize:12, color: '#7f7f7f'}}>{I18n.t("reload_bd_popup_last_date", {locale: this.props.ui.lang, date: this._getDate() })}</Text>
+                    <Text>{I18n.t("reload_bd_popup_content", {locale: this.props.ui.lang})}</Text>
+                  </View>
+                  <View style={styles.modalViewActions}>
+                    <View style={{marginRight:'5%'}}>
+                      <Button
+                        onPress={this._refetch}
+                        color="#e6334c"
+                        title={I18n.t("confirm", {locale: this.props.ui.lang})}
+                      />
+                    </View>
+                    <View>
+                      <Button
+                        onPress={() => this._setModalVisible(false,false)}
+                        color="#e6334c"
+                        title={I18n.t("cancel", {locale: this.props.ui.lang})}
+                      />
+                    </View>
+                  </View>
+                </View>
+              )}
            </View>
-         </View>
-        </Modal>
-      </View>
+          </Modal>
+          <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={this.state.showModalGPS}
+            onRequestClose={() => {console.log("Modal has been closed.")}}
+            >
+           <View style={styles.modalContainer}>
+             <View style={styles.modalView}>
+               <Text style={{color: "#e6334c", textAlign: 'center', fontSize: 18}}>{I18n.t("spinner_getting_coordenates_label", {locale: this.props.ui.lang})}</Text>
+               <Spinner color='#e6334c'/>
+             </View>
+           </View>
+          </Modal>
+        </View>
 		);
 	}
 }

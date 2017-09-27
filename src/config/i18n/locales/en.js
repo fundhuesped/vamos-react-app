@@ -158,7 +158,7 @@ export default {
   "neighborhood": "Neighborhood, city, or department",
   "responsable": "Responsable",
   "select_location": "Select Location",
-  "search_department_description": "Enter the name of the Department or Neighborhood",
+  "search_department_description": "Enter your neighborhood, city, or department",
   "not_found_result_label": "No results found ...",
   "Mas info en": "More info on",
   "about_usefull_information": "Useful information",
@@ -496,8 +496,8 @@ export default {
   "ile_trinidadandtobago": "Find out more about sexual and reproductive health and rights on the website of FPATT, the IPPF/WHR Member Association in Trinidad and Tobago: www.ttfpa.org",
   "ile_uruguay": "Find out more about sexual and reproductive health and rights on the website of IS, the IPPF/WHR Member Association in Uruguay: www.iniciativas.org.uy",
   "ile_venezuela": "Find out more about sexual and reproductive health and rights on the website of PLAFAM, the IPPF/WHR Member Association in Venezuela: www.plafam.org.ve",
-  "web_url": "https://ippf-staging.com.ar",
-  "web_url_label": "www.ippf-staging.com.ar",
+  "web_url": "https://vamoslac.org/",
+  "web_url_label": "www.vamoslac.org",
   "intro text": "Vamos is a collaborative platform. If you find any error with the platform's data or operating functionality, please send us a message.",
   "mundo_antic_resultado": "<Number> of contraceptive access points in <City>",
   "mundo_antic_sin_resultado": "We do not have and registered contraceptive access points in <City>",
@@ -578,5 +578,8 @@ export default {
   "spinner_sending_evaluation_label": "Submitting evaluation",
   "spinner_getting_coordenates_label": "Getting coordinates",
   "comment_go_for_label": "Went looking for",
-  "close_label_button": "Close"
+  "close_label_button": "Close",
+  search_by_location_title: 'Search by geolocation',
+  social_share_text_not_encode: "Using #Vamos I found {{establishment}} in {{nombre_partido}}",
+  direcion_position_label: "{{calle}} {{altura}} {{piso}} and {{interseccion}}"
 };

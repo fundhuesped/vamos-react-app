@@ -47,6 +47,7 @@ const initialState = {
     },
     userInput: {
       GEOLOCATE: {
+        timeStamp: undefined,
         currentLocation: {
           latitude: null,
           longitude: null,
@@ -194,6 +195,7 @@ export default (state = initialState, action) => {
             userInput:{
               ...state.searchEngine.userInput,
               GEOLOCATE: {
+                timeStamp: new Date(),
                 currentLocation: {
                   latitude: parseFloat(latitude),
                   longitude: parseFloat(longitude)

@@ -1,7 +1,7 @@
 import store from '../../store/index.js'
 
 import {updatePlaces, updateCities, startFetching} from '../../constants/actions/index.js'
-import {DAYSBEFOREUPDATE, URLPLACES, URLCITIES} from '../../config/HTTP/index.js'
+import {DAYSBEFOREUPDATE, URLPLACES, URLCITIES, URL} from '../../config/HTTP/index.js'
 
 export class HTTPServices {
   constructor() {
@@ -74,7 +74,7 @@ export class HTTPServices {
           console.log(failedPages);
       for (let i in failedPages) {
         console.log(failedPages[i],i);
-          let nextUrl = `https://ippf-staging.com.ar/api/v2/places/getall/?page=${i}`,
+          let nextUrl = `${URL}/api/v2/places/getall/?page=${i}`,
               place;
           try {
             let response = await fetch(nextUrl, {

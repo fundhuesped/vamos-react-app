@@ -56,11 +56,12 @@ export default class PlacePreviewList extends React.Component {
   }
 
   render() {
+    let store = {...this.props.store}
     return (
       <FlatList
         ref="listRef"
         data={this.props.store}
-        extraData={this.props.store}
+        extraData={store}
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
         ItemSeparatorComponent={this._renderSeparator}

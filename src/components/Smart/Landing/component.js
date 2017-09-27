@@ -25,8 +25,7 @@ class SmartLanding extends React.Component {
   }
 
   _handleService = (service) =>{
-    if(service === "TEEN") this.props.dispatch(selectLookingFor(service))
-    else {
+    if(service !== "TEEN"){
       this.props.dispatch(selectLookingFor(service))
       this.props.navigation.navigate('Services',{service: service})
     }
@@ -34,7 +33,14 @@ class SmartLanding extends React.Component {
 
   render() {
     // console.log(this.props.db.);
-    return ((this.props.db.isFetching) ? <ProgressCircle firstFetch={(this.props.db.places.meta.updatedAt === undefined) ? true : false} downloading={true}/> : <DummyLanding navigation={this.props.navigation} _handleService={this._handleService} lang={this.props.ui.lang}/>)
+    return ((this.props.db.isFetching) ? <ProgressCircle firstFetch={(this.props.db.places.meta.updatedAt === undefined) ? true : false} downloading={true}/> :
+    <DummyLanding
+      navigation={this.props.navigation}
+      _handleService={this._handleService}
+      ui={this.props.ui}
+      db={this.props.db}
+      dispatch={this.props.dispatch}
+    />)
   }
 }
 
