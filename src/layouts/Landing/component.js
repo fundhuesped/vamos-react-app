@@ -43,7 +43,14 @@ export default class Landing extends React.Component {
   }
 
 
-  _handleService = (service) => this.props._handleService(service)
+  _handleService = (service) => {
+    if(service !== "TEEN"){
+      this.props.dispatch(selectLookingFor(service))
+      this.props.navigation.navigate('Services',{service: service, cleanState: this._cleanState})
+    }
+  }
+
+  _cleanState = () => this.setState({buttonId: ''})
 
   _goToGeolocation = () =>{
     this.setState({showModalGPS:true})
@@ -133,7 +140,7 @@ export default class Landing extends React.Component {
         // this._handleService(id)
       }
     }
-    else this.setState({buttonId: id}, () => {this._handleService(id); setTimeout(() => {this.setState({buttonId: ''})}, 1000)})
+    else this.setState({buttonId: id}, () => this._handleService(id))
   }
 
 

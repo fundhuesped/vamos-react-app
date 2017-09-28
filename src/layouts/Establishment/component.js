@@ -328,12 +328,12 @@ export default class Establishment extends React.Component {
     let url;
     switch (social) {
       case 'whatsapp':{
-        url = `whatsapp://send?text=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        url = `whatsapp://send?text=${I18n.t("social_share_text", { establecimiento: this.props.establishmentData.placeData.establecimiento,
         nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20${URL}/share/${this.props.establishmentData.placeData.placeId}`
         break;
       }
       case 'twitter':{
-        url = `https://twitter.com/intent/tweet?text=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        url = `https://twitter.com/intent/tweet?text=${I18n.t("social_share_text", { establecimiento: this.props.establishmentData.placeData.establecimiento,
         nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}%20${URL}/share/${this.props.establishmentData.placeData.placeId}`
         break;
       }
@@ -341,12 +341,12 @@ export default class Establishment extends React.Component {
         let app_id = 1964173333831483,
             link = `${URL}/share/${this.props.establishmentData.placeData.placeId}`;
 
-        url = `https://www.facebook.com/dialog/share?app_id=${app_id}&display=popup&href=${encodeURIComponent(link)}&quote=${I18n.t("social_share_text", { establishment: this.props.establishmentData.placeData.establecimiento,
+        url = `https://www.facebook.com/dialog/share?app_id=${app_id}&display=popup&href=${encodeURIComponent(link)}&quote=${I18n.t("social_share_text", { establecimiento: this.props.establishmentData.placeData.establecimiento,
         nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })}`
         break;
       }
       case 'messenger':{
-        let link = `${I18n.t("social_share_text_not_encode", { establishment: this.props.establishmentData.placeData.establecimiento,
+        let link = `${I18n.t("social_share_text_not_encode", { establecimiento: this.props.establishmentData.placeData.establecimiento,
         nombre_partido: this.props.establishmentData.placeData.barrio_localidad, locale: this.props.lang })} ${URL}/share/${this.props.establishmentData.placeData.placeId}`,
         app_id = 1964173333831483
 

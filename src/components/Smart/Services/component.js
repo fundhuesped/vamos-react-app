@@ -39,6 +39,7 @@ class SmartServices extends React.Component {
       db={this.props.db}
       ui={this.props.ui}
       dispatch={this.props.dispatch}
+      cleanState={this.props.navigation.state.params.cleanState}
     />)
   }
 }

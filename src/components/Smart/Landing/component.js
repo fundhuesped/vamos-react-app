@@ -24,19 +24,11 @@ class SmartLanding extends React.Component {
     else HTTPService.checkPlaces();
   }
 
-  _handleService = (service) =>{
-    if(service !== "TEEN"){
-      this.props.dispatch(selectLookingFor(service))
-      this.props.navigation.navigate('Services',{service: service})
-    }
-  }
-
   render() {
     // console.log(this.props.db.);
     return ((this.props.db.isFetching) ? <ProgressCircle firstFetch={(this.props.db.places.meta.updatedAt === undefined) ? true : false} downloading={true}/> :
     <DummyLanding
       navigation={this.props.navigation}
-      _handleService={this._handleService}
       ui={this.props.ui}
       db={this.props.db}
       dispatch={this.props.dispatch}

@@ -13,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.horcrux.svg.SvgPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MapsPackage(),
           new RealmReactPackage(),
           new ReactNativeI18n(),
-          new LottiePackage()
+          new LottiePackage(),
+          new SplashScreenReactPackage()
       );
     }
   };

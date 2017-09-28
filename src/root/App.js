@@ -13,6 +13,7 @@ import I18n from '../config/i18n';
 
 import { _createStore, _getStore, } from '../storage';
 import {updateStoreDB,updateStoreUI, startFetching, setLang} from '../constants/actions'
+import SplashScreen from 'react-native-splash-screen'
 
 import {tracker} from '../utils/analytics/index.js'
 
@@ -67,6 +68,7 @@ export default class App extends React.Component {
     }
     setTimeout( () => {
     this.setState({rehydrated: true})
+    SplashScreen.hide();
   }, 10);
 }
 
@@ -75,7 +77,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (this.state.rehydrated) ? (
+    return (true) ? (
       <Provider store={store}>
           <Root>
             <AppNavigator

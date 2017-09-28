@@ -259,7 +259,12 @@ export default class Services extends React.Component {
               >
               <Button
                 transparent
-                onPress={()=>{this.props.navigation.goBack()}}
+                onPress={() =>{
+                  if(typeof this.props.cleanState === 'function'){
+                      this.props.cleanState();
+                  }
+                  this.props.navigation.goBack()
+                }}
                 >
                 <Icon name="ios-arrow-back"/>
               </Button>
@@ -331,7 +336,7 @@ export default class Services extends React.Component {
                       <View style={styles.containerGeolocation}>
                         <Icon name='md-pin' style={{fontSize: 30, color: '#FFFFFF'}}/>
                         <View style={{marginLeft: '7%'}}>
-                          <Text style={{color: 'rgba(0,0,0,0.4)'}}>{I18n.t("search_by_location_title", {locale: this.props.ui.lang})}</Text>
+                          <Text style={{color: 'rgba(0,0,0,0.4)'}}>{I18n.t("search_by_location", {locale: this.props.ui.lang})}</Text>
                         </View>
                       </View>
                     </TouchableHighlight>

@@ -41,7 +41,7 @@ class SmartSearchForGeolocation extends React.Component {
       navigation={this.props.navigation}
       store={data}
       _changeSortValue={this._changeSortValue}
-      address={this.props.navigation.state.params.address}
+      address={this.props.navigation.state.params.cityDepartment}
       serviceTypeData={this.props.ui.lookingFor}
       lang={this.props.ui.lang}
       searchEngine={(this.props.ui.searchEngine.selected.name !== AUTOCOMPLETE) ? true : false}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Text,View,StyleSheet,Image, Button, Linking, Picker, Modal, TouchableHighlight, ScrollView} from 'react-native'
+import {Text,View,StyleSheet,Image, Button, Linking, Picker, Modal, TouchableHighlight, ScrollView, Dimensions} from 'react-native'
 import {Toast, Icon, Spinner} from 'native-base';
 import {connect} from 'react-redux'
 import {URL,TIME_STAMP_GPS_MIN} from '../../../config/HTTP/index.js'
@@ -13,6 +13,8 @@ function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
 }
 
+const {width, height} = Dimensions.get('window');
+
 class SideBar extends Component {
 
   constructor(props){
@@ -24,6 +26,8 @@ class SideBar extends Component {
       showModalGPS: false
     }
   }
+
+  componentWillReceiveProps = (nextProps) => {if(this.props.ui.lang !== nextProps.ui.lang) this.setState({language:nextProps.ui.lang})}
 
   _setModalVisible = (visible,isFetching) => (!isFetching) ? this.setState({modalVisible: visible}) : this.setState({modalVisible: visible}, () => {
     HTTPService.cleanState();
@@ -217,66 +221,76 @@ class SideBar extends Component {
                   </Picker>
                 </View>
               </View>
-              <TouchableHighlight
-                onPress={this._goToAbout}
-                activeOpacity={0.5}
-                underlayColor="white"
-                >
                 <View
                   style={styles.bodyItem}
                   >
-                  <Icon name='ios-information-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-                  <Text style={styles.bodyItemText}>{I18n.t("go_to_about", {locale: this.props.ui.lang})}</Text>
+                    <TouchableHighlight
+                      onPress={this._goToAbout}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                          <Icon name='ios-information-circle' style={{fontSize: 24, color:'#e6334c'}}/>
+                          <Text style={styles.bodyItemText}>{I18n.t("go_to_about", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={this._goToSuggest}
-                activeOpacity={0.5}
-                underlayColor="white"
-                >
                 <View
                   style={styles.bodyItem}
                   >
-                  <Icon name='ios-add-circle' style={{fontSize: 24, color:'#e6334c'}}/>
-                  <Text style={styles.bodyItemText}>{I18n.t("go_to_suggest", {locale: this.props.ui.lang})}</Text>
+                    <TouchableHighlight
+                      onPress={this._goToSuggest}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                          <Icon name='ios-add-circle' style={{fontSize: 24, color:'#e6334c'}}/>
+                          <Text style={styles.bodyItemText}>{I18n.t("go_to_suggest", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={this._goToNearby}
-                activeOpacity={0.5}
-                underlayColor="white"
-                >
                 <View
                   style={styles.bodyItem}
                   >
-                  <Icon name='ios-pin' style={{fontSize: 24, color:'#e6334c'}}/>
-                  <Text style={styles.bodyItemText}>{I18n.t("nearby", {locale: this.props.ui.lang})}</Text>
+                    <TouchableHighlight
+                      onPress={this._goToNearby}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                          <Icon name='ios-pin' style={{fontSize: 24, color:'#e6334c'}}/>
+                          <Text style={styles.bodyItemText}>{I18n.t("nearby", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={this._reloadBD}
-                activeOpacity={0.5}
-                underlayColor="white"
-                >
                 <View
                   style={styles.bodyItem}
                   >
-                  <Icon name='md-refresh' style={{fontSize: 24, color:'#e6334c'}}/>
-                  <Text style={styles.bodyItemText}>{I18n.t("reload_bd", {locale: this.props.ui.lang})}</Text>
+                    <TouchableHighlight
+                      onPress={this._reloadBD}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                          <Icon name='md-refresh' style={{fontSize: 24, color:'#e6334c'}}/>
+                          <Text style={styles.bodyItemText}>{I18n.t("reload_bd", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={this._goToList}
-                activeOpacity={0.5}
-                underlayColor="white"
-                >
                 <View
                   style={styles.bodyItem}
                   >
-                  <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
-                  <Text style={styles.bodyItemText}>{I18n.t("list", {locale: this.props.ui.lang})}</Text>
+                    <TouchableHighlight
+                      onPress={this._goToList}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                          <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
+                          <Text style={styles.bodyItemText}>{I18n.t("list", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
                 </View>
-              </TouchableHighlight>
             </View>
           </ScrollView>
           <View style={styles.footer}>
@@ -316,7 +330,7 @@ class SideBar extends Component {
                   <View style={styles.modalViewActions}>
                     <View>
                       <Button
-                        onPress={() => this.setState({modalVisible:false})}
+                        onPress={() => this.setState({modalVisible:false, modalType:false})}
                         color="#e6334c"
                         title={I18n.t("back_label_button", {locale: this.props.ui.lang})}
                       />
@@ -381,18 +395,18 @@ const styles = StyleSheet.create({
     height: 100,
   },
   body:{
-    marginLeft: 20
+    marginLeft: 20,
   },
   bodyItem:{
     flexDirection:'row',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: height/25,
   },
   bodyItemText:{
-    fontSize: 20,
+    fontSize: height/35,
     color:'#e6334c',
     marginLeft: 20,
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans',
   },
   footer:{
     justifyContent: 'center'

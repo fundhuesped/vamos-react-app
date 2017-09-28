@@ -24,7 +24,7 @@ export default class SearchForGeolocation extends React.Component {
     this.state={
       loaded: false,
       sortEngine: "ALL",
-      address: 'Obteniendo dirección',
+      address: null,
       showModal: false,
       isTeen: false,
       disabledButtonMap: false
@@ -100,11 +100,11 @@ export default class SearchForGeolocation extends React.Component {
       partido: false,
       ciudad: false
     }
-    if(typeof this.state.address !== 'string' && this.state.address !== undefined) location = {
-      pais: this.state.address.address_parts.country || null,
-      provincia: this.state.address.address_parts.administrative_area_level_1 || null,
-      partido: this.state.address.address_parts.administrative_area_level_2 || null,
-      ciudad: this.state.address.address_parts.locality || null
+    if(typeof this.state.address !== 'string' && this.state.address !== null && this.state.address !== undefined) location = {
+      pais: this.state.address.nombre_pais || null,
+      provincia: this.state.address.nombre_provincia || null,
+      partido: this.state.address.nombre_partido || null,
+      ciudad: this.state.address.nombre_ciudad || null
     }
     return (
       <StyleProvider style={getTheme(platform)}>
@@ -149,15 +149,21 @@ export default class SearchForGeolocation extends React.Component {
                   <Text style={styles.headerServiceTitle}>{serviceData.title.toUpperCase()}</Text>
                 </View>
               </View>
-              {(this.state.address !== undefined) ? (
+              {(this.state.address !== null) ? (
                 <View style={styles.serviceBreadcrumbLocation}>
-                  {(location.pais) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.pais}</Text> : null }
-                  {(location.pais) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                  {(location.provincia) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.provincia}</Text> : null }
-                  {(location.provincia) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                  {(location.partido) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.partido}</Text> : null }
-                  {(location.partido) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '1%'}}/> : null }
-                  {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
+                  {(this.props.searchEngine) ? (
+                    <Text style={styles.serviceBreadcrumbLocationText}>{I18n.t("busqueda_auto_acc", {locale: this.props.lang})}</Text>
+                  ):(
+                    <View style={{flexDirection:'row', flexWrap: 'wrap', alignItems: 'center',}}>
+                      {(location.pais) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.pais}</Text> : null }
+                      {(location.pais) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '2%'}}/> : null }
+                      {(location.provincia) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.provincia}</Text> : null }
+                      {(location.provincia) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '2%'}}/> : null }
+                      {(location.partido) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.partido}</Text> : null }
+                      {(location.partido) ? <Icon name="ios-arrow-forward" style={{fontSize: 12, color: '#e6334c', marginHorizontal: '2%'}}/> : null }
+                      {(location.ciudad) ? <Text style={styles.serviceBreadcrumbLocationText}>{location.ciudad}</Text> : null }
+                    </View>
+                  )}
                 </View>
               ) : (null)}
               { (this.props.store.length !== 0) ?

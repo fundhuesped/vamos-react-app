@@ -97,7 +97,7 @@ export const normalizePlace = (place) => {
     formattedAddress: place.formattedAddress ? String(place.formattedAddress) : "",
     latitude: place.latitude ? parseFloat(place.latitude) : .0,
     longitude: place.longitude ? parseFloat(place.longitude) : .0,
-    rateReal: place.rateReal ? parseFloat(place.rateReal) : 0,
+    rateReal: place.rate ? parseFloat(place.rate) : 0,
     cantidad_votos: place.cantidad_votos ? parseInt(place.cantidad_votos) : 0,
     habilitado: normalizeBoolean(place.habilitado),
     es_rapido: normalizeBoolean(place.es_rapido),

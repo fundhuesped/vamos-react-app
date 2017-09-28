@@ -52,7 +52,8 @@ export default class Evaluations extends React.Component {
   _renderServices = () =>{
     let serviceOptions = [];
     this.props.servicesAvailable.map( (service,i) =>{
-      serviceOptions.push(<Picker.Item label={service.content.name} value={`${service.content.id}/${service.content.shortname}`} color="#000" key={i}/>)
+      let label = I18n.t(`${service.content.shortname.toLowerCase()}_name`, {locale: this.props.lang})
+      serviceOptions.push(<Picker.Item label={label} value={`${service.content.id}/${service.content.shortname}`} color="#000" key={i}/>)
     })
 
     return serviceOptions
@@ -300,7 +301,6 @@ export default class Evaluations extends React.Component {
                           <Picker.Item label={I18n.t("evaluation_answeroption_38", {locale: this.props.lang})} value="evaluation_answeroption_38" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_39", {locale: this.props.lang})} value="evaluation_answeroption_39" color="#000"/>
                           <Picker.Item label={I18n.t("evaluation_answeroption_40", {locale: this.props.lang})} value="evaluation_answeroption_40" color="#000"/>
-                          <Picker.Item label={I18n.t("evaluation_answeroption_41", {locale: this.props.lang})} value="evaluation_answeroption_41" color="#000"/>
                         </Picker>
                       </View>
                     </View>
