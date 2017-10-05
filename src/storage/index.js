@@ -144,9 +144,6 @@ export const _getStore = (id) => {
 }
 
 export const _updateStore = async (store, value, type) => {
-  // alert('update store '+ value.length +" "+ type);
-  console.log(store);
-  console.log(value);
   switch (type) {
     case "lang":{
       realm.write(() => {
@@ -178,7 +175,6 @@ export const _updateStore = async (store, value, type) => {
         try {
           store.cities = value
         } catch (e) {
-          alert('error realm '+e);
           console.warn(e)
         }
       })

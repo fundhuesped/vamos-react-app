@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon,Spinner} from 'native-base';
-import {View, Image, StyleSheet, Picker, Dimensions, Text, ScrollView, TextInput, TouchableHighlight, Modal, Keyboard} from 'react-native';
+import {View, Image, StyleSheet, Picker, Dimensions, Text, ScrollView, TextInput, TouchableHighlight, Modal, Keyboard, BackHandler} from 'react-native';
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
@@ -47,6 +47,22 @@ export default class Evaluations extends React.Component {
       showThanks: false,
       showModal: false
     }
+  }
+
+  componentWillMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    if(typeof this.props.cleanState === 'function'){
+        this.props.cleanState();
+    }
+    this.props.navigation.goBack(null);
+    return true;
   }
 
   _renderServices = () =>{

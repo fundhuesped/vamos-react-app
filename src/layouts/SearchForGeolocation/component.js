@@ -1,13 +1,15 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner, CheckBox,DeviceEventEmitter } from 'native-base';
-import {View, StyleSheet,Picker, NetInfo, Modal, Text, Dimensions, TouchableHighlight} from 'react-native'
+import {View, StyleSheet,Picker, NetInfo, Modal, Text, Dimensions, TouchableHighlight, BackHandler, Linking} from 'react-native'
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
 import PlacePreviewList from '../../components/Dummy/PlacePreviewList/component.js'
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
+import {URL} from '../../config/HTTP/index.js'
+
 
 import {RATE, DISTANCE, TEEN} from '../../constants/action-types/index.js'
 
@@ -31,6 +33,22 @@ export default class SearchForGeolocation extends React.Component {
     }
   }
 
+  componentWillMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    if(typeof this.props.cleanState === 'function'){
+        this.props.cleanState();
+    }
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
   componentDidMount = () => {
     if(this.props.store[0] === undefined || this.props.store[0].empty === undefined ) this.setState({loaded:true})
     this.setState({address:this.props.address})
@@ -50,7 +68,19 @@ export default class SearchForGeolocation extends React.Component {
 
   _cleanState = () => this.setState({disabledButtonMap:false})
 
+  _goToSuggest = () =>{
+    let url = `${URL}/form`;
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
   _renderView = () =>{
+    console.log(this.props.store);
     let view;
     if(this.state.loaded){
       if(this.props.store.length !== 0){
@@ -62,9 +92,7 @@ export default class SearchForGeolocation extends React.Component {
       }else {
         view = (
           <View style={{marginTop: '5%'}}>
-            <Text style={{color:'#655E5E'}}>
-              No hay establecimientos cercanos
-            </Text>
+            <Text style={{color: '#655E5E'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label", {locale: this.props.lang})}</Text>
           </View>
         )
       }

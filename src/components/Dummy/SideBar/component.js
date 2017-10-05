@@ -109,6 +109,7 @@ class SideBar extends Component {
           this._getAddress(position.coords)
         },
         (error) => {
+          alert('error')
           this.setState({modalVisible:true, modalType: true, showModalGPS:false})
         },
         { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },
@@ -308,6 +309,9 @@ class SideBar extends Component {
                 resizeMode="contain"
               />
             </View>
+            {/* <Text>
+              STAGING RELEASE
+            </Text> */}
           </View>
           <Modal
             animationType={"fade"}

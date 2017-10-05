@@ -51,7 +51,7 @@ export default class App extends React.Component {
     this.state = { rehydrated: false }
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     let storeRealm = _getStore("1");
     if(storeRealm === undefined) {
       _createStore('1')

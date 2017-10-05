@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Spinner} from 'native-base';
-import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal, Keyboard,TouchableOpacity} from 'react-native';
+import {View, Image, StyleSheet, Dimensions, Text, TextInput, TouchableHighlight, Modal, Keyboard,TouchableOpacity, BackHandler} from 'react-native';
 
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
@@ -44,6 +44,22 @@ export default class Services extends React.Component {
       itemSelected: null,
       showModalGPS: false
     }
+  }
+
+  componentWillMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    if(typeof this.props.cleanState === 'function'){
+        this.props.cleanState();
+    }
+    this.props.navigation.goBack(null);
+    return true;
   }
 
   _sendToInfoCountryGEOLOCATE = () =>{

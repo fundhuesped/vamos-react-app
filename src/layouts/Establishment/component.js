@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationActions } from 'react-navigation'
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon } from 'native-base';
 import { StyleProvider} from 'native-base';
-import { Text, StyleSheet, View, Image, ScrollView, TouchableHighlight, Dimensions, Modal, NetInfo, Linking } from 'react-native';
+import { Text, StyleSheet, View, Image, ScrollView, TouchableHighlight, Dimensions, Modal, NetInfo, Linking, BackHandler } from 'react-native';
 import getTheme from '../../config/styles/native-base-theme/components';
 import platform from '../../config/styles/native-base-theme/variables/platform';
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
@@ -41,6 +41,23 @@ export default class Establishment extends React.Component {
       disabledButton: false,
     }
   }
+
+  componentWillMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    if(typeof this.props.cleanState === 'function'){
+        this.props.cleanState();
+    }
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
 
   _goURL = (url) =>{
     Linking.canOpenURL(url).then(supported => {

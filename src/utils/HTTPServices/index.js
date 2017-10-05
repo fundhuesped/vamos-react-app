@@ -19,7 +19,6 @@ export class HTTPServices {
   fetchPlaces = async () => {
     store.dispatch(startFetching())
     // console.log('FIRTS FETCH BD');
-    // alert('FIRTS FETCH BD');
     while (this.currentPage) {
       if(this.currentPage <= this.totalPages){
         try {
@@ -50,13 +49,11 @@ export class HTTPServices {
       }
     }
     // console.log('FINALIZADO FIRTS FETCH BD');
-    // alert('FINALIZADO FIRTS FETCH BD');
     this.fetchCities()
   }
 
   checkPlaces = async () => {
     // console.log('CHECKEANDO BD');
-    // alert('CHECKEANDO BD');
     let lastUpdate = new Date(store.getState().db.places.meta.updatedAt) || new Date()
         currentDate = new Date(),
         differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime(),
@@ -65,15 +62,11 @@ export class HTTPServices {
     let failedPages;
 
     if(differenceDays >= DAYSBEFOREUPDATE){
-      console.log('BAJANDO BD NUEVAMENTE');
-      // alert('BAJANDO BD NUEVAMENTE');
       this.fetchPlaces();
     }else {
       failedPages = store.getState().db.places.meta.failedPages,
           newFailedPages = {};
-          console.log(failedPages);
       for (let i in failedPages) {
-        console.log(failedPages[i],i);
           let nextUrl = `${URL}/api/v2/places/getall/?page=${i}`,
               place;
           try {
@@ -115,7 +108,7 @@ export class HTTPServices {
 
         } catch(error) {
           console.log(error);
-          alert('error fetching cities'+error.message)
+          // alert('error fetching cities'+error.message)
         }
       }
       else this.currentDataCities = store.getState().db.cities;
@@ -135,7 +128,7 @@ export class HTTPServices {
 
       } catch(error) {
         console.log(error);
-        alert('error fetching cities'+error.message)
+        // alert('error fetching cities'+error.message)
       }
 
       store.dispatch(updatePlaces(this.currentDataPlaces,this.failedPages))

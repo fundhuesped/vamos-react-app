@@ -64,12 +64,12 @@ export default {
   General_ILE_AW: 'En Aruba el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_BB: 'En Barbados el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
   General_ILE_BZ: 'En Belice el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
-  General_ILE_BO: 'En Bolivia el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
+  General_ILE_BO: 'En Bolivia el aborto es legal bajo ciertas circunstancias. En los casos permitidos por ley podrás acceder a servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
   General_ILE_CL: 'En Chile el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.',
   General_ILE_CO: 'En Colombia el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
   General_ILE_CW: 'En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_DM: 'En Dominica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
-  General_ILE_DO: 'En República Dominicana el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.',
+  General_ILE_DO: 'En República Dominicana el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados/planeados y prevención de muertes por aborto inseguro.',
   General_ILE_EC: 'En Ecuador el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.',
   General_ILE_SV: 'En El Salvador el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_GD: 'En Granada el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
@@ -617,6 +617,6 @@ export default {
   "noCities": "No hay registros de ciudades para [[partido]]",
   "noResults": "No tenemos registrados lugares de entrega gratuita de Condones en [[ciudad]]",
   "point": "[[rate]] punto",
-  social_share_text_not_encode: "Usando #VAMOS encontré {{establishment}} en {{nombre_partido}}",
+  social_share_text_not_encode: "Usando #VAMOS encontré {{establecimiento}} en {{nombre_partido}}",
   direcion_position_label: "{{calle}} {{altura}} {{piso}} y {{interseccion}}"
 };

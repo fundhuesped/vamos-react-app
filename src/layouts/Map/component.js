@@ -10,7 +10,8 @@ import {
   Animated,
   Image,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from 'react-native';
 import { StyleProvider } from 'native-base';
 import getTheme from '../../config/styles/native-base-theme/components';
@@ -49,6 +50,19 @@ export default class Map extends React.Component {
     console.log(this.props);
     this.index = 0;
     this.animation = new Animated.Value(0);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    if(typeof this.props.cleanState === 'function'){
+        this.props.cleanState();
+    }
+    this.props.navigation.goBack(null);
+    return true;
   }
 
   componentDidMount = () => {
