@@ -618,5 +618,8 @@ export default {
   "noResults": "",
   "point": "[[rate]] points",
   social_share_text_not_encode: "Using #Vamos I found {{establecimiento}} in {{nombre_partido}}",
-  direcion_position_label: "{{calle}} {{altura}} {{piso}} and {{interseccion}}"
+  direcion_position_label: "{{calle}} {{altura}} {{piso}} and {{interseccion}}",
+  evaluation_8: "Name:",
+  evaluation_9: "Email:",
+  evaluation_10: "Phone:"
 };

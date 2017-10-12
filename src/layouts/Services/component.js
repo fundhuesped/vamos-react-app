@@ -9,6 +9,7 @@ import platform from '../../config/styles/native-base-theme/variables/platform';
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
 import CitiesList from '../../components/Dummy/CitiesList/component.js'
+import Permissions from 'react-native-permissions';
 
 import {getServiceData} from '../../utils/engines/index.js'
 
@@ -63,6 +64,10 @@ export default class Services extends React.Component {
   }
 
   _sendToInfoCountryGEOLOCATE = () =>{
+    // Permissions.check('location', 'always')
+    //   .then(response => {
+    //     if(response !== 'authorized') this.setState({showModal:true, showModalGPS: false})
+    // })
     this.setState({showModalGPS:true})
     Keyboard.dismiss();
     if(this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined){

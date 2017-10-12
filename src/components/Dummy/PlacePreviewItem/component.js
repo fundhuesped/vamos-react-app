@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     paddingRight: '2.5%',
     paddingVertical: '5%',
     flex: 9,
+    height: width/2.7
   },
   fontColor:{ color: '#655E5E'},
   rowAlign:{

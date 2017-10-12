@@ -618,5 +618,8 @@ export default {
   "noResults": "No tenemos registrados lugares de entrega gratuita de Condones en [[ciudad]]",
   "point": "[[rate]] punto",
   social_share_text_not_encode: "Usando #VAMOS encontré {{establecimiento}} en {{nombre_partido}}",
-  direcion_position_label: "{{calle}} {{altura}} {{piso}} y {{interseccion}}"
+  direcion_position_label: "{{calle}} {{altura}} {{piso}} y {{interseccion}}",
+  evaluation_8: "Nombre:",
+  evaluation_9: "Mail:",
+  evaluation_10: "Télefono:"
 };

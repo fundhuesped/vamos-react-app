@@ -8,6 +8,7 @@ import {EN, ES, NEARBY, GEOLOCATE} from '../../../constants/action-types/index.j
 import I18n from '../../../config/i18n/index.js';
 import {HTTPService} from '../../../utils/HTTPServices/index.js';
 import {Engine} from '../../../utils/engines'
+import Permissions from 'react-native-permissions';
 
 function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
@@ -100,6 +101,10 @@ class SideBar extends Component {
   }
 
   _goToNearby = () =>{
+    // Permissions.check('location', 'always')
+    //   .then(response => {
+    //     if(response !== 'authorized') this.setState({modalVisible:true, modalType: true, showModalGPS:false})
+    // })
     this.setState({showModalGPS:true})
     this.props.dispatch(selectLookingFor(NEARBY))
     if(this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined){
@@ -109,7 +114,6 @@ class SideBar extends Component {
           this._getAddress(position.coords)
         },
         (error) => {
-          alert('error')
           this.setState({modalVisible:true, modalType: true, showModalGPS:false})
         },
         { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 },

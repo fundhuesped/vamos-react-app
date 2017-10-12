@@ -18,6 +18,7 @@ import SVGILEIcon from '../../components/Dummy/SVG/ILEIcon/component.js'
 import SVGMACIcon from '../../components/Dummy/SVG/MACIcon/component.js'
 import SVGTeenIcon from '../../components/Dummy/SVG/TeenIcon/component.js'
 import SVGVIHIcon from '../../components/Dummy/SVG/VIHIcon/component.js'
+import Permissions from 'react-native-permissions';
 
 import {
   CON,
@@ -53,6 +54,10 @@ export default class Landing extends React.Component {
   _cleanState = () => this.setState({buttonId: ''})
 
   _goToGeolocation = () =>{
+    // Permissions.check('location', 'always')
+    //   .then(response => {
+    //     if(response !== 'authorized') this.setState({showModalErrorGPS:true, showModalGPS: false})
+    // })
     this.setState({showModalGPS:true})
     this._handleService(TEEN)
     if(this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined){

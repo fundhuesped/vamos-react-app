@@ -323,7 +323,7 @@ export default class Evaluations extends React.Component {
                     <View style={styles.section}>
                       <Text style={[styles.fontColor, {flexWrap:'wrap', flex:1}]}>{I18n.t("evaluation_question_14", {locale: this.props.lang})}</Text>
                       <View style={{flexDirection:'row', flex:1, alignItems: 'center', marginVertical: '2.5%', paddingRight:'1%'}}>
-                        <Text style={[styles.fontColor, {flex:1}]}>{I18n.t("name", {locale: this.props.lang})}</Text>
+                        <Text style={[styles.fontColor, {flex:1, fontSize: width/32}]}>{I18n.t("evaluation_8", {locale: this.props.lang})}</Text>
                         <TextInput
                           style={styles.nameInput}
                           onChangeText={(text) => this.setState({nameInput:text})}
@@ -333,7 +333,7 @@ export default class Evaluations extends React.Component {
                         />
                       </View>
                       <View style={{flexDirection:'row', flex:1, alignItems: 'center', marginVertical: '2.5%', paddingRight:'1%'}}>
-                        <Text style={[styles.fontColor, {flex:1}]}>{I18n.t("email", {locale: this.props.lang})}</Text>
+                        <Text style={[styles.fontColor, {flex:1, fontSize: width/32}]}>{I18n.t("evaluation_9", {locale: this.props.lang})}</Text>
                         <TextInput
                           style={styles.nameInput}
                           onChangeText={(text) => this.setState({emailInput:text})}
@@ -344,7 +344,7 @@ export default class Evaluations extends React.Component {
                         />
                       </View>
                       <View style={{flexDirection:'row', flex:1, alignItems: 'center', marginVertical: '2.5%', paddingRight:'1%'}}>
-                        <Text style={[styles.fontColor, {flex:1}]}>{I18n.t("tel", {locale: this.props.lang})}</Text>
+                        <Text style={[styles.fontColor, {flex:1, fontSize: width/32}]}>{I18n.t("evaluation_10", {locale: this.props.lang})}</Text>
                         <TextInput
                           style={styles.nameInput}
                           onChangeText={(text) => this.setState({phoneInput:text})}
