@@ -126,6 +126,12 @@ class Place {
       web_ile: 'string',
       ubicacion_ile: 'string',
       comentarios_ile: 'string',
+      servicetype_ile: 'string',
+      servicetype_mac: 'string',
+      servicetype_condones: 'string',
+      servicetype_prueba: 'string',
+      servicetype_ssr: 'string',
+      servicetype_dc: 'string',
       friendly_condones: 'bool',
       friendly_vacunatorios: 'bool',
       friendly_prueba: 'bool',
@@ -206,4 +212,4 @@ export const _deleteStore = (store) => {
 // const serializedState = JSON.stringify(state) save
 // let serializedState = JSON.parse(value) load
 
-const realm = new Realm({schema: [City,Place,Store]})
+const realm = new Realm({schema: [City,Place,Store], schemaVersion: 1})

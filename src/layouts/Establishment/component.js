@@ -125,7 +125,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_distrib,
             email: data.placeData.mail_distrib,
             web: data.placeData.web_distrib,
-            phone: data.placeData.tel_distrib
+            phone: data.placeData.tel_distrib,
+            serviceType: data.placeData.servicetype_condones
           }
         }
           break;
@@ -136,7 +137,8 @@ export default class Establishment extends React.Component {
             email: data.placeData.mail_testeo,
             web: data.placeData.web_testeo,
             phone: data.placeData.tel_testeo,
-            infoPrueba: data.placeData.observaciones_testeo
+            infoPrueba: data.placeData.observaciones_testeo,
+            serviceType: data.placeData.servicetype_prueba
           }
         }
           break;
@@ -146,7 +148,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_ile,
             email: data.placeData.mail_ile,
             web: data.placeData.web_ile,
-            phone: data.placeData.tel_ile
+            phone: data.placeData.tel_ile,
+            serviceType: data.placeData.servicetype_ile
           }
         }
           break;
@@ -157,7 +160,8 @@ export default class Establishment extends React.Component {
             email: data.placeData.mail_dc,
             web: data.placeData.web_dc,
             phone: data.placeData.tel_dc,
-            infoDC: data.placeData.comentarios_dc
+            infoDC: data.placeData.comentarios_dc,
+            serviceType: data.placeData.servicetype_dc
           }
         }
           break;
@@ -167,7 +171,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_mac,
             email: data.placeData.mail_mac,
             web: data.placeData.web_mac,
-            phone: data.placeData.tel_mac
+            phone: data.placeData.tel_mac,
+            serviceType: data.placeData.servicetype_mac
           }
         }
           break;
@@ -177,7 +182,8 @@ export default class Establishment extends React.Component {
             director: data.placeData.responsable_ssr,
             email: data.placeData.mail_ssr,
             web: data.placeData.web_ssr,
-            phone: data.placeData.tel_ssr
+            phone: data.placeData.tel_ssr,
+            serviceType: data.placeData.servicetype_ssr
           }
         }
           break;
@@ -188,6 +194,15 @@ export default class Establishment extends React.Component {
 
       return (
         <View style={styles.serviceAditionalInfo}>
+          {(service.serviceType !== "" && service.serviceType !== undefined) ? (
+            <View style={styles.serviceAditionalInfoItem}>
+              <Icon name='ios-information-circle-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>
+              <Text
+                style={{color: "#FFFFFF", flex: 1, flexWrap:'wrap'}}
+                >{`${I18n.t("form_select_service_type_title", {locale: this.props.lang})}: ${service.serviceType}`}</Text>
+            </View>
+          ): null
+          }
           {(service.openTime !== "" && service.phone !== undefined) ? (
             <View style={styles.serviceAditionalInfoItem}>
               <Icon name='ios-clock-outline' style={{fontSize: 14, color: '#FFFFFF', marginRight:'2%'}}/>

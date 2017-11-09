@@ -3,6 +3,7 @@ package com.vamoslac.myapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import io.realm.react.RealmReactPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
@@ -36,7 +37,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RealmReactPackage(),
           new ReactNativeI18n(),
           new LottiePackage(),
-          new SplashScreenReactPackage()
+          new SplashScreenReactPackage(),
+          new RNDeviceInfo()
       );
     }
   };

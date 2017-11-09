@@ -91,8 +91,9 @@ export default class SearchForGeolocation extends React.Component {
         )
       }else {
         view = (
-          <View style={{marginTop: '5%'}}>
-            <Text style={{color: '#655E5E'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label", {locale: this.props.lang})}</Text>
+          <View style={{marginTop: '5%', flexDirection: 'row'}}>
+            <Text style={{color: '#e6334c'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label", {locale: this.props.lang})}</Text>
+            <Text style={{color: '#e6334c', textDecorationLine: 'underline'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label_underline", {locale: this.props.lang})}</Text>
           </View>
         )
       }

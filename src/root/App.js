@@ -7,6 +7,7 @@ import Routes from '../config/routes/routes.js'
 import store from '../store/index.js'
 import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
 import {GA_TRACKING_ID} from '../config/HTTP/index.js'
+import DeviceInfo from 'react-native-device-info';
 
 import ProgressCircle from '../components/Dummy/ProgressCircle/component.js'
 import I18n from '../config/i18n';
@@ -54,6 +55,7 @@ export default class App extends React.Component {
   componentWillMount = () => {
     let storeRealm = _getStore("1");
     if(storeRealm === undefined) {
+      this.makeCallToFB();
       _createStore('1')
       let langDefault = I18n.currentLocale(),
           lang;
@@ -64,13 +66,24 @@ export default class App extends React.Component {
     else {
       store.dispatch(updateStoreDB({places:storeRealm.places, createdTimestamp:storeRealm.createdTimestamp, cities:storeRealm.cities}))
       store.dispatch(updateStoreUI(storeRealm.lang))
-
     }
     setTimeout( () => {
     this.setState({rehydrated: true})
     SplashScreen.hide();
   }, 10);
 }
+
+  makeCallToFB = async () => {
+    let url = `https://graph.facebook.com/1964173333831483/activities?event=MOBILE_APP_INSTALL&advertiser_id=${DeviceInfo.getUniqueID()}&advertiser_tracking_enabled=1&application_tracking_enabled=1&bundle_short_version=0.5&bundle_id=com.vamoslac.myapp&attribution=${DeviceInfo.getUniqueID()}`
+    try {
+      let response = await fetch(url, {
+                            method: 'POST',
+                            })
+      let responseJson = await response.json();
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
   componentWillUnmount = () =>{
     console.log('unmount');
