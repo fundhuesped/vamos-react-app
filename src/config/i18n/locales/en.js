@@ -69,7 +69,7 @@ export default {
   General_ILE_CO: 'In Colombia abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.',
   General_ILE_CW: 'In Curacao abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org',
   General_ILE_DM: 'In Dominica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org',
-  General_ILE_DO: 'In Domincan Republic abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned/unwanted pregnancy and preventing deaths for unsafe abortion at the following clinics.',
+  General_ILE_DO: 'In Dominican Republic abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org',
   General_ILE_EC: 'In Ecuador abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.',
   General_ILE_SV: 'In El Salvador abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org',
   General_ILE_GD: 'In Grenada abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org',

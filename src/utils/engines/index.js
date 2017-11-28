@@ -116,7 +116,7 @@ export const getGralTextandILEForCountry = (country) =>{
       break;
     case "DO":
       {
-        ILEService = true;
+        ILEService = false;
         asocciationImageUrl =  require('../../assets/images/countryLogos/DO.jpg')
       }
       break;

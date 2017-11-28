@@ -69,7 +69,7 @@ export default {
   General_ILE_CO: 'En Colombia el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.',
   General_ILE_CW: 'En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_DM: 'En Dominica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
-  General_ILE_DO: 'En República Dominicana el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados/planeados y prevención de muertes por aborto inseguro.',
+  General_ILE_DO: 'En República Dominicana el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_EC: 'En Ecuador el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.',
   General_ILE_SV: 'En El Salvador el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
   General_ILE_GD: 'En Granada el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org',
