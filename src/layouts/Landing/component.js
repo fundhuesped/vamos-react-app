@@ -18,6 +18,7 @@ import SVGILEIcon from '../../components/Dummy/SVG/ILEIcon/component.js'
 import SVGMACIcon from '../../components/Dummy/SVG/MACIcon/component.js'
 import SVGTeenIcon from '../../components/Dummy/SVG/TeenIcon/component.js'
 import SVGVIHIcon from '../../components/Dummy/SVG/VIHIcon/component.js'
+import SVGChatIcon from '../../components/Dummy/SVG/ChatIcon/component.js'
 import Permissions from 'react-native-permissions';
 
 import {
@@ -113,7 +114,6 @@ export default class Landing extends React.Component {
           // alert('FAIL GEOCODIGN');
       }
       else{
-        console.log(responseJson);
         let address = {};
         const address_components = responseJson.results[0].address_components;
         let country;
@@ -131,7 +131,6 @@ export default class Landing extends React.Component {
         this.props.navigation.navigate('SearchForGeolocation',{address: addressFormated})
       }
     } catch (e) {
-      console.log(e);
       this.setState({showModalGPS:false})
       this.props.navigation.navigate('SearchForGeolocation')
     }
@@ -154,6 +153,7 @@ export default class Landing extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
             <Left style={{flex:1}}/>
@@ -184,6 +184,20 @@ export default class Landing extends React.Component {
           >
             <ScrollView style={styles.scrollContainer}>
               <View style={styles.container}>
+                <TouchableHighlight
+                  onPress={() => {this.props.chat()}}
+                  style={styles.chatBox}
+                  activeOpacity={0.5}
+                  underlayColor="#E32E43"
+                >
+                  <View style={[styles.boxContent]}>
+                    <SVGChatIcon
+                      height={(width/7)}
+                      width={(width/7)}
+                    />
+                    <Text style={[styles.boxContentText, {color: "#FFFFFF"}]}>{I18n.t("chat_text_middle", { locale: this.props.ui.lang })}</Text>
+                  </View>
+                </TouchableHighlight>
                 <View style={styles.row}>
                   <View style={styles.column}>
                     <TouchableHighlight
@@ -195,8 +209,8 @@ export default class Landing extends React.Component {
                       >
                       <View style={styles.boxContent}>
                         <SVGCondomIcon
-                          height={(width/5)}
-                          width={(width/5)}
+                          height={(width/7)}
+                          width={(width/7)}
                         />
                         <Text style={styles.boxContentText}>{I18n.t("condones_name", {locale: this.props.ui.lang})}</Text>
                       </View>
@@ -209,8 +223,8 @@ export default class Landing extends React.Component {
                       >
                         <View style={styles.boxContent}>
                           <SVGMACIcon
-                            height={(width/5)}
-                            width={(width/5)}
+                            height={(width/7)}
+                            width={(width/7)}
                           />
                           <Text style={styles.boxContentText}>{I18n.t("mac_name", {locale: this.props.ui.lang})}</Text>
                         </View>
@@ -223,8 +237,8 @@ export default class Landing extends React.Component {
                       >
                         <View style={styles.boxContent}>
                           <SVGDetectionIcon
-                            height={(width/5)}
-                            width={(width/5)}
+                            height={(width/7)}
+                            width={(width/7)}
                           />
                           <Text style={styles.boxContentText}>{I18n.t("dc_name", {locale: this.props.ui.lang})}</Text>
                         </View>
@@ -239,8 +253,8 @@ export default class Landing extends React.Component {
                       >
                         <View style={styles.boxContent}>
                           <SVGVIHIcon
-                            height={(width/5)}
-                            width={(width/5)}
+                            height={(width/7)}
+                            width={(width/7)}
                           />
                           <Text style={styles.boxContentText}>{I18n.t("prueba_name", {locale: this.props.ui.lang})}</Text>
                         </View>
@@ -253,8 +267,8 @@ export default class Landing extends React.Component {
                       >
                         <View style={styles.boxContent}>
                           <SVGILEIcon
-                            height={(width/5)}
-                            width={(width/5)}
+                            height={(width/7)}
+                            width={(width/7)}
                           />
                           <Text style={styles.boxContentText}>{I18n.t("ile_name", {locale: this.props.ui.lang})}</Text>
                         </View>
@@ -267,8 +281,8 @@ export default class Landing extends React.Component {
                       >
                         <View style={styles.boxContent}>
                           <SVGHealthIcon
-                            height={(width/5)}
-                            width={(width/5)}
+                            height={(width/8)}
+                            width={(width/8)}
                           />
                           <Text style={styles.boxContentText}>{I18n.t("ssr_name", {locale: this.props.ui.lang})}</Text>
                         </View>
@@ -295,7 +309,7 @@ export default class Landing extends React.Component {
                   animationType={"fade"}
                   transparent={true}
                   visible={this.state.showModalErrorGPS}
-                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  onRequestClose={() => {}}
                   >
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>
@@ -325,7 +339,7 @@ export default class Landing extends React.Component {
                   animationType={"fade"}
                   transparent={true}
                   visible={this.state.showModalGPS}
-                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  onRequestClose={() => {}}
                   >
                  <View style={styles.modalContainer}>
                    <View style={styles.modalView}>
@@ -362,11 +376,21 @@ const styles = StyleSheet.create({
   box:{
     elevation: 2,
     width: width / 2.6,
-    height: width / 2.8,
+    height: width / 3.6,
     marginBottom: 14,
     borderWidth: 2,
     borderColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20
+  },
+  chatBox:{
+    elevation: 2,
+    width: "100%",
+    height: width / 3.6,
+    marginBottom: 14,
+    borderWidth: 2,
+    borderColor: "#E32E43",
+    borderRadius: 20,
+    backgroundColor: "#E32E43"
   },
   lastBox:{
     elevation: 2,

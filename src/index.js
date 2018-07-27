@@ -46,7 +46,7 @@ export default class index extends React.Component {
       ...fontAssets,
     ]);
 
-  this.setState({ isReady: true },()=>{console.log('cargado');});
+  this.setState({ isReady: true },()=>{});
   }
 
   render() {

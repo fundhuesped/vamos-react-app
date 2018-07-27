@@ -9,6 +9,9 @@ import I18n from '../../../config/i18n/index.js';
 import {HTTPService} from '../../../utils/HTTPServices/index.js';
 import {Engine} from '../../../utils/engines'
 import Permissions from 'react-native-permissions';
+import ZendeskChat from 'react-native-zendesk-chat';
+import DeviceInfo from 'react-native-device-info';
+import SVGChatIcon from '../SVG/ChatIcon/component.js'
 
 function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
@@ -38,7 +41,6 @@ class SideBar extends Component {
 
 
   _reloadBD = () =>{
-    console.log('recargarBD');
     if(this.props.db.places.data.length === 0){
       Toast.show({
                 text: 'TODAVIA NO HAY DATOS EN LA BD!',
@@ -57,33 +59,30 @@ class SideBar extends Component {
     let url = `${URL}/#/acerca`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _goToSuggest = () =>{
     let url = `${URL}/form`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _goToList = () =>{
     let url = `${URL}/listado-paises`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _getDate = () =>{
@@ -173,7 +172,6 @@ class SideBar extends Component {
 
         }
       } catch (e) {
-        console.log(e);
         this._checkCountry(undefined, undefined)
       }
 
@@ -199,6 +197,16 @@ class SideBar extends Component {
     }
   }
 
+  _startZendeskChat = () => {
+    ZendeskChat.startChat({
+      name: "",
+      email: "",
+      phone: "user.mobile_phone",
+      tags: [''],
+      department: ""
+    });
+  }
+
 	render() {
 		return (
         <View style={styles.container}>
@@ -214,7 +222,7 @@ class SideBar extends Component {
             // contentContainerStyle ={{alignItems: 'left'}}
           >
             <View style={styles.body}>
-              <View style={styles.bodyItem}>
+              <View style={[styles.bodyItem, {marginBottom: height/70}]}>
                 <Icon name='ios-globe-outline' style={{fontSize: 24, color:'#e6334c'}}/>
                 {/* <Text style={styles.bodyItemText}>{I18n.t("language", {locale: this.props.ui.lang})}</Text> */}
                 <View style={{width: 100, paddingTop:3}}>
@@ -296,6 +304,24 @@ class SideBar extends Component {
                         </View>
                   </TouchableHighlight>
                 </View>
+                <View
+                  style={styles.bodyItem}
+                  >
+                    <TouchableHighlight
+                      onPress={this._startZendeskChat}
+                      activeOpacity={0.5}
+                      underlayColor="white"
+                      >
+                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
+                        <SVGChatIcon
+                          height={(width/14)}
+                          width={(width/14)}
+                          color={"#e6334c"}
+                        />
+                          <Text style={[styles.bodyItemText, {marginLeft: 15}]}>{I18n.t("chat_text_short", {locale: this.props.ui.lang})}</Text>
+                        </View>
+                  </TouchableHighlight>
+                </View>
             </View>
           </ScrollView>
           <View style={styles.footer}>
@@ -321,7 +347,7 @@ class SideBar extends Component {
             animationType={"fade"}
             transparent={true}
             visible={this.state.modalVisible}
-            onRequestClose={() => {console.log("Modal has been closed.")}}
+            onRequestClose={() => {}}
             >
            <View style={styles.modalContainer}>
               {this.state.modalType ? (
@@ -378,7 +404,7 @@ class SideBar extends Component {
             animationType={"fade"}
             transparent={true}
             visible={this.state.showModalGPS}
-            onRequestClose={() => {console.log("Modal has been closed.")}}
+            onRequestClose={() => {}}
             >
            <View style={styles.modalContainer}>
              <View style={styles.modalView}>

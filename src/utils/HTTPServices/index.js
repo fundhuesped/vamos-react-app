@@ -18,7 +18,6 @@ export class HTTPServices {
 
   fetchPlaces = async () => {
     store.dispatch(startFetching())
-    // console.log('FIRTS FETCH BD');
     while (this.currentPage) {
       if(this.currentPage <= this.totalPages){
         try {
@@ -48,12 +47,10 @@ export class HTTPServices {
         this.currentPage = 0;
       }
     }
-    // console.log('FINALIZADO FIRTS FETCH BD');
     this.fetchCities()
   }
 
   checkPlaces = async () => {
-    // console.log('CHECKEANDO BD');
     let lastUpdate = new Date(store.getState().db.places.meta.updatedAt) || new Date()
         currentDate = new Date(),
         differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime(),
@@ -85,7 +82,6 @@ export class HTTPServices {
       }
     }
 
-    // console.log('FINALIZADO CHECKEANDO BD');
     // alert('FINALIZADO CHECKEANDO BD');
     if(failedPages.length !== 0) this.fetchCities({currentDataPlaces:failedPages,failedPages:newFailedPages})
   }
@@ -107,7 +103,6 @@ export class HTTPServices {
           this.currentDataCities = responseJson
 
         } catch(error) {
-          console.log(error);
           // alert('error fetching cities'+error.message)
         }
       }
@@ -127,7 +122,6 @@ export class HTTPServices {
         this.currentDataCities = responseJson
 
       } catch(error) {
-        console.log(error);
         // alert('error fetching cities'+error.message)
       }
 

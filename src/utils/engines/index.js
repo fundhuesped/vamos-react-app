@@ -404,7 +404,6 @@ export class Engine {
       }
     })
 
-    console.log(filterData);
     this.Data = filterData;
     // alert(this.Store.length)
     this.sortEngine("ALL");
@@ -503,7 +502,6 @@ export class Engine {
       }
     })
 
-    console.log(filterData);
     this.Data = filterData;
     // alert(this.Data.length)
     this.sortEngine("ALL");
@@ -542,7 +540,6 @@ export class Engine {
 
       store.dispatch(setResultList(filterForTeen))
     }
-    else console.log('cualquiera');
   }
 
   cleanResultList = () =>{

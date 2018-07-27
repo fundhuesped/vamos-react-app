@@ -21,7 +21,6 @@ export default class CityItem extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Text
         onPress={this._onPress}

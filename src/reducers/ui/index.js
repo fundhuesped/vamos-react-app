@@ -187,7 +187,6 @@ export default (state = initialState, action) => {
           longitude
         } = action.currentLocation
         if (!(typeof latitude === "number") || !(typeof longitude === "number")) return state
-        console.log(...state);
         return {
           ...state,
           searchEngine: {

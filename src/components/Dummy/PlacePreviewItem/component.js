@@ -32,7 +32,6 @@ export default class PlacePreviewItem extends React.PureComponent {
   _renderServices = () =>{
     let iconsArray = [];
     let services = this.props.data.placeData;
-    // console.log(services);
       if(services.condones) {
         let svg = (services.friendly_condones) ?
         (

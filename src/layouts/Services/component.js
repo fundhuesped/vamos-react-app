@@ -10,6 +10,7 @@ import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
 import CitiesList from '../../components/Dummy/CitiesList/component.js'
 import Permissions from 'react-native-permissions';
+import SVGChatIcon from '../../components/Dummy/SVG/ChatIcon/component.js'
 
 import {getServiceData} from '../../utils/engines/index.js'
 
@@ -117,7 +118,6 @@ export default class Services extends React.Component {
             // alert('FAIL GEOCODIGN');
         }
         else{
-          console.log(responseJson);
           let address = {};
           const address_components = responseJson.results[0].address_components;
           let country;
@@ -135,7 +135,6 @@ export default class Services extends React.Component {
 
         }
       } catch (e) {
-        console.log(e);
         this._checkCountry(undefined, undefined)
       }
 
@@ -164,7 +163,6 @@ export default class Services extends React.Component {
   _filterList = () =>{
     if(this.state.itemSelected === null) this._isInputFocus(true)
     if(this.state.textInput.length > 1){
-      console.log('filtrando');
       let cities = this.props.db.cities,
           filterCities = cities.filter((city) => {
           let cityString,
@@ -210,7 +208,6 @@ export default class Services extends React.Component {
       }).reverse();
 
       this.setState({filterCities})
-      console.log(filterCities);
     }
   }
 
@@ -239,8 +236,6 @@ export default class Services extends React.Component {
   }
 
   _renderListResults = () =>{
-    console.log(this.state.textInput);
-    console.log(this.state.textInput.length);
     return (this.state.textInput !== "" && this.state.textInput.length > 1 && this.state.showList) ? (
       <View style={{flex: 1}}>
         <View style={styles.flatlistContainer}>
@@ -273,6 +268,7 @@ export default class Services extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
             <Left
@@ -331,6 +327,20 @@ export default class Services extends React.Component {
                 <View style={styles.infoContainer}>
                   <Text style={styles.infoContainerText}>{serviceData.subtitle}</Text>
                 </View>
+                <TouchableHighlight
+                  onPress={() => { this.props.chat() }}
+                  style={styles.chatBox}
+                  activeOpacity={0.5}
+                  underlayColor="#E32E43"
+                >
+                  <View style={styles.boxContent}>
+                    <SVGChatIcon
+                      height={(width/11)}
+                      width={(width/11)}
+                    />
+                    <Text style={[styles.boxContentText, {color: "#FFFFFF"}]}>{I18n.t("chat_text_extend", { locale: this.props.ui.lang })}</Text>
+                  </View>
+                </TouchableHighlight>
                 <View style={styles.inputContainer}>
                   <View style={styles.containerSearchCity}>
                     <Icon name="md-search" style={{fontSize: 30, color: '#FFFFFF'}}/>
@@ -365,7 +375,7 @@ export default class Services extends React.Component {
                   animationType={"fade"}
                   transparent={true}
                   visible={this.state.showModal}
-                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  onRequestClose={() => {}}
                   >
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>
@@ -395,7 +405,7 @@ export default class Services extends React.Component {
                   animationType={"fade"}
                   transparent={true}
                   visible={this.state.showModalGPS}
-                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  onRequestClose={() => {}}
                   >
                  <View style={styles.modalContainer}>
                    <View style={styles.modalView}>
@@ -517,5 +527,28 @@ const styles = StyleSheet.create({
   modalViewActions:{
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  chatBox:{
+    elevation: 2,
+    width: "100%",
+    height: 70,
+    marginTop: 10,
+    borderWidth: 2,
+    borderColor: "#E32E43",
+    borderRadius: 5,
+    backgroundColor: "#E32E43"
+  },
+  boxContent:{
+    flex: 1,
+    flexDirection: "row",
+    alignItems: 'center',
+    paddingLeft: width / 35
+  },
+  boxContentText:{
+    textAlign:'center',
+    paddingHorizontal: 10,
+    color: '#e6354d',
+    fontFamily: 'OpenSans',
+    fontSize: width/28
+  },
 })

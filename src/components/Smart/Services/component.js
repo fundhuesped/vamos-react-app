@@ -20,6 +20,8 @@ import {
   TEEN
 } from '../../../constants/action-types'
 
+import ZendeskChat from 'react-native-zendesk-chat';
+import DeviceInfo from 'react-native-device-info';
 
 
 function mapStateToProps(store) {
@@ -29,7 +31,17 @@ function mapStateToProps(store) {
 class SmartServices extends React.Component {
 
   componentDidMount = () =>{
-    console.log(this.props);
+  }
+
+  chat = () => {
+    let lookingFor = (this.props.ui.lookingFor) ? this.props.ui.lookingFor : ""
+    ZendeskChat.startChat({
+      name: "",
+      email: "",
+      phone: "user.mobile_phone",
+      tags: [`${lookingFor}`],
+      department: `${lookingFor}`
+    });
   }
 
   render() {
@@ -40,6 +52,7 @@ class SmartServices extends React.Component {
       ui={this.props.ui}
       dispatch={this.props.dispatch}
       cleanState={this.props.navigation.state.params.cleanState}
+      chat={this.chat}
     />)
   }
 }

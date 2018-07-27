@@ -97,8 +97,8 @@ android {
         applicationId "com.vamoslac.myapp"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 6
-        versionName "0.6"
+        versionCode 7
+        versionName "0.7"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -144,10 +144,13 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-device-info')
     compile project(':react-native-splash-screen')
+    compile project(':realm')
     compile project(':react-native-svg')
+    compile project(':lottie-react-native')
     compile project(':react-native-google-analytics-bridge')
+    compile project(':react-native-device-info')
+    compile project(':react-native-i18n')
     compile(project(':react-native-maps')) {
         exclude group: 'com.google.android.gms', module: 'play-services-base'
         exclude group: 'com.google.android.gms', module: 'play-services-maps'
@@ -155,9 +158,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:11.+'
     compile 'com.google.android.gms:play-services-maps:11.+'
     compile 'com.google.android.gms:play-services-location:11.+'
-    compile project(':realm')
-    compile project(':lottie-react-native')
-    compile project(':react-native-i18n')
+    compile project(':react-native-zendesk-chat')
+    compile group: 'com.zopim.android', name: 'sdk', version: '1.3.0.1'
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

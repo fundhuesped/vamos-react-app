@@ -62,11 +62,10 @@ export default class Establishment extends React.Component {
   _goURL = (url) =>{
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _renderHeader = (section, index, isActive) => {
@@ -344,7 +343,6 @@ export default class Establishment extends React.Component {
     this.setState({disabledButton: true})
     NetInfo.isConnected.fetch().then(isConnected => {
       let conection = isConnected ? 'online' : 'offline'
-      console.log('First, is ' + conection);
       if(isConnected){
         (feature === 'map') ? this.props.navigation.navigate('Map', {establishmentData: this.props.establishmentData, cleanState: this._cleanState}) : this.props.navigation.navigate('Evaluations', {servicesAvailable: this.props.servicesAvailable, establishment:this.props.establishmentData.placeData, reRenderFunction: this.props.reRenderFunction, cleanState: this._cleanState})
       }
@@ -393,14 +391,10 @@ export default class Establishment extends React.Component {
 
     Linking.canOpenURL(url).then(supported => {
     if (!supported) {
-      console.log('Can\'t handle url: ' + url);
-      // alert('Can\'t handle url: ' + url);
     } else {
       return Linking.openURL(url);
     }
     }).catch(err => {
-      console.error('An error occurred', err)
-      // alert('An error occurred '+err)
     });
   }
 
@@ -477,6 +471,7 @@ export default class Establishment extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
             <Left style={{flex:1}}>
@@ -708,7 +703,7 @@ export default class Establishment extends React.Component {
                   animationType={"fade"}
                   transparent={true}
                   visible={this.state.showModal}
-                  onRequestClose={() => {console.log("Modal has been closed.")}}
+                  onRequestClose={() => {}}
                   >
                  <View style={styles.modalContainer}>
                   <View style={styles.modalView}>

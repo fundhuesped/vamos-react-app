@@ -12,12 +12,14 @@ import {
   UPDATE_CITIES,
   UPDATE_EVALUATIONS,
   FETCHING,
-  UPDATE_STORE_DB
+  UPDATE_STORE_DB,
+  SET_TERMS_CONDITIONS
 } from '../../constants/action-types'
 
 import { _updateStore, _getStore } from '../../storage';
 
 const initialState = {
+  termsConditions: false,
   isFetching: false,
   places: {
     meta: {
@@ -53,7 +55,6 @@ export default (state = initialState, action) => {
             })
           }
         })
-        console.log(store);
         return store
         break
       }
@@ -121,7 +122,6 @@ export default (state = initialState, action) => {
           isFetching: false,
           cities: currentCities
         }
-        console.log(store);
         return store
         break
       }
@@ -139,6 +139,13 @@ export default (state = initialState, action) => {
         return {...state, isFetching:true}
         break
       }
+    case SET_TERMS_CONDITIONS:
+      {
+        let storeRealm = _getStore("1");
+        _updateStore(storeRealm, true, "termsConditions");
+        return { ...state, termsConditions: true }
+        break
+      }
     case UPDATE_STORE_DB:
       {
         // return Object.assign(state, {
@@ -149,10 +156,10 @@ export default (state = initialState, action) => {
         //     data: action.store
         //   }
         // })
-        console.log(action.store);
         let store ={
           ...state,
           isFetching: false,
+          termsConditions: action.store.termsConditions,
           places: {
             meta: {
               ...state.places.meta,
@@ -162,7 +169,6 @@ export default (state = initialState, action) => {
           },
           cities: action.store.cities
         }
-        console.log(store);
         // alert('store reducer '+ store.places.data.length);
         return store
         break

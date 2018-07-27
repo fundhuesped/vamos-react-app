@@ -32,10 +32,7 @@ export default class ProgressCircle extends React.Component {
     this.interval = setInterval(() => {
       let downloadStatus = HTTPService.getCurrentPage()
       if(this.state.currentPlaces !== downloadStatus.currentPage) this.setState({currentPlaces: downloadStatus.currentPlaces, totalEstablishment: downloadStatus.totalEstablishment, cityOrPlace: downloadStatus.cityOrPlace })
-      console.log('intervalo ',downloadStatus.currentPage);
     }, 500);
-
-    console.log(this.props.firstFetch);
   }
 
   _renderProgress = () => {

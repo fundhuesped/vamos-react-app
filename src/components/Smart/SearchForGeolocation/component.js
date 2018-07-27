@@ -15,6 +15,9 @@ import {Engine} from '../../../utils/engines'
 
 import {tracker} from '../../../utils/analytics/index.js'
 
+import ZendeskChat from 'react-native-zendesk-chat';
+import DeviceInfo from 'react-native-device-info';
+
 function mapStateToProps(store) {
     return {db: store.db, ui: store.ui}
 }
@@ -32,6 +35,19 @@ class SmartSearchForGeolocation extends React.Component {
 
   // componentWillUnmount = () => this.Engine.cleanResultList()
 
+  chat = () => {
+    let lookingFor = (this.props.ui.lookingFor) ? this.props.ui.lookingFor : "",
+        country = (this.props.navigation.state.params.country) ? this.props.navigation.state.params.country : "",
+        cityDepartment = (this.props.navigation.state.params.cityDepartment) ? this.props.navigation.state.params.cityDepartment : "";
+    ZendeskChat.startChat({
+      name: "",
+      email: "",
+      phone: "user.mobile_phone",
+      tags: [`${lookingFor}`, `${country}`, `${cityDepartment}`],
+      department: `${lookingFor} ${country} ${cityDepartment}`
+    });
+  }
+
   render() {
     let data = this.props.ui.resultList;
     let event = 'listado_'+this.props.ui.lookingFor;
@@ -45,6 +61,7 @@ class SmartSearchForGeolocation extends React.Component {
       serviceTypeData={this.props.ui.lookingFor}
       lang={this.props.ui.lang}
       searchEngine={(this.props.ui.searchEngine.selected.name !== AUTOCOMPLETE) ? true : false}
+      chat={this.chat}
     />
     : <ProgressCircle/>)
   }

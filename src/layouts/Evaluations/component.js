@@ -116,15 +116,12 @@ export default class Evaluations extends React.Component {
             })
         })
         .then( (res) => {
-          console.log(res)
           if(res.ok) this.setState({showThanks: true, showModal:false})
         })
         .catch( (error) => {
-          console.log(error)
           this.setState({sendButtonDisabled:false, showModal:false})
         })
       } catch (e) {
-        console.log(e);
         this.setState({sendButtonDisabled:false, showModal:false})
       }
 
@@ -158,6 +155,7 @@ export default class Evaluations extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
               <Left style={{flex:1}}>
@@ -392,7 +390,7 @@ export default class Evaluations extends React.Component {
               animationType={"fade"}
               transparent={true}
               visible={this.state.showModal}
-              onRequestClose={() => {console.log("Modal has been closed.")}}
+              onRequestClose={() => {}}
               >
              <View style={styles.modalContainer}>
                <View style={styles.modalView}>

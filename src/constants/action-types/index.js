@@ -35,6 +35,8 @@ export const SET_LANG = "SET_LANG"
 export const SET_COUNTRY = "SET_COUNTRY"
 export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION"
 
+export const SET_TERMS_CONDITIONS = "SET_TERMS_CONDITIONS"
+
 /* Supported langs */
 export const ES = "es-ES"
 export const EN = "en-US"

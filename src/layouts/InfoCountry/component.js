@@ -137,11 +137,10 @@ export default class InfoCountry extends React.Component {
   _goURL = (url) =>{
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _goToLanding = () =>{
@@ -191,6 +190,7 @@ export default class InfoCountry extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
             <Left

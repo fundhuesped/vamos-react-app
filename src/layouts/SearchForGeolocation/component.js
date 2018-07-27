@@ -9,6 +9,7 @@ import PlacePreviewList from '../../components/Dummy/PlacePreviewList/component.
 import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
 import I18n from '../../config/i18n/index.js';
 import {URL} from '../../config/HTTP/index.js'
+import SVGChatIcon from '../../components/Dummy/SVG/ChatIcon/component.js'
 
 
 import {RATE, DISTANCE, TEEN} from '../../constants/action-types/index.js'
@@ -72,15 +73,13 @@ export default class SearchForGeolocation extends React.Component {
     let url = `${URL}/form`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _renderView = () =>{
-    console.log(this.props.store);
     let view;
     if(this.state.loaded){
       if(this.props.store.length !== 0){
@@ -139,6 +138,7 @@ export default class SearchForGeolocation extends React.Component {
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
+            androidStatusBarColor="#E6642F"
             style={{backgroundColor:'#E6642F'}}
             >
             <Left style={{flex:1}}>
@@ -195,6 +195,20 @@ export default class SearchForGeolocation extends React.Component {
                   )}
                 </View>
               ) : (null)}
+              <TouchableHighlight
+                    onPress={() => { this.props.chat() }}
+                    style={styles.chatBox}
+                    activeOpacity={0.5}
+                    underlayColor="#E32E43"
+                  >
+                  <View style={styles.boxContent}>
+                    <SVGChatIcon
+                      height={(width/11)}
+                      width={(width/11)}
+                    />
+                    <Text style={[styles.boxContentText, {color: "#FFFFFF"}]}>{I18n.t("chat_text_extend", { locale: this.props.lang })}</Text>
+                  </View>
+                </TouchableHighlight>
               { (this.props.store.length !== 0) ?
                 <View>
                   {(this.props.serviceTypeData === TEEN) ? (
@@ -207,7 +221,7 @@ export default class SearchForGeolocation extends React.Component {
                     onPress={() => this.setState({isTeen: !this.state.isTeen } , () => this.props._changeSortValue(TEEN,this.state.isTeen))}
                     activeOpacity={0}
                     underlayColor="#FFFFFF"
-                    style={{marginTop: '10%'}}
+                    style={{marginTop: '2.5%'}}
                     >
                     <View style={styles.isTeenContainer}>
                       <CheckBox
@@ -222,8 +236,6 @@ export default class SearchForGeolocation extends React.Component {
                 <View style={styles.serviceContainerSort}>
                   <Text style={{flex:1, color:'#655E5E'}}>{`${I18n.t("sort_label_text", {locale: this.props.lang})}`}</Text>
                   <View style={styles.serviceContainerSortInput}>
-
-
                       {(this.props.searchEngine) ?
                         (
                           <Picker
@@ -264,7 +276,7 @@ export default class SearchForGeolocation extends React.Component {
                 animationType={"fade"}
                 transparent={true}
                 visible={this.state.showModal}
-                onRequestClose={() => {console.log("Modal has been closed.")}}
+                onRequestClose={() => {}}
                 >
                <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
@@ -337,13 +349,15 @@ const styles = StyleSheet.create({
   },
   serviceContainerSort:{
     flexDirection: 'row',
-    marginVertical: '5%',
+    marginVertical: '3.5%',
     alignItems: 'center',
     width: '100%',
   },
   serviceContainerSortInput:{
     borderRadius: 5,
-    backgroundColor:'#e6334c',
+    backgroundColor:'#FFFFFF',
+    borderWidth: 2,
+    borderColor: "#D3CDCD",
     alignSelf: 'stretch',
     // width: width / 1.2,
     flex: 4,
@@ -398,5 +412,29 @@ const styles = StyleSheet.create({
   modalViewActions:{
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  chatBox:{
+    elevation: 2,
+    width: "100%",
+    height: 60,
+    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: "#E32E43",
+    borderRadius: 5,
+    backgroundColor: "#E32E43",
+    marginTop: "5%"
+  },
+  boxContent:{
+    flex: 1,
+    flexDirection: "row",
+    alignItems: 'center',
+    paddingLeft: width / 35,
+  },
+  boxContentText:{
+    textAlign:'center',
+    paddingHorizontal: 10,
+    color: '#e6354d',
+    fontFamily: 'OpenSans',
+    fontSize: width/28
+  },
 })

@@ -47,7 +47,6 @@ export default class Map extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
     this.index = 0;
     this.animation = new Animated.Value(0);
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -69,7 +68,6 @@ export default class Map extends React.Component {
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
-      // console.log(value);
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
       if (index >= this.props.store.length) {
         index = this.props.store.length - 1;
@@ -77,14 +75,12 @@ export default class Map extends React.Component {
       if (index <= 0) {
         index = 0;
       }
-      console.log(index);
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
           let latitude = this.props.store[index].placeData.latitude,
               longitude = this.props.store[index].placeData.longitude;
-          console.log(this.state.selectedMarkerIndex, index);
           if(this.state.selectedMarkerIndex !== index && this.state.isPicked){
             this.setState({selectedMarkerIndex: index, isPicked:true})
             this.map.animateToRegion(
@@ -109,7 +105,6 @@ export default class Map extends React.Component {
 
 
   _scrollToAnimatedScrollView = (e, index) =>{
-    console.log(index);
     this.setState({selectedMarkerIndex: index, isPicked:true}, () => {
       let distanceToCard = (CARD_WIDTH + 20) * index;
       // alert(distanceToCard)
@@ -186,6 +181,7 @@ export default class Map extends React.Component {
         <StyleProvider style={getTheme(platform)}>
           <Container>
             <Header
+              androidStatusBarColor="#E6642F"
               style={{backgroundColor:'#E6642F'}}
               >
               <Left

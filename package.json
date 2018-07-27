@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "android": "react-native run-android && open 'rndebugger://set-debugger-loc?port=8081'"
+    "android": "react-native run-android && open 'rndebugger://set-debugger-loc?port=8081'",
+    "build-android": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "babel-plugin-transform-remove-console": "^6.8.5",
@@ -23,6 +24,7 @@
     "react-native-permissions": "^1.0.1",
     "react-native-splash-screen": "^3.0.1",
     "react-native-svg": "^5.4.1",
+    "react-native-zendesk-chat": "^0.2.2",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
     "realm": "^1.11.1",

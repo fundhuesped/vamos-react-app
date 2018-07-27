@@ -13,7 +13,8 @@ import {
   SET_CURRENT_LOCATION,
   FETCHING,
   UPDATE_STORE_DB,
-  UPDATE_STORE_UI
+  UPDATE_STORE_UI,
+  SET_TERMS_CONDITIONS
 } from '../../constants/action-types'
 
 export const updatePlaces = (places, failedPages) => {
@@ -109,6 +110,13 @@ export const startFetching = () => {
     type: FETCHING,
   }
 }
+
+export const setTermsConditions = () => {
+  return {
+    type: SET_TERMS_CONDITIONS,
+  }
+}
+
 export const updateStoreDB = (store) => {
   if (!store) throw Error("Review action parameters updateStoreDB!")
   return {

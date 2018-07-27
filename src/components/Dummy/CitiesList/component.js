@@ -17,7 +17,6 @@ export default class CitiesList extends React.PureComponent {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);
       selected.set(id, !selected.get(id)); // toggle
-      console.log('apretado');
       return {selected};
     });
   };
@@ -35,11 +34,10 @@ export default class CitiesList extends React.PureComponent {
     let url = `${URL}/form`;
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
       } else {
         return Linking.openURL(url);
       }
-    }).catch(err => console.error('An error occurred', err));
+    }).catch(err => {});
   }
 
   _renderSeparator = () => {
@@ -67,7 +65,6 @@ export default class CitiesList extends React.PureComponent {
   _renderEmptyList = () => <Text style={{color: '#e6334c'}} onPress={this._goToSuggest}>{I18n.t("autocomplete_not_found_result_label", {locale: store.getState().ui.lang})}</Text>
 
   render() {
-    console.log(this.props);
     return (
       <FlatList
         data={this.props.data}

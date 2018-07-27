@@ -11,7 +11,8 @@ class Store {
       lang:{type: 'string', default: ''},
       places: {type: 'list', objectType: 'Place'},
       cities: {type: 'list', objectType: 'City'},
-      createdTimestamp: {type: 'date'}
+      createdTimestamp: {type: 'date'},
+      termsConditions: {type: 'bool', default: false}
     }
   }
 }
@@ -156,8 +157,6 @@ export const _updateStore = async (store, value, type) => {
         try {
           store.lang = value
         } catch (e) {
-          // alert('error realm '+e);
-          console.warn(e)
         }
       })
       break;
@@ -169,8 +168,6 @@ export const _updateStore = async (store, value, type) => {
           store.places = value
           store.createdTimestamp = new Date()
         } catch (e) {
-          // alert('error realm '+e);
-          console.warn(e)
         }
       })
       break;
@@ -181,7 +178,15 @@ export const _updateStore = async (store, value, type) => {
         try {
           store.cities = value
         } catch (e) {
-          console.warn(e)
+        }
+      })
+      break;
+    }
+    case "termsConditions":{
+      realm.write(() => {
+        try {
+          store.termsConditions = value
+        } catch (e) {
         }
       })
       break;
@@ -212,4 +217,4 @@ export const _deleteStore = (store) => {
 // const serializedState = JSON.stringify(state) save
 // let serializedState = JSON.parse(value) load
 
-const realm = new Realm({schema: [City,Place,Store], schemaVersion: 1})
+const realm = new Realm({schema: [City,Place,Store], schemaVersion: 2})

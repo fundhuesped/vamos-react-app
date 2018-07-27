@@ -64,7 +64,7 @@ export default class App extends React.Component {
       store.dispatch(setLang(lang))
     }
     else {
-      store.dispatch(updateStoreDB({places:storeRealm.places, createdTimestamp:storeRealm.createdTimestamp, cities:storeRealm.cities}))
+      store.dispatch(updateStoreDB({places:storeRealm.places, createdTimestamp:storeRealm.createdTimestamp, cities:storeRealm.cities, termsConditions: storeRealm.termsConditions}))
       store.dispatch(updateStoreUI(storeRealm.lang))
     }
     setTimeout( () => {
@@ -81,12 +81,10 @@ export default class App extends React.Component {
                             })
       let responseJson = await response.json();
     } catch(error) {
-      console.log(error);
     }
   }
 
   componentWillUnmount = () =>{
-    console.log('unmount');
   }
 
   render() {
