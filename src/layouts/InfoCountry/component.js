@@ -1,18 +1,38 @@
-import React from 'react';
-import { NavigationActions } from 'react-navigation'
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
-import {View, Image, StyleSheet, Dimensions, Text, TouchableHighlight, ScrollView, Linking, BackHandler} from 'react-native';
-import { StyleProvider } from 'native-base';
-import getTheme from '../../config/styles/native-base-theme/components';
-import platform from '../../config/styles/native-base-theme/variables/platform';
-import SVGVamosLogo from '../../components/Dummy/SVG/VamosLogo/component.js'
-import I18n from '../../config/i18n/index.js';
+import React from "react";
+import { NavigationActions } from "react-navigation";
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Button,
+  Left,
+  Right,
+  Body,
+  Icon
+} from "native-base";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TouchableHighlight,
+  ScrollView,
+  Linking,
+  BackHandler
+} from "react-native";
+import { StyleProvider } from "native-base";
+import getTheme from "../../config/styles/native-base-theme/components";
+import platform from "../../config/styles/native-base-theme/variables/platform";
+import SVGVamosLogo from "../../components/Dummy/SVG/VamosLogo/component.js";
+import I18n from "../../config/i18n/index.js";
 
-import {tracker} from '../../utils/analytics/index.js'
+import { tracker } from "../../utils/analytics/index.js";
 
-import {getGralTextandILEForCountry} from '../../utils/engines/index.js'
+import { getGralTextandILEForCountry } from "../../utils/engines/index.js";
 
-import {getServiceData} from '../../utils/engines/index.js'
+import { getServiceData } from "../../utils/engines/index.js";
 
 import {
   CON,
@@ -22,227 +42,267 @@ import {
   LPI,
   DC,
   TEEN
-} from '../../constants/action-types'
+} from "../../constants/action-types";
 
-const {width, height} = Dimensions.get('window');
-
+const { width, height } = Dimensions.get("window");
 
 export default class InfoCountry extends React.Component {
-
-  constructor(){
+  constructor() {
     super();
-    this.state = {disabledButton: false}
+    this.state = { disabledButton: false };
   }
 
   componentWillMount = () => {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  };
 
   componentWillUnmount = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  };
 
   handleBackButtonClick = () => {
-    if(typeof this.props.cleanState === 'function'){
-        this.props.cleanState();
+    if (typeof this.props.cleanState === "function") {
+      this.props.cleanState();
     }
     this.props.navigation.goBack(null);
     return true;
-  }
+  };
 
-  _goToSearch = () =>{
-    this.setState({disabledButton: true}, () => setTimeout(() => {
-      this._cleanState();
-    }, 1000))
-    if(this.props.cityDepartment !== undefined){
-      this.props.navigation.navigate('SearchForGeolocation',{cityDepartment: this.props.cityDepartment, country: I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()})
+  _goToSearch = () => {
+    this.setState({ disabledButton: true }, () =>
+      setTimeout(() => {
+        this._cleanState();
+      }, 1000)
+    );
+    if (this.props.cityDepartment !== undefined) {
+      this.props.navigation.navigate("SearchForGeolocation", {
+        cityDepartment: this.props.cityDepartment,
+        country: I18n.t(this.props.country, {
+          locale: this.props.lang
+        }).toUpperCase()
+      });
+    } else {
+      this.props.navigation.navigate("SearchForGeolocation", {
+        country: I18n.t(this.props.country, {
+          locale: this.props.lang
+        }).toUpperCase(),
+        address: this.props.address
+      });
     }
-    else {
-      this.props.navigation.navigate('SearchForGeolocation',{country: I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase(), address:this.props.address})
-    }
-  }
+  };
 
-  _cleanState = () => this.setState({disabledButton:false})
+  _cleanState = () => this.setState({ disabledButton: false });
 
-  _renderButton = (ILEService) => {
+  _renderButton = ILEService => {
     let button;
-    if(this.props.service !== "LPI") button = (
-      <Button
-        bordered
-        block
-        style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-        onPress={(!this.state.disabledButton) ? this._goToSearch : null}
+    if (this.props.service !== "LPI")
+      button = (
+        <Button
+          bordered
+          block
+          style={{ borderColor: "rgba(0, 0, 0, 0)", elevation: 2, flex: 1 }}
+          onPress={!this.state.disabledButton ? this._goToSearch : null}
         >
-        <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
-      </Button>
-    )
+          <Text style={{ color: "#e6334c", flexWrap: "wrap" }}>
+            {I18n.t("continue_to_search_label_button", {
+              locale: this.props.lang
+            })}
+          </Text>
+        </Button>
+      );
     else {
-      if(ILEService) button = (
-        <Button
-          bordered
-          block
-          style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-          onPress={(!this.state.disabledButton) ? this._goToSearch : null}
+      if (ILEService)
+        button = (
+          <Button
+            bordered
+            block
+            style={{ borderColor: "rgba(0, 0, 0, 0)", elevation: 2, flex: 1 }}
+            onPress={!this.state.disabledButton ? this._goToSearch : null}
           >
-          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("continue_to_search_label_button", {locale: this.props.lang})}</Text>
-        </Button>
-      )
-      else button = (
-        <Button
-          bordered
-          block
-          style={{borderColor: 'rgba(0, 0, 0, 0)', elevation: 2, flex:1}}
-          onPress={() => this.props.navigation.goBack()}
+            <Text style={{ color: "#e6334c", flexWrap: "wrap" }}>
+              {I18n.t("continue_to_search_label_button", {
+                locale: this.props.lang
+              })}
+            </Text>
+          </Button>
+        );
+      else
+        button = (
+          <Button
+            bordered
+            block
+            style={{ borderColor: "rgba(0, 0, 0, 0)", elevation: 2, flex: 1 }}
+            onPress={() => this.props.navigation.goBack()}
           >
-          <Text style={{color: "#e6334c", flexWrap:'wrap'}}>{I18n.t("make_another_search_label_button", {locale: this.props.lang})}</Text>
-        </Button>
-      )
+            <Text style={{ color: "#e6334c", flexWrap: "wrap" }}>
+              {I18n.t("make_another_search_label_button", {
+                locale: this.props.lang
+              })}
+            </Text>
+          </Button>
+        );
     }
 
     return button;
-  }
+  };
 
-  _handleLinks = (text) =>{
+  _handleLinks = text => {
     let textComponent;
-        textString = text.split('www')
+    textString = text.split("www");
 
-
-    if(textString.length === 1){
-      textComponent = (
-        <Text>
-          {textString[0]}
-        </Text>
-      )
-    }else {
-      let url = textString[1]
+    if (textString.length === 1) {
+      textComponent = <Text>{textString[0]}</Text>;
+    } else {
+      let url = textString[1];
       textComponent = (
         <View>
-          <Text>
-            {textString[0]}
-          </Text>
+          <Text>{textString[0]}</Text>
           <Text
             onPress={() => this._goURL(`https://www${url}`)}
-            style={{color: "#e6334c"}}
-            >
+            style={{ color: "#e6334c" }}
+          >
             {`www${textString[1]}`}
           </Text>
         </View>
-
-      )
+      );
     }
 
-    return textComponent
-  }
+    return textComponent;
+  };
 
-  _goURL = (url) =>{
-    Linking.canOpenURL(url).then(supported => {
-      if (!supported) {
-      } else {
-        return Linking.openURL(url);
-      }
-    }).catch(err => {});
-  }
+  _goURL = url => {
+    Linking.canOpenURL(url)
+      .then(supported => {
+        if (!supported) {
+        } else {
+          return Linking.openURL(url);
+        }
+      })
+      .catch(err => {});
+  };
 
-  _goToLanding = () =>{
+  _goToLanding = () => {
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Drawer'})
-      ]
-    })
-    this.props.navigation.dispatch(resetAction)
-  }
+      actions: [NavigationActions.navigate({ routeName: "Drawer" })]
+    });
+    this.props.navigation.dispatch(resetAction);
+  };
 
-  _renderGralText = (service, ILECondition, text) =>{
-    let gralText = this._handleLinks(text)
+  _renderGralText = (service, ILECondition, text) => {
+    let gralText = this._handleLinks(text);
 
-    if(service === "LPI") {
-      if(!ILECondition) gralText = null
+    if (service === "LPI") {
+      if (!ILECondition) gralText = null;
     }
 
     return gralText;
-  }
+  };
 
-  _renderAssociationImage = (service, ILECondition, image) =>{
+  _renderAssociationImage = (service, ILECondition, image) => {
     let AssociationImage;
 
-    if(service !== "LPI") AssociationImage = (<Image
-      source={image}
-      style={styles.associationLogo}
-      resizeMode="contain"
-    />)
+    if (service !== "LPI")
+      AssociationImage = (
+        <Image
+          source={image}
+          style={styles.associationLogo}
+          resizeMode="contain"
+        />
+      );
     else {
-      if(ILECondition) AssociationImage = (<Image
-        source={image}
-        style={styles.associationLogo}
-        resizeMode="contain"
-      />)
-      else AssociationImage = null
+      if (ILECondition)
+        AssociationImage = (
+          <Image
+            source={image}
+            style={styles.associationLogo}
+            resizeMode="contain"
+          />
+        );
+      else AssociationImage = null;
     }
 
     return AssociationImage;
-  }
+  };
 
   render() {
-    let gralTextandILEForCountry = getGralTextandILEForCountry(this.props.country)
-    tracker.trackEvent('asociacion_miembro', I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase());
+    let gralTextandILEForCountry = getGralTextandILEForCountry(
+      this.props.country
+    );
+    tracker.trackEvent(
+      "asociacion_miembro",
+      I18n.t(this.props.country, { locale: this.props.lang }).toUpperCase()
+    );
     return (
       <StyleProvider style={getTheme(platform)}>
         <Container>
           <Header
             androidStatusBarColor="#E6642F"
-            style={{backgroundColor:'#E6642F'}}
-            >
-            <Left
-              style={{flex:1}}
-              >
+            style={{ backgroundColor: "#E6642F" }}
+          >
+            <Left style={{ flex: 1 }}>
               <Button
                 transparent
-                onPress={()=>{this.props.navigation.goBack()}}
-                >
-                <Icon name="ios-arrow-back"/>
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}
+              >
+                <Icon name="ios-arrow-back" />
               </Button>
             </Left>
-            <Body style={{flex:1,  justifyContent:'flex-start'}}>
-              <Button
-                transparent
-                onPress={this._goToLanding}
-                >
-                <SVGVamosLogo
-                  height={140}
-                  width={140}
-                />
+            <Body style={{ flex: 1, justifyContent: "flex-start" }}>
+              <Button transparent onPress={this._goToLanding}>
+                <SVGVamosLogo height={140} width={140} />
               </Button>
             </Body>
-          <Right style={{flex:1}}>
-          </Right>
+            <Right style={{ flex: 1 }} />
           </Header>
           <Content
-            contentContainerStyle ={{
-              flex:1,
-              backgroundColor:"#FFFFFF",
-              alignItems: 'center'
-              }}
+            contentContainerStyle={{
+              flex: 1,
+              backgroundColor: "#FFFFFF",
+              alignItems: "center"
+            }}
           >
             <ScrollView
-              style={{width: '100%'}}
-              contentContainerStyle ={{alignItems: 'center', minHeight: (height - height/8)}}
-              >
+              style={{ width: "100%" }}
+              contentContainerStyle={{
+                alignItems: "center",
+                minHeight: height - height / 8
+              }}
+            >
               <View style={styles.container}>
                 <View style={styles.infoCountryHeader}>
-                  <View style={{marginBottom: '2.5%'}}>
-                    <Text style={{fontSize: 22, color: '#e6334c'}}>{`${I18n.t(this.props.country, {locale: this.props.lang}).toUpperCase()}`}</Text>
+                  <View style={{ marginBottom: "2.5%" }}>
+                    <Text style={{ fontSize: 22, color: "#e6334c" }}>{`${I18n.t(
+                      this.props.country,
+                      { locale: this.props.lang }
+                    ).toUpperCase()}`}</Text>
                   </View>
-                  { this._renderAssociationImage(this.props.service, gralTextandILEForCountry.ILEService, gralTextandILEForCountry.asocciationImageUrl)}
+                  {this._renderAssociationImage(
+                    this.props.service,
+                    gralTextandILEForCountry.ILEService,
+                    gralTextandILEForCountry.asocciationImageUrl
+                  )}
                 </View>
                 <View style={styles.infoCountryBody}>
-                  {this._renderGralText(this.props.service, gralTextandILEForCountry.ILEService, gralTextandILEForCountry.generalText)}
-                  {(this.props.service === "LPI") ? (
+                  {this._renderGralText(
+                    this.props.service,
+                    gralTextandILEForCountry.ILEService,
+                    gralTextandILEForCountry.generalText
+                  )}
+                  {this.props.service === "LPI" ? (
                     <View>
-                      <View style={{height: 20}}/>
+                      <View style={{ height: 20 }} />
                       {this._handleLinks(gralTextandILEForCountry.ILEText)}
                     </View>
-                  ) : (null)}
+                  ) : null}
                 </View>
                 <View style={styles.infoCountryFooter}>
                   {this._renderButton(gralTextandILEForCountry.ILEService)}
@@ -257,25 +317,25 @@ export default class InfoCountry extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  fontColor:{ color: '#655E5E'},
-  container:{
-    marginTop: '5%',
+  fontColor: { color: "#655E5E" },
+  container: {
+    marginTop: "5%",
     width: width / 1.2,
-    flex: 1,
+    flex: 1
   },
-  infoCountryHeader:{
-    alignItems: 'center',
+  infoCountryHeader: {
+    alignItems: "center"
   },
-  associationLogo:{
-    width: '100%',
-    height: width/ 3
+  associationLogo: {
+    width: "100%",
+    height: width / 3
   },
-  infoCountryBody:{
-    marginVertical: '5%'
+  infoCountryBody: {
+    marginVertical: "5%"
   },
-  infoCountryFooter:{
-    marginTop: 'auto',
-    marginBottom: '2%',
+  infoCountryFooter: {
+    marginTop: "auto",
+    marginBottom: "2%",
     paddingBottom: 10
   }
-})
+});

@@ -1,5 +1,4 @@
-export const normalizeBoolean = (kindOfBoolean) => {
-
+export const normalizeBoolean = kindOfBoolean => {
   if (
     kindOfBoolean === "SI" ||
     kindOfBoolean === "si" ||
@@ -7,11 +6,12 @@ export const normalizeBoolean = (kindOfBoolean) => {
     kindOfBoolean === "1" ||
     kindOfBoolean === 1 ||
     kindOfBoolean === true
-  ) return true
-  else return false
-}
+  )
+    return true;
+  else return false;
+};
 
-export const normalizeEvaluation = (element) => {
+export const normalizeEvaluation = element => {
   return {
     id: element.id ? parseInt(element.id) : -1,
     que_busca: element.que_busca ? String(element.que_busca) : "",
@@ -28,55 +28,57 @@ export const normalizeEvaluation = (element) => {
     informacion_vacunas: normalizeBoolean(element.informacion_vacunas),
     idPlace: element.idPlace ? parseInt(element.idPlace) : -1,
     es_gratuito: normalizeBoolean(element.es_gratuito)
-  }
-}
+  };
+};
 export const normalizeAndInsertEvaluationsList = (places, list) => {
-  let normalizedEvaluationsObject = normalizeEvaluationsList(list)
-  let evaluationPlacesIds = Object.keys(normalizedEvaluationsObject)
-  evaluationPlacesIds.forEach((placeId) => {
+  let normalizedEvaluationsObject = normalizeEvaluationsList(list);
+  let evaluationPlacesIds = Object.keys(normalizedEvaluationsObject);
+  evaluationPlacesIds.forEach(placeId => {
     if (places[placeId.toString()])
-      places[placeId.toString()].eval = normalizedEvaluationsObject[placeId.toString()]
-  })
-  return places
-}
+      places[placeId.toString()].eval =
+        normalizedEvaluationsObject[placeId.toString()];
+  });
+  return places;
+};
 
-export const normalizeEvaluationsList = (evaluations) => {
-  if (!Array.isArray(evaluations)) return []
-  let normalizedEvaluationList = {}
-  evaluations.forEach((evaluation) => {
-    let _idPlace = evaluation.idPlace
+export const normalizeEvaluationsList = evaluations => {
+  if (!Array.isArray(evaluations)) return [];
+  let normalizedEvaluationList = {};
+  evaluations.forEach(evaluation => {
+    let _idPlace = evaluation.idPlace;
     if (_idPlace) {
-      delete evaluation.idPlace
+      delete evaluation.idPlace;
       if (!Array.isArray(normalizedEvaluationList[_idPlace.toString()]))
-        normalizedEvaluationList[_idPlace.toString()] = []
-      normalizedEvaluationList[_idPlace.toString()].push(normalizeEvaluation(evaluation))
+        normalizedEvaluationList[_idPlace.toString()] = [];
+      normalizedEvaluationList[_idPlace.toString()].push(
+        normalizeEvaluation(evaluation)
+      );
     }
-  })
-  return normalizedEvaluationList
-}
+  });
+  return normalizedEvaluationList;
+};
 
-export const normalizePlacesList = (places) => {
-  let keys = Object.keys(places)
-  let flatPlaces = []
-  let normalizedPlacesList = []
+export const normalizePlacesList = places => {
+  let keys = Object.keys(places);
+  let flatPlaces = [];
+  let normalizedPlacesList = [];
 
-  keys.forEach((index) => {
-    flatPlaces = flatPlaces.concat(places[index])
-  })
+  keys.forEach(index => {
+    flatPlaces = flatPlaces.concat(places[index]);
+  });
 
-  flatPlaces.forEach((place) => {
-    let _placeId = place.placeId
+  flatPlaces.forEach(place => {
+    let _placeId = place.placeId;
     if (_placeId) {
       // delete place.placeId
       // normalizedPlacesList[_placeId.toString()] = normalizePlace(place)
-      normalizedPlacesList.push(normalizePlace(place))
+      normalizedPlacesList.push(normalizePlace(place));
     }
+  });
+  return normalizedPlacesList;
+};
 
-  })
-  return normalizedPlacesList
-}
-
-export const normalizePlace = (place) => {
+export const normalizePlace = place => {
   return {
     id: place.placeId ? parseInt(place.placeId) : -1,
     idCiudad: place.idCiudad ? parseInt(place.idCiudad) : -1,
@@ -88,15 +90,21 @@ export const normalizePlace = (place) => {
     altura: place.altura ? String(place.altura) : "",
     piso_dpto: place.piso_dpto ? String(place.piso_dpto) : "",
     cruce: place.cruce ? String(place.cruce) : "",
-    barrio_localidad: place.barrio_localidad ? String(place.barrio_localidad) : "",
+    barrio_localidad: place.barrio_localidad
+      ? String(place.barrio_localidad)
+      : "",
     partido_comuna: place.partido_comuna ? String(place.partido_comuna) : "",
-    provincia_region: place.provincia_region ? String(place.provincia_region) : "",
+    provincia_region: place.provincia_region
+      ? String(place.provincia_region)
+      : "",
     pais: place.pais ? String(place.pais) : "",
     aprobado: normalizeBoolean(place.aprobado),
     observacion: place.observacion ? String(place.observacion) : "",
-    formattedAddress: place.formattedAddress ? String(place.formattedAddress) : "",
-    latitude: place.latitude ? parseFloat(place.latitude) : .0,
-    longitude: place.longitude ? parseFloat(place.longitude) : .0,
+    formattedAddress: place.formattedAddress
+      ? String(place.formattedAddress)
+      : "",
+    latitude: place.latitude ? parseFloat(place.latitude) : 0.0,
+    longitude: place.longitude ? parseFloat(place.longitude) : 0.0,
     rateReal: place.rate ? parseFloat(place.rate) : 0,
     cantidad_votos: place.cantidad_votos ? parseInt(place.cantidad_votos) : 0,
     habilitado: normalizeBoolean(place.habilitado),
@@ -110,10 +118,16 @@ export const normalizePlace = (place) => {
     tel_testeo: place.tel_testeo ? String(place.tel_testeo) : "",
     mail_testeo: place.mail_testeo ? String(place.mail_testeo) : "",
     horario_testeo: place.horario_testeo ? String(place.horario_testeo) : "",
-    responsable_testeo: place.responsable_testeo ? String(place.responsable_testeo) : "",
+    responsable_testeo: place.responsable_testeo
+      ? String(place.responsable_testeo)
+      : "",
     web_testeo: place.web_testeo ? String(place.web_testeo) : "",
-    ubicacion_testeo: place.ubicacion_testeo ? String(place.ubicacion_testeo) : "",
-    observaciones_testeo: place.observaciones_testeo ? String(place.observaciones_testeo) : "",
+    ubicacion_testeo: place.ubicacion_testeo
+      ? String(place.ubicacion_testeo)
+      : "",
+    observaciones_testeo: place.observaciones_testeo
+      ? String(place.observaciones_testeo)
+      : "",
     tel_dc: place.tel_dc ? String(place.tel_dc) : "",
     mail_dc: place.mail_dc ? String(place.mail_dc) : "",
     horario_dc: place.horario_dc ? String(place.horario_dc) : "",
@@ -124,17 +138,37 @@ export const normalizePlace = (place) => {
     tel_distrib: place.tel_distrib ? String(place.tel_distrib) : "",
     mail_distrib: place.mail_distrib ? String(place.mail_distrib) : "",
     horario_distrib: place.horario_distrib ? String(place.horario_distrib) : "",
-    responsable_distrib: place.responsable_distrib ? String(place.responsable_distrib) : "",
+    responsable_distrib: place.responsable_distrib
+      ? String(place.responsable_distrib)
+      : "",
     web_distrib: place.web_distrib ? String(place.web_distrib) : "",
-    ubicacion_distrib: place.ubicacion_distrib ? String(place.ubicacion_distrib) : "",
-    comentarios_distrib: place.comentarios_distrib ? String(place.comentarios_distrib) : "",
-    tel_infectologia: place.tel_infectologia ? String(place.tel_infectologia) : "",
-    mail_infectologia: place.mail_infectologia ? String(place.mail_infectologia) : "",
-    horario_infectologia: place.horario_infectologia ? String(place.horario_infectologia) : "",
-    responsable_infectologia: place.responsable_infectologia ? String(place.responsable_infectologia) : "",
-    web_infectologia: place.web_infectologia ? String(place.web_infectologia) : "",
-    ubicacion_infectologia: place.ubicacion_infectologia ? String(place.ubicacion_infectologia) : "",
-    comentarios_infectologia: place.comentarios_infectologia ? String(place.comentarios_infectologia) : "",
+    ubicacion_distrib: place.ubicacion_distrib
+      ? String(place.ubicacion_distrib)
+      : "",
+    comentarios_distrib: place.comentarios_distrib
+      ? String(place.comentarios_distrib)
+      : "",
+    tel_infectologia: place.tel_infectologia
+      ? String(place.tel_infectologia)
+      : "",
+    mail_infectologia: place.mail_infectologia
+      ? String(place.mail_infectologia)
+      : "",
+    horario_infectologia: place.horario_infectologia
+      ? String(place.horario_infectologia)
+      : "",
+    responsable_infectologia: place.responsable_infectologia
+      ? String(place.responsable_infectologia)
+      : "",
+    web_infectologia: place.web_infectologia
+      ? String(place.web_infectologia)
+      : "",
+    ubicacion_infectologia: place.ubicacion_infectologia
+      ? String(place.ubicacion_infectologia)
+      : "",
+    comentarios_infectologia: place.comentarios_infectologia
+      ? String(place.comentarios_infectologia)
+      : "",
     tel_ssr: place.tel_ssr ? String(place.tel_ssr) : "",
     mail_ssr: place.mail_ssr ? String(place.mail_ssr) : "",
     horario_ssr: place.horario_ssr ? String(place.horario_ssr) : "",
@@ -165,8 +199,12 @@ export const normalizePlace = (place) => {
     comentarios_ile: place.comentarios_ile ? String(place.comentarios_ile) : "",
     servicetype_ile: place.servicetype_ile ? String(place.servicetype_ile) : "",
     servicetype_mac: place.servicetype_mac ? String(place.servicetype_mac) : "",
-    servicetype_condones: place.servicetype_condones ? String(place.servicetype_condones) : "",
-    servicetype_prueba: place.servicetype_prueba ? String(place.servicetype_prueba) : "",
+    servicetype_condones: place.servicetype_condones
+      ? String(place.servicetype_condones)
+      : "",
+    servicetype_prueba: place.servicetype_prueba
+      ? String(place.servicetype_prueba)
+      : "",
     servicetype_ssr: place.servicetype_ssr ? String(place.servicetype_ssr) : "",
     servicetype_dc: place.servicetype_dc ? String(place.servicetype_dc) : "",
     friendly_condones: normalizeBoolean(place.friendly_condones),
@@ -177,5 +215,5 @@ export const normalizePlace = (place) => {
     friendly_infectologia: normalizeBoolean(place.friendly_infectologia),
     friendly_dc: normalizeBoolean(place.friendly_dc),
     friendly_mac: normalizeBoolean(place.friendly_mac)
-  }
-}
+  };
+};
