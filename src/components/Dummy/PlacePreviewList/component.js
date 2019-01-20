@@ -1,24 +1,23 @@
-import React from 'react';
-import {FlatList, View} from 'react-native';
-import PlacePreviewItem from '../PlacePreviewItem/component.js'
-
+import React from "react";
+import { FlatList, View } from "react-native";
+import PlacePreviewItem from "../PlacePreviewItem/component.js";
 
 export default class PlacePreviewList extends React.Component {
-  state = {selected: (new Map(): Map<string, boolean>)};
+  state = { selected: (new Map(): Map<string, boolean>) };
 
   _keyExtractor = (item, index) => item.placeData.placeId;
 
   _onPressItem = (id: string) => {
     // updater functions are preferred for transactional updates
-    this.setState((state) => {
+    this.setState(state => {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);
       selected.set(id, !selected.get(id)); // toggle
-      return {selected};
+      return { selected };
     });
   };
 
-  _renderItem = ({item}) => (
+  _renderItem = ({ item }) => (
     <PlacePreviewItem
       id={item.placeData.placeId}
       onPressItem={this._onPressItem}
@@ -32,31 +31,28 @@ export default class PlacePreviewList extends React.Component {
     return (
       <View
         style={{
-          height: 10,
-
+          height: 10
         }}
       />
     );
   };
 
   _renderFooter = () => {
-
     return (
       <View
         style={{
-          height: 10,
+          height: 10
         }}
-      >
-      </View>
+      />
     );
   };
 
-  componentWillReceiveProps = (nexProps) =>{
-    this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
-  }
+  componentWillReceiveProps = nexProps => {
+    this.refs.listRef.scrollToOffset({ x: 0, y: 0, animated: true });
+  };
 
   render() {
-    let store = {...this.props.store}
+    let store = { ...this.props.store };
     return (
       <FlatList
         ref="listRef"

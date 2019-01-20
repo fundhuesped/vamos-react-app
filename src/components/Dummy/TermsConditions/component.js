@@ -1,38 +1,53 @@
-import React from 'react';
-import { Text, StyleSheet,View, Modal, Dimensions, Picker, ScrollView, TouchableHighlight } from 'react-native';
-import { StyleProvider, Container, Header, Content, Button, Body, CheckBox} from 'native-base';
-import getTheme from '../../../config/styles/native-base-theme/components';
-import platform from '../../../config/styles/native-base-theme/variables/platform';
-import I18n from '../../../config/i18n/index.js';
-import store from '../../../store/index.js'
-import SVGVamosLogo from '../SVG/VamosLogo/component.js'
-import {setLang, setTermsConditions} from '../../../constants/actions/index.js'
+import React from "react";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Modal,
+  Dimensions,
+  Picker,
+  ScrollView,
+  TouchableHighlight
+} from "react-native";
+import {
+  StyleProvider,
+  Container,
+  Header,
+  Content,
+  Button,
+  Body,
+  CheckBox
+} from "native-base";
+import getTheme from "../../../config/styles/native-base-theme/components";
+import platform from "../../../config/styles/native-base-theme/variables/platform";
+import I18n from "../../../config/i18n/index.js";
+import store from "../../../store/index.js";
+import SVGVamosLogo from "../SVG/VamosLogo/component.js";
+import {
+  setLang,
+  setTermsConditions
+} from "../../../constants/actions/index.js";
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export default class ProgressCircle extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       language: props.ui.lang,
       showModalTermsConditions: true,
       agreeTermsConditions: false
-    }
+    };
   }
 
-
-
-
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   _closeModalTermsConditions = () => {
-    this.setState({showModalTermsConditions: false}, () => {
-      this.props.startDownload()
-      this.props.dispatch(setTermsConditions())
-    })
-  }
+    this.setState({ showModalTermsConditions: false }, () => {
+      this.props.startDownload();
+      this.props.dispatch(setTermsConditions());
+    });
+  };
 
   render() {
     return (
@@ -40,103 +55,199 @@ export default class ProgressCircle extends React.Component {
         animationType={"fade"}
         transparent={true}
         visible={this.state.showModalTermsConditions}
-        onRequestClose={() => { }}
+        onRequestClose={() => {}}
       >
         <StyleProvider style={getTheme(platform)}>
           <Container>
             <Header
               androidStatusBarColor="#E6642F"
-              style={{ backgroundColor: '#E6642F' }}
+              style={{ backgroundColor: "#E6642F" }}
             >
-              <Body
-                style={{ flex: 1 , alignItems: "center"}}
-              >
-                <SVGVamosLogo
-                  height={140}
-                  width={140}
-                />
+              <Body style={{ flex: 1, alignItems: "center" }}>
+                <SVGVamosLogo height={140} width={140} />
               </Body>
             </Header>
             <Content
               contentContainerStyle={{
                 flex: 1,
-                backgroundColor: "#FFFFFF",
+                backgroundColor: "#FFFFFF"
               }}
             >
               <View style={styles.modalTermsConditions}>
                 <View style={styles.headTermsConditions}>
                   <View style={styles.languageSelector}>
-                    <View style={{marginRight: width/10}}>
-                      <Text style={{ color: '#e6354d', fontFamily: 'OpenSans', fontSize: width / 20, fontWeight: "bold" }}>{I18n.t("terms_language" , {locale: this.props.ui.lang})}</Text>
+                    <View style={{ marginRight: width / 10 }}>
+                      <Text
+                        style={{
+                          color: "#e6354d",
+                          fontFamily: "OpenSans",
+                          fontSize: width / 20,
+                          fontWeight: "bold"
+                        }}
+                      >
+                        {I18n.t("terms_language", {
+                          locale: this.props.ui.lang
+                        })}
+                      </Text>
                     </View>
-                    <View style={{borderWidth: 2, borderColor: "#e6334c", width: 90}}>
+                    <View
+                      style={{
+                        borderWidth: 2,
+                        borderColor: "#e6334c",
+                        width: 90
+                      }}
+                    >
                       <Picker
                         selectedValue={this.state.language}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ language: itemValue }, () => { this.props.dispatch(setLang(itemValue)) })}>
-                        <Picker.Item label="ES" value={"es-ES"} color="#e6334c" />
-                        <Picker.Item label="EN" value={"en-US"} color="#e6334c" />
+                        onValueChange={(itemValue, itemIndex) =>
+                          this.setState({ language: itemValue }, () => {
+                            this.props.dispatch(setLang(itemValue));
+                          })
+                        }
+                      >
+                        <Picker.Item
+                          label="ES"
+                          value={"es-ES"}
+                          color="#e6334c"
+                        />
+                        <Picker.Item
+                          label="EN"
+                          value={"en-US"}
+                          color="#e6334c"
+                        />
                       </Picker>
                     </View>
                   </View>
                   <View style={styles.titleHeader}>
-                    <Text style={{ color: '#e6334c', fontFamily: 'OpenSans', fontSize: width / 25}}>{I18n.t("terms_title" , {locale: this.props.ui.lang})}</Text>
+                    <Text
+                      style={{
+                        color: "#e6334c",
+                        fontFamily: "OpenSans",
+                        fontSize: width / 25
+                      }}
+                    >
+                      {I18n.t("terms_title", { locale: this.props.ui.lang })}
+                    </Text>
                   </View>
                 </View>
                 <ScrollView
-                  style={{ width: '100%' }}
-                  contentContainerStyle={{ alignItems: 'center', paddingHorizontal: width / 20}}
-                  keyboardShouldPersistTaps='handled'>
+                  style={{ width: "100%" }}
+                  contentContainerStyle={{
+                    alignItems: "center",
+                    paddingHorizontal: width / 20
+                  }}
+                  keyboardShouldPersistTaps="handled"
+                >
                   <View style={styles.bodyTermsConditions}>
-                  <Text style={{ color: '#6a6a6d', fontFamily: 'OpenSans', fontSize: width / 30}}>{I18n.t("terms_conditions" , {locale: this.props.ui.lang})}</Text>
+                    <Text
+                      style={{
+                        color: "#6a6a6d",
+                        fontFamily: "OpenSans",
+                        fontSize: width / 30
+                      }}
+                    >
+                      {I18n.t("terms_conditions", {
+                        locale: this.props.ui.lang
+                      })}
+                    </Text>
                   </View>
                 </ScrollView>
                 <View style={styles.footerTermsConditions}>
-                    <View style={{marginTop: "5%", marginBottom: "2.5%", height: height/15}}>
-                      <TouchableHighlight
-                        onPress={() => this.setState({ agreeTermsConditions: !this.state.agreeTermsConditions })}
-                        activeOpacity={0.5}
-                        underlayColor="#e6334c"
-                        style={{ marginTop: '2.5%' }}
-                      >
-                        <View style={{flexDirection: "row"}}>
-                          <CheckBox
-                            onPress={() => this.setState({ agreeTermsConditions: !this.state.agreeTermsConditions })}
-                            checked={this.state.agreeTermsConditions}
-                            color={"#e6334c"}
-                          />
-                          <View style={{marginLeft: width / 15, flex: 1}}>
-                          <Text style={{ color: '#e6334c', fontFamily: 'OpenSans', fontSize: width / 22}}>{I18n.t("terms_agree" , {locale: this.props.ui.lang})}</Text>
-                          </View>
+                  <View
+                    style={{
+                      marginTop: "5%",
+                      marginBottom: "2.5%",
+                      height: height / 15
+                    }}
+                  >
+                    <TouchableHighlight
+                      onPress={() =>
+                        this.setState({
+                          agreeTermsConditions: !this.state.agreeTermsConditions
+                        })
+                      }
+                      activeOpacity={0.5}
+                      underlayColor="#e6334c"
+                      style={{ marginTop: "2.5%" }}
+                    >
+                      <View style={{ flexDirection: "row" }}>
+                        <CheckBox
+                          onPress={() =>
+                            this.setState({
+                              agreeTermsConditions: !this.state
+                                .agreeTermsConditions
+                            })
+                          }
+                          checked={this.state.agreeTermsConditions}
+                          color={"#e6334c"}
+                        />
+                        <View style={{ marginLeft: width / 15, flex: 1 }}>
+                          <Text
+                            style={{
+                              color: "#e6334c",
+                              fontFamily: "OpenSans",
+                              fontSize: width / 22
+                            }}
+                          >
+                            {I18n.t("terms_agree", {
+                              locale: this.props.ui.lang
+                            })}
+                          </Text>
                         </View>
-                      </TouchableHighlight>
-                    </View>
-                    <View style={{ width: "100%", marginBottom: "5%", paddingBottom: "2.5%", height: height/15 }}>
-                      <Button
-                        bordered
-                        disabled={!this.state.agreeTermsConditions}
-                        style={{ borderColor: '#D3CDCD', elevation: 2, flex: 1, alignSelf: "center", backgroundColor: (this.state.agreeTermsConditions) ? "#FFFFFF" : "#D3CDCD" }}
-                        onPress={() => this._closeModalTermsConditions()}
-                      >
-                        <Text style={{ color: "#e6334c", flexWrap: 'wrap', fontFamily: 'OpenSans', fontSize: width / 20, fontWeight: "bold" }}>{I18n.t("terms_button", { locale: this.props.ui.lang })}</Text>
-                      </Button>
-                    </View>
+                      </View>
+                    </TouchableHighlight>
                   </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      marginBottom: "5%",
+                      paddingBottom: "2.5%",
+                      height: height / 15
+                    }}
+                  >
+                    <Button
+                      bordered
+                      disabled={!this.state.agreeTermsConditions}
+                      style={{
+                        borderColor: "#D3CDCD",
+                        elevation: 2,
+                        flex: 1,
+                        alignSelf: "center",
+                        backgroundColor: this.state.agreeTermsConditions
+                          ? "#FFFFFF"
+                          : "#D3CDCD"
+                      }}
+                      onPress={() => this._closeModalTermsConditions()}
+                    >
+                      <Text
+                        style={{
+                          color: "#e6334c",
+                          flexWrap: "wrap",
+                          fontFamily: "OpenSans",
+                          fontSize: width / 20,
+                          fontWeight: "bold"
+                        }}
+                      >
+                        {I18n.t("terms_button", { locale: this.props.ui.lang })}
+                      </Text>
+                    </Button>
+                  </View>
+                </View>
               </View>
             </Content>
           </Container>
         </StyleProvider>
       </Modal>
-    )
+    );
   }
-
 }
 
 const styles = StyleSheet.create({
   modalTermsConditions: {
-    flex:1,
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    width: "100%",
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    width: "100%"
   },
   headTermsConditions: {
     width: "100%",
@@ -150,7 +261,7 @@ const styles = StyleSheet.create({
   },
   footerTermsConditions: {
     paddingHorizontal: width / 20,
-    width: "100%",
+    width: "100%"
   },
   languageSelector: {
     flexDirection: "row",
@@ -164,4 +275,4 @@ const styles = StyleSheet.create({
     marginTop: "2.5%",
     marginBottom: "5%"
   }
-})
+});
