@@ -46,13 +46,13 @@ export default {
   General_Service_CO:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/RHO en Colombia: www.profamilia.org.co",
   General_Service_CW:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/RHO en Curazao: www.ippfwhr.org/en/country/caribbean",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/RHO en Curazao: caribbeanfamilyplanning.com/where-we-work/curacao",
   General_Service_DM:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de DPPA, la asociación miembro de IPPF/RHO en Dominica: www.ippfwhr.org/en/country/caribbean",
   General_Service_DO:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/RHO en República Dominicana: www.profamilia.org.do/",
   General_Service_EC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/RHO en Ecuador: www.cepamgye.wordpress.com",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/RHO en Ecuador: www.cepamgye.org/es",
   General_Service_SV:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de ADS, la asociación miembro de IPPF/RHO en El Salvador: www.ads.org.sv",
   General_Service_GD:
@@ -64,7 +64,7 @@ export default {
   General_Service_HT:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de PROFAMIL, la asociación miembro de IPPF/RHO en Haití: www.profamilhaiti.org",
   General_Service_HN:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/RHO en Honduras: www.ashonplafa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/RHO en Honduras: www.ashonplafa.com",
   General_Service_JM:
     "Infórmate sobre salud sexual y reproductiva visitando la página web de JFPA, la asociación miembro de IPPF/RHO en Jamaica: www.famplan.wordpress.com",
   General_Service_MX:
@@ -106,7 +106,7 @@ export default {
   General_ILE_CO:
     "En Colombia el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_CW:
-    "En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar caribbeanfamilyplanning.com/where-we-work/curacao",
   General_ILE_DM:
     "En Dominica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
   General_ILE_DO:
@@ -124,7 +124,7 @@ export default {
   General_ILE_HT:
     "En Haití el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.",
   General_ILE_HN:
-    "En Honduras el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Honduras el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.ashonplafa.com",
   General_ILE_JM:
     "En Jamaica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
   General_ILE_MX:

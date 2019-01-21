@@ -164,7 +164,7 @@ export default class InfoCountry extends React.Component {
         <View>
           <Text>{textString[0]}</Text>
           <Text
-            onPress={() => this._goURL(`https://www${url}`)}
+            onPress={() => this._goURL(`http://www${url}`)}
             style={{ color: "#e6334c" }}
           >
             {`www${textString[1]}`}

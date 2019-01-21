@@ -46,13 +46,13 @@ export default {
   General_Service_CO:
     "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Colombia: www.profamilia.org.co",
   General_Service_CW:
-    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao: www.ippfwhr.org/en/country/caribbean",
+    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao: caribbeanfamilyplanning.com/where-we-work/curacao",
   General_Service_DM:
     "Find out more about sexual and reproductive health and rights on the website of DPPA, the IPPF/WHR Member Association in Dominica: www.ippfwhr.org/en/country/caribbean",
   General_Service_DO:
     "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Dominican Republic: www.profamilia.org.do",
   General_Service_EC:
-    "Find out more about sexual and reproductive health and rights on the website of CEPAM, the IPPF/WHR Member Association in Ecuador: www.cepamgye.wordpress.com",
+    "Find out more about sexual and reproductive health and rights on the website of CEPAM, the IPPF/WHR Member Association in Ecuador: www.cepamgye.org/es",
   General_Service_SV:
     "Find out more about sexual and reproductive health and rights on the website of ADS, the IPPF/WHR Member Association in El Salvador: www.ads.org.sv",
   General_Service_GD:
@@ -64,7 +64,7 @@ export default {
   General_Service_HT:
     "Find out more about sexual and reproductive health and rights on the website of PROFAMIL, the IPPF/WHR Member Association in Haiti: www.profamilhaiti.org",
   General_Service_HN:
-    "Find out more about sexual and reproductive health and rights on the website of ASHONPLAFA, the IPPF/WHR Member Association in Honduras: www.ashonplafa.org",
+    "Find out more about sexual and reproductive health and rights on the website of ASHONPLAFA, the IPPF/WHR Member Association in Honduras: www.ashonplafa.com",
   General_Service_JM:
     "Find out more about sexual and reproductive health and rights on the website of JFPA, the IPPF/WHR Member Association in Jamaica: www.famplan.wordpress.com",
   General_Service_MX:
@@ -106,7 +106,7 @@ export default {
   General_ILE_CO:
     "In Colombia abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_CW:
-    "In Curacao abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Curacao abortion is prohibited under all circumstances. For more information, visit caribbeanfamilyplanning.com/where-we-work/curacao",
   General_ILE_DM:
     "In Dominica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
   General_ILE_DO:
@@ -124,7 +124,7 @@ export default {
   General_ILE_HT:
     "In Haiti abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.",
   General_ILE_HN:
-    "In Honduras abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Honduras abortion is prohibited under all circumstances. For more information, visit www.ashonplafa.com",
   General_ILE_JM:
     "In Jamaica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
   General_ILE_MX:
