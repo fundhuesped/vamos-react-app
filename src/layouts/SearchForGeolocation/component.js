@@ -48,7 +48,7 @@ export default class SearchForGeolocation extends React.Component {
     super();
     this.state = {
       loaded: false,
-      sortEngine: "ALL",
+      sortEngine: RATE,
       address: null,
       showModal: false,
       isTeen: false,
@@ -379,6 +379,13 @@ export default class SearchForGeolocation extends React.Component {
                           }
                         >
                           <Picker.Item
+                            label={I18n.t("sort_better_option", {
+                              locale: this.props.lang
+                            })}
+                            value={RATE}
+                            color="#000"
+                          />
+                          <Picker.Item
                             label={I18n.t("all", { locale: this.props.lang })}
                             value={"ALL"}
                             color="#000"
@@ -388,13 +395,6 @@ export default class SearchForGeolocation extends React.Component {
                               locale: this.props.lang
                             })}
                             value={DISTANCE}
-                            color="#000"
-                          />
-                          <Picker.Item
-                            label={I18n.t("sort_better_option", {
-                              locale: this.props.lang
-                            })}
-                            value={RATE}
                             color="#000"
                           />
                         </Picker>
@@ -408,15 +408,15 @@ export default class SearchForGeolocation extends React.Component {
                           }
                         >
                           <Picker.Item
-                            label={I18n.t("all", { locale: this.props.lang })}
-                            value={"ALL"}
-                            color="#000"
-                          />
-                          <Picker.Item
                             label={I18n.t("sort_better_option", {
                               locale: this.props.lang
                             })}
                             value={RATE}
+                            color="#000"
+                          />
+                          <Picker.Item
+                            label={I18n.t("all", { locale: this.props.lang })}
+                            value={"ALL"}
                             color="#000"
                           />
                         </Picker>
