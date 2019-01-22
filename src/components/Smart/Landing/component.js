@@ -42,6 +42,18 @@ class SmartLanding extends React.Component {
     });
   };
 
+  updateData = () => {
+    if (
+      !this.state.firstTime &&
+      this.props.db.places.data.length !== 0 &&
+      !this.props.db.isFetching
+    ) {
+      //TODO: delete alert
+      alert("checkplaces");
+      HTTPService.checkPlaces();
+    }
+  };
+
   _renderComponent = () => {
     console.log("renderComponent");
 
@@ -73,6 +85,7 @@ class SmartLanding extends React.Component {
             db={this.props.db}
             dispatch={this.props.dispatch}
             chat={this.chat}
+            updateData={this.updateData}
           />
         );
     }

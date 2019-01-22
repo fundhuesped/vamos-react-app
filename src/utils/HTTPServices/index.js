@@ -61,22 +61,20 @@ export class HTTPServices {
   };
 
   checkPlaces = async () => {
-    let lastUpdate =
-      new Date(store.getState().db.places.meta.updatedAt) || new Date();
-    (currentDate = new Date()),
-      (differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime()),
-      (differenceDays = differenceMiliseconds / 1000 / 60 / 60 / 24);
+    const lastUpdate = new Date(store.getState().db.places.meta.updatedAt);
+    const currentDate = new Date();
+    const differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime();
+    const differenceDays = differenceMiliseconds / 1000 / 60 / 60 / 24;
 
-    let failedPages;
-
-    if (differenceDays >= DAYSBEFOREUPDATE) {
+    //TODO: delte this condition
+    if (differenceDays >= 1) {
+      // if (differenceDays >= DAYSBEFOREUPDATE) {
       this.fetchPlaces();
     } else {
-      (failedPages = store.getState().db.places.meta.failedPages),
-        (newFailedPages = {});
+      let failedPages = store.getState().db.places.meta.failedPages;
+      const newFailedPages = {};
       for (let i in failedPages) {
-        let nextUrl = `${URL}/api/v2/places/getall/?page=${i}`,
-          place;
+        let nextUrl = `${URL}/api/v2/places/getall/?page=${i}`;
         try {
           let response = await fetch(nextUrl, {
             method: "GET",
@@ -92,14 +90,12 @@ export class HTTPServices {
           newFailedPages[i.toString()] = null;
         }
       }
+      if (Object.keys(failedPages).length !== 0)
+        this.fetchCities({
+          currentDataPlaces: failedPages,
+          failedPages: newFailedPages
+        });
     }
-
-    // alert('FINALIZADO CHECKEANDO BD');
-    if (failedPages.length !== 0)
-      this.fetchCities({
-        currentDataPlaces: failedPages,
-        failedPages: newFailedPages
-      });
   };
 
   fetchCities = async places => {
