@@ -30,65 +30,65 @@ export default {
   UY: "Uruguay",
   VE: "Venezuela",
   General_Service_AG:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APPA, la asociación miembro de IPPF/RHO en Antigua y Barbuda: www.facebook.com/AntiguaPlannedParenthood",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APPA, la asociación miembro de IPPF/WHR en Antigua y Barbuda: www.facebook.com/AntiguaPlannedParenthood",
   General_Service_AR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FUSA, la asociación miembro de IPPF/RHO en Argentina: www.grupofusa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FUSA, la asociación miembro de IPPF/WHR en Argentina: www.grupofusa.org",
   General_Service_AW:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/RHO en Aruba: www.caribbeanfamilyplanning.com/where-we-work/aruba",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Aruba: www.caribbeanfamilyplanning.com/where-we-work/aruba",
   General_Service_BB:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFPA, la asociación miembro de IPPF/RHO en Barbados: www.facebook.com/BarbadosFamilyPlanningAssociation",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFPA, la asociación miembro de IPPF/WHR en Barbados: www.facebook.com/BarbadosFamilyPlanningAssociation",
   General_Service_BZ:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFLA, la asociación miembro de IPPF/RHO en Belice: www.bflabelize.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFLA, la asociación miembro de IPPF/WHR en Belice: www.bflabelize.org",
   General_Service_BO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CIES, la asociación miembro de IPPF/RHO en Bolivia: www.cies.org.bo",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CIES, la asociación miembro de IPPF/WHR en Bolivia: www.cies.org.bo",
   General_Service_CL:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFA, la asociación miembro de IPPF/RHO en Chile: www.aprofa.cl",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFA, la asociación miembro de IPPF/WHR en Chile: www.aprofa.cl",
   General_Service_CO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/RHO en Colombia: www.profamilia.org.co",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en Colombia: www.profamilia.org.co",
   General_Service_CW:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/RHO en Curazao: caribbeanfamilyplanning.com/where-we-work/curacao",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Curazao: caribbeanfamilyplanning.com/where-we-work/curacao",
   General_Service_DM:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de DPPA, la asociación miembro de IPPF/RHO en Dominica: www.ippfwhr.org/en/country/caribbean",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de DPPA, la asociación miembro de IPPF/WHR en Dominica: www.ippfwhr.org/en/country/caribbean",
   General_Service_DO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/RHO en República Dominicana: www.profamilia.org.do/",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en República Dominicana: www.profamilia.org.do/",
   General_Service_EC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/RHO en Ecuador: www.cepamgye.org/es",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/WHR en Ecuador: www.cepamgye.org/es",
   General_Service_SV:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de ADS, la asociación miembro de IPPF/RHO en El Salvador: www.ads.org.sv",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de ADS, la asociación miembro de IPPF/WHR en El Salvador: www.ads.org.sv",
   General_Service_GD:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de GPPA, la asociación miembro de IPPF/RHO en Granada: www.ippfwhr.org/en/country/caribbean",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de GPPA, la asociación miembro de IPPF/WHR en Granada: www.ippfwhr.org/en/country/caribbean",
   General_Service_GT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFAM, la asociación miembro de IPPF/RHO en Guatemala: www.aprofam.org.gt",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFAM, la asociación miembro de IPPF/WHR en Guatemala: www.aprofam.org.gt",
   General_Service_GY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de GRPA, la asociación miembro de IPPF/RHO en Guyana: www.grpa.org.gy",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de GRPA, la asociación miembro de IPPF/WHR en Guyana: www.grpa.org.gy",
   General_Service_HT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de PROFAMIL, la asociación miembro de IPPF/RHO en Haití: www.profamilhaiti.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de PROFAMIL, la asociación miembro de IPPF/WHR en Haití: www.profamilhaiti.org",
   General_Service_HN:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/RHO en Honduras: www.ashonplafa.com",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/WHR en Honduras: www.ashonplafa.com",
   General_Service_JM:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de JFPA, la asociación miembro de IPPF/RHO en Jamaica: www.famplan.wordpress.com",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de JFPA, la asociación miembro de IPPF/WHR en Jamaica: www.famplan.wordpress.com",
   General_Service_MX:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de MexFam, la asociación miembro de IPPF/RHO en México: www.mexfam.org.mx",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de MexFam, la asociación miembro de IPPF/WHR en México: www.mexfam.org.mx",
   General_Service_PA:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APLAFA, la asociación miembro de IPPF/RHO en Panamá: www.aplafa.org.pa",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APLAFA, la asociación miembro de IPPF/WHR en Panamá: www.aplafa.org.pa",
   General_Service_PY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPEP, la asociación miembro de IPPF/RHO en Paraguay: www.cepep.org.py",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPEP, la asociación miembro de IPPF/WHR en Paraguay: www.cepep.org.py",
   General_Service_PE:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de INPPARES, la asociación miembro de IPPF/RHO en Perú: www.inppares.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de INPPARES, la asociación miembro de IPPF/WHR en Perú: www.inppares.org",
   General_Service_PR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilias, la asociación miembro de IPPF/RHO en Puerto Rico: www.profamiliaspr.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilias, la asociación miembro de IPPF/WHR en Puerto Rico: www.profamiliaspr.org",
   General_Service_LC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de SLPPA, la asociación miembro de IPPF/RHO en Santa Lucía: www.slppa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de SLPPA, la asociación miembro de IPPF/WHR en Santa Lucía: www.slppa.org",
   General_Service_VC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de SVPPA, la asociación miembro de IPPF/RHO en San Vicente: www.facebook.com/SVPPA",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de SVPPA, la asociación miembro de IPPF/WHR en San Vicente: www.facebook.com/SVPPA",
   General_Service_SR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de LOBI, la asociación miembro de IPPF/RHO en Surinam: www.lobisuriname.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de LOBI, la asociación miembro de IPPF/WHR en Surinam: www.lobisuriname.org",
   General_Service_TT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPATT, la asociación miembro de IPPF/RHO en Trinidad y Tobago: www.ttfpa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPATT, la asociación miembro de IPPF/WHR en Trinidad y Tobago: www.ttfpa.org",
   General_Service_UY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de IS, la asociación miembro de IPPF/RHO en Uruguay: www.iniciativas.org.uy",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de IS, la asociación miembro de IPPF/WHR en Uruguay: www.iniciativas.org.uy",
   General_Service_VE:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de PLAFAM, la asociación miembro de IPPF/RHO en Venezuela: www.plafam.org.ve",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de PLAFAM, la asociación miembro de IPPF/WHR en Venezuela: www.plafam.org.ve",
   General_ILE_AG:
     "En Antigua y Barbuda el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
   General_ILE_AR:
@@ -238,7 +238,7 @@ export default {
   rate_this_place: "¿Cómo te atendimos?",
   next: "Siguiente",
   page_title:
-    "VAMOS - Encuentra servicios de salud sexual y reproductiva - IPPF/RHO y Fundación Huésped",
+    "VAMOS - Encuentra servicios de salud sexual y reproductiva - IPPF/WHR y Fundación Huésped",
   form_intro_text:
     "A continuación, completa el formulario con el nuevo establecimiento. Los campos con * son obligatorios.",
   form_establishment_name: "Nombre del Establecimiento*",
@@ -481,22 +481,22 @@ export default {
   evaluation_answeroption_79: 10,
   about_vamos_title: "Quiénes Somos",
   about_ippf_description:
-    "IPPF/RHO trabaja con 45 organizaciones asociadas, en 41 países de las Américas y el Caribe. Nuestros socios locales son organizaciones autónomas, que comparten una misión común: asegurar los derechos sexuales y reproductivos para todas las personas, incluyendo el acceso universal a servicios de calidad en materia de salud sexual y reproductiva y a la educación integral de sexualidad.",
+    "IPPF/WHR trabaja con 45 organizaciones asociadas, en 41 países de las Américas y el Caribe. Nuestros socios locales son organizaciones autónomas, que comparten una misión común: asegurar los derechos sexuales y reproductivos para todas las personas, incluyendo el acceso universal a servicios de calidad en materia de salud sexual y reproductiva y a la educación integral de sexualidad.",
   about_ippf_description_2:
-    "En 2016, los socios de la IPPF/RHO prestaron más de 30 millones de servicios en las Américas y el Caribe, evitaron más de dos millones de embarazos no deseados y facilitaron el acceso a una amplia gama de servicios, incluyendo la anticoncepción, los exámenes para la detección de cáncer de mamá y el cáncer cervical, prevención de VIH, y el aborto seguro.",
+    "En 2016, los socios de la IPPF/WHR prestaron más de 30 millones de servicios en las Américas y el Caribe, evitaron más de dos millones de embarazos no deseados y facilitaron el acceso a una amplia gama de servicios, incluyendo la anticoncepción, los exámenes para la detección de cáncer de mamá y el cáncer cervical, prevención de VIH, y el aborto seguro.",
   about_ippf_description_3:
-    "En la Oficina Regional de IPPF/RHO conectamos a nuestros socios con el movimiento global a favor de los derechos sexuales y reproductivos. También aseguramos su sostenibilidad de largo plazo, prestando asistencia técnica en áreas como la planificación programática, el desarrollo institucional y la recaudación de fondos.",
+    "En la Oficina Regional de IPPF/WHR conectamos a nuestros socios con el movimiento global a favor de los derechos sexuales y reproductivos. También aseguramos su sostenibilidad de largo plazo, prestando asistencia técnica en áreas como la planificación programática, el desarrollo institucional y la recaudación de fondos.",
   about_ippf_description_4:
     "Juntos, construimos instituciones fuertes y comunidades saludables en toda la región.",
   select_city: "(Elegir Ciudad)",
   seo_countries_headertitle:
-    "IPPF/RHO y Fundación Huésped - Paises con servicios de salud sexual y reproductiva",
+    "IPPF/WHR y Fundación Huésped - Paises con servicios de salud sexual y reproductiva",
   seo_meta_description_content:
     "Ubica dónde conseguir condones, métodos anticonceptivos, realizarte la prueba de VIH y otras ITS, detectar cáncer de cuello uterino y mamas, recibir consejería sobre interrupción legal del embarazo y servicios de salud sexual y reproductiva en diferentes países",
-  seo_meta_author_content: "IPPF/RHO y Fundación Huésped",
+  seo_meta_author_content: "IPPF/WHR y Fundación Huésped",
   seo_meta_canonicallink: "",
   seo_meta_property_local: "es_LA",
-  seo_meta_property_title: "IPPF/RHO y Fundación Huésped",
+  seo_meta_property_title: "IPPF/WHR y Fundación Huésped",
   seo_meta_property_description:
     "Elige los países donde conseguir condones, métodos anticonceptivos, realizarte la prueba de VIH y otras ITS, detectar cáncer de cuello uterino y mamas, recibir consejería sobre interrupción legal del embarazo y servicios de salud sexual y reproductiva",
   seo_countries_nav_init: "INICIO",
@@ -512,7 +512,7 @@ export default {
     "Conoce dónde conseguir condones, métodos anticonceptivos, realizarte la prueba de VIH y otras ITS, detectar cáncer de cuello uterino y mamas, recibir consejería sobre interrupción legal del embarazo y servicios de salud sexual y reproductiva",
   seo_select_district: "Selecciona un Distrito",
   seo_select_state: "Selecciona una Provincia",
-  seo_meta_placelist_title_1: "IPPF/RHO y Fundación Huésped -  ¿#Vamos",
+  seo_meta_placelist_title_1: "IPPF/WHR y Fundación Huésped -  ¿#Vamos",
   on: "en",
   seo_meta_description_content_2: "Encuentra",
   seo_services_whatareyoulookingfor_label: "¿Qué estás buscando?",
@@ -707,7 +707,7 @@ export default {
   about_donde_description_3:
     "VAMOS es una plataforma de código abierto que funciona desde cualquier dispositivo con acceso a internet, el uso es gratuito y anónimo. También puedes descargarla como aplicación para Android en el <a href='' >Play Store</a>.",
   about_donde_description_4:
-    "La primera versión de esta plataforma fue desarrollada por Fundación Huésped para Argentina y otros países del Cono Sur. En 2017 junto a la Federación Internacional de Planificación Familiar - Región del Hemisferio Occidental (IPPF/RHO) rediseñamos la plataforma, la hicimos crecer y la extendimos a todos los países de América Latina y el Caribe incorporando también otros servicios.",
+    "La primera versión de esta plataforma fue desarrollada por Fundación Huésped para Argentina y otros países del Cono Sur. En 2017 junto a la Federación Internacional de Planificación Familiar - Región del Hemisferio Occidental (IPPF/WHR) rediseñamos la plataforma, la hicimos crecer y la extendimos a todos los países de América Latina y el Caribe incorporando también otros servicios.",
   about_li_label_preservativos: "Entrega de condones",
   about_li_label_prueba: "Realización de la prueba de VIH y otras ITS",
   about_li_label_ssr: "Servicios de salud sexual y reproductiva",
@@ -718,7 +718,7 @@ export default {
   about_li_rhsc_label: "",
   about_li_rhsc_label_2: "",
   about_li_ippf_hro_label:
-    "Federación Internacional de Planificación de la Familia/Región del Hemisferio Occidental (IPPF/RHO).",
+    "Federación Internacional de Planificación de la Familia/Región del Hemisferio Occidental (IPPF/WHR).",
   about_li_ministerio_label: "",
   about_href_colectivo_1: "",
   about_href_colectivo_2: "",
@@ -801,5 +801,5 @@ export default {
   terms_agree: "Acepto los Términos y Condiciones",
   terms_button: "Ingresar",
   terms_conditions:
-    "Gracias por utilizar VAMOS.\n\nVAMOS permite buscar y ver en un mapa, lugares que ofrecen diferentes servicios de salud sexual y reproductiva. De cada lugar, se puede encontrar información sobre los servicios que ofrece: tipo de servicio, dirección, teléfono, correo electrónico, sitio web, entre otros datos de las Asociaciones Miembro de IPPF/RHO, sus clínicas asociadas y organizaciones aliadas.\n\nLas y los usuarios de la plataforma pueden sugerir la incorporación de nuevos sitios. Las solicitudes serán evaluadas por IPPF/RHO y Fundación Huésped para su incorporación.\n\nEn VAMOS, las y los usuarios pueden evaluar la atención recibida en los servicios localizados, mediante una encuesta anónima. IPPF/RHO y Fundación Huésped no se responsabilizan por las evaluaciones y comentarios hechos por los usuarios. IPPF/RHO y Fundación Huésped tienen la potestad de eliminar comentarios cuando violen normas de cada país, revelen información privada o sensible, contengan publicidad o atenten contra los derechos humanos.\n\nLos datos de contacto solicitados en la encuesta de evaluación, serán utilizados por IPPF/RHO y Fundación Huésped para brindar más información sobre la plataforma y proporcionar retroalimentación a las Asociaciones que prestan los servicios. Las y los usuarios podrán solicitar la baja de la lista de distribución cuando lo deseen comunicándose a vamoslacapp@gmail.com.\n\nDesde agosto de 2018, VAMOS ofrece un servicio de consejería online. De manera anónima, las y los usuarios pueden hacer consultas sobre salud sexual y reproductiva y sobre el funcionamiento de la plataforma. De lunes a viernes entre las 12 y 20 hs. (Buenos Aires GMT-3) hay agentes online que responden las consultas en el momento, fuera de ese horario es posible realizar una consulta, para lo que se requiere que la persona indique un nombre y correo electrónico de contacto.\n\nLos datos de contacto enviados por las personas en el marco del servicio de consejería online, serán utilizados por IPPF/RHO y Fundación Huésped para brindar la información solicitada. Además se les ofrecerá incorporarse a la lista de distribución, bajo las mismas condiciones mencionadas anteriormente.\n\nLa aplicación de VAMOS para Android OS tiene instalada el píxel de Facebook, el cual es usado para crear públicos personalizados para anuncios y medir tasa de conversión. A partir del 25 de mayo de 2018, debemos obtener tu consentimiento como usuario antes que Facebook pueda hacer seguimiento de tu actividad. Por lo tanto, si quieres descargar la aplicación, primero tendrás que aceptar los términos y condiciones.\n\nLas y los usuarios pueden compartir la información encontrada en VAMOS, difundir la plataforma por diferentes medios, usarla con fines no lucrativos personales, educativos, laborales u otros. Se solicita mencionar siempre a VAMOS, así como informar sobre experiencias de uso.\n\nVAMOS no tiene fines comerciales y el uso es totalmente gratuito, ninguna persona o institución puede usar la plataforma o sus funcionalidades con fines de lucro.\n\nLas condiciones reales pueden diferir de los resultados obtenidos mediante la plataforma, apelamos a la participación de las y los usuarios para la corrección y mejora de la información ofrecida. VAMOS busca ser una fuente de referencia para las personas, quienes en última instancia son responsables de las decisiones tomadas con la información aquí ofrecida.\n\nAnte cualquier consulta, puede comunicarse con IPPF/RHO y Fundación Huésped a vamoslacapp@gmail.com"
+    "Gracias por utilizar VAMOS.\n\nVAMOS permite buscar y ver en un mapa, lugares que ofrecen diferentes servicios de salud sexual y reproductiva. De cada lugar, se puede encontrar información sobre los servicios que ofrece: tipo de servicio, dirección, teléfono, correo electrónico, sitio web, entre otros datos de las Asociaciones Miembro de IPPF/WHR, sus clínicas asociadas y organizaciones aliadas.\n\nLas y los usuarios de la plataforma pueden sugerir la incorporación de nuevos sitios. Las solicitudes serán evaluadas por IPPF/WHR y Fundación Huésped para su incorporación.\n\nEn VAMOS, las y los usuarios pueden evaluar la atención recibida en los servicios localizados, mediante una encuesta anónima. IPPF/WHR y Fundación Huésped no se responsabilizan por las evaluaciones y comentarios hechos por los usuarios. IPPF/WHR y Fundación Huésped tienen la potestad de eliminar comentarios cuando violen normas de cada país, revelen información privada o sensible, contengan publicidad o atenten contra los derechos humanos.\n\nLos datos de contacto solicitados en la encuesta de evaluación, serán utilizados por IPPF/WHR y Fundación Huésped para brindar más información sobre la plataforma y proporcionar retroalimentación a las Asociaciones que prestan los servicios. Las y los usuarios podrán solicitar la baja de la lista de distribución cuando lo deseen comunicándose a vamoslacapp@gmail.com.\n\nDesde agosto de 2018, VAMOS ofrece un servicio de consejería online. De manera anónima, las y los usuarios pueden hacer consultas sobre salud sexual y reproductiva y sobre el funcionamiento de la plataforma. De lunes a viernes entre las 12 y 20 hs. (Buenos Aires GMT-3) hay agentes online que responden las consultas en el momento, fuera de ese horario es posible realizar una consulta, para lo que se requiere que la persona indique un nombre y correo electrónico de contacto.\n\nLos datos de contacto enviados por las personas en el marco del servicio de consejería online, serán utilizados por IPPF/WHR y Fundación Huésped para brindar la información solicitada. Además se les ofrecerá incorporarse a la lista de distribución, bajo las mismas condiciones mencionadas anteriormente.\n\nLa aplicación de VAMOS para Android OS tiene instalada el píxel de Facebook, el cual es usado para crear públicos personalizados para anuncios y medir tasa de conversión. A partir del 25 de mayo de 2018, debemos obtener tu consentimiento como usuario antes que Facebook pueda hacer seguimiento de tu actividad. Por lo tanto, si quieres descargar la aplicación, primero tendrás que aceptar los términos y condiciones.\n\nLas y los usuarios pueden compartir la información encontrada en VAMOS, difundir la plataforma por diferentes medios, usarla con fines no lucrativos personales, educativos, laborales u otros. Se solicita mencionar siempre a VAMOS, así como informar sobre experiencias de uso.\n\nVAMOS no tiene fines comerciales y el uso es totalmente gratuito, ninguna persona o institución puede usar la plataforma o sus funcionalidades con fines de lucro.\n\nLas condiciones reales pueden diferir de los resultados obtenidos mediante la plataforma, apelamos a la participación de las y los usuarios para la corrección y mejora de la información ofrecida. VAMOS busca ser una fuente de referencia para las personas, quienes en última instancia son responsables de las decisiones tomadas con la información aquí ofrecida.\n\nAnte cualquier consulta, puede comunicarse con IPPF/WHR y Fundación Huésped a vamoslacapp@gmail.com"
 };
