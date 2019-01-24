@@ -67,16 +67,7 @@ class SideBar extends Component {
         });
 
   _reloadBD = () => {
-    if (this.props.db.places.data.length === 0) {
-      Toast.show({
-        text: "TODAVIA NO HAY DATOS EN LA BD!",
-        position: "bottom",
-        buttonText: "OK",
-        duration: 2000
-      });
-    } else {
-      this._setModalVisible(true, false);
-    }
+    this._setModalVisible(true, false);
   };
 
   _refetch = () => this._setModalVisible(false, true);

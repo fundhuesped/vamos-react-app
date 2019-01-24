@@ -33,6 +33,7 @@ class SmartSearchForGeolocation extends React.Component {
       this.props.db.places.data,
       this.props.ui.lookingFor
     );
+    this.Engine.sortEngine("RATE");
   };
 
   _changeSortValue = (sortEngine, value) => {

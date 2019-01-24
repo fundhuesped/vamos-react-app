@@ -65,6 +65,8 @@ export default class Landing extends React.Component {
     };
   }
 
+  componentDidMount = () => this.props.updateData();
+
   _handleService = service => {
     if (service !== "TEEN") {
       this.props.dispatch(selectLookingFor(service));
