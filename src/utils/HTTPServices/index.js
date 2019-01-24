@@ -66,9 +66,7 @@ export class HTTPServices {
     const differenceMiliseconds = currentDate.getTime() - lastUpdate.getTime();
     const differenceDays = differenceMiliseconds / 1000 / 60 / 60 / 24;
 
-    //TODO: delte this condition
-    if (differenceDays >= 1) {
-      // if (differenceDays >= DAYSBEFOREUPDATE) {
+    if (differenceDays >= DAYSBEFOREUPDATE) {
       this.fetchPlaces();
     } else {
       let failedPages = store.getState().db.places.meta.failedPages;

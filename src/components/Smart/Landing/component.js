@@ -48,8 +48,6 @@ class SmartLanding extends React.Component {
       this.props.db.places.data.length !== 0 &&
       !this.props.db.isFetching
     ) {
-      //TODO: delete alert
-      alert("checkplaces");
       HTTPService.checkPlaces();
     }
   };

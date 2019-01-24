@@ -1,4 +1,4 @@
-export const DAYSBEFOREUPDATE = 15;
+export const DAYSBEFOREUPDATE = 30;
 export const URL = "https://vamoslac.org";
 // export const URL = "https://ippf-staging.com.ar";
 export const URLPLACES = URL + "/api/v2/places/getall";
