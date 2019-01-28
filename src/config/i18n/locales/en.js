@@ -46,7 +46,7 @@ export default {
   General_Service_CO:
     "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Colombia: www.profamilia.org.co",
   General_Service_CW:
-    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao: caribbeanfamilyplanning.com/where-we-work/curacao",
+    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao: http://caribbeanfamilyplanning.com/where-we-work/curacao/",
   General_Service_DM:
     "Find out more about sexual and reproductive health and rights on the website of DPPA, the IPPF/WHR Member Association in Dominica: www.ippfwhr.org/en/country/caribbean",
   General_Service_DO:
@@ -106,7 +106,7 @@ export default {
   General_ILE_CO:
     "In Colombia abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_CW:
-    "In Curacao abortion is prohibited under all circumstances. For more information, visit caribbeanfamilyplanning.com/where-we-work/curacao",
+    "In Curacao abortion is prohibited under all circumstances. For more information, visit http://caribbeanfamilyplanning.com/where-we-work/curacao/",
   General_ILE_DM:
     "In Dominica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
   General_ILE_DO:
