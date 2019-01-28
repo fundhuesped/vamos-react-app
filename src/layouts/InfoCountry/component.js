@@ -154,20 +154,21 @@ export default class InfoCountry extends React.Component {
 
   _handleLinks = text => {
     let textComponent;
-    textString = text.split("www");
+    let textString = text.split("www.");
+    let url = `http://www.${textString[1]}`;
+    if (textString.length === 1) {
+      textString = text.split("http://");
+      url = `http://${textString[1]}`;
+    }
 
     if (textString.length === 1) {
       textComponent = <Text>{textString[0]}</Text>;
     } else {
-      let url = textString[1];
       textComponent = (
         <View>
           <Text>{textString[0]}</Text>
-          <Text
-            onPress={() => this._goURL(`http://www${url}`)}
-            style={{ color: "#e6334c" }}
-          >
-            {`www${textString[1]}`}
+          <Text onPress={() => this._goURL(url)} style={{ color: "#e6334c" }}>
+            {textString[1]}
           </Text>
         </View>
       );
