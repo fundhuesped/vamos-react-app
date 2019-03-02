@@ -206,30 +206,34 @@ export default class InfoCountry extends React.Component {
     return gralText;
   };
 
-  _renderAssociationImage = (service, ILECondition, image) => {
-    let AssociationImage;
-
-    if (service !== "LPI")
-      AssociationImage = (
-        <Image
-          source={image}
-          style={styles.associationLogo}
-          resizeMode="contain"
-        />
-      );
-    else {
-      if (ILECondition)
-        AssociationImage = (
+  _renderCountryImages = (service, ILECondition, images) => {
+    const countryImages = images.map((image, index) => {
+      if (service !== "LPI")
+        associationImage = (
           <Image
+            key={index}
             source={image}
             style={styles.associationLogo}
             resizeMode="contain"
           />
         );
-      else AssociationImage = null;
-    }
+      else {
+        if (ILECondition)
+          associationImage = (
+            <Image
+              key={index}
+              source={image}
+              style={styles.associationLogo}
+              resizeMode="contain"
+            />
+          );
+        else associationImage = null;
+      }
 
-    return AssociationImage;
+      return associationImage;
+    });
+
+    return countryImages;
   };
 
   render() {
@@ -286,7 +290,7 @@ export default class InfoCountry extends React.Component {
                       { locale: this.props.lang }
                     ).toUpperCase()}`}</Text>
                   </View>
-                  {this._renderAssociationImage(
+                  {this._renderCountryImages(
                     this.props.service,
                     gralTextandILEForCountry.ILEService,
                     gralTextandILEForCountry.asocciationImageUrl
@@ -329,7 +333,8 @@ const styles = StyleSheet.create({
   },
   associationLogo: {
     width: "100%",
-    height: width / 3
+    height: width / 3,
+    marginBottom: 10
   },
   infoCountryBody: {
     marginVertical: "5%"

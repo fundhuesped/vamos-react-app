@@ -62,181 +62,181 @@ export const getGralTextandILEForCountry = country => {
     case "AG":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/AG.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/AG.jpg")];
       }
       break;
     case "AR":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/AR.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/AR.jpg"), require("../../assets/images/countryLogos/AR2.jpg")];
       }
       break;
     case "AW":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/AW.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/AW.jpg")];
       }
       break;
     case "BB":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/BB.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/BB.jpg")];
       }
       break;
     case "BZ":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/BZ.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/BZ.jpg")];
       }
       break;
     case "BO":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/BO.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/BO.jpg")];
       }
       break;
     case "CL":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/CL.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/CL.jpg")];
       }
       break;
     case "CO":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/CO.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/CO.jpg")];
       }
       break;
     case "CW":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/CW.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/CW.jpg")];
       }
       break;
     case "DM":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/DM.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/DM.jpg")];
       }
       break;
     case "DO":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/DO.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/DO.jpg")];
       }
       break;
     case "EC":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/EC.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/EC.jpg")];
       }
       break;
     case "SV":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/SV.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/SV.jpg")];
       }
       break;
     case "GD":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/GD.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/GD.jpg")];
       }
       break;
     case "GT":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/GT.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/GT.jpg")];
       }
       break;
     case "GY":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/GY.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/GY.jpg")];
       }
       break;
     case "HT":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/HT.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/HT.jpg")];
       }
       break;
     case "HN":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/HN.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/HN.jpg")];
       }
       break;
     case "JM":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/JM.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/JM.jpg")];
       }
       break;
     case "MX":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/MX.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/MX.jpg")];
       }
       break;
     case "PA":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/PA.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/PA.jpg")];
       }
       break;
     case "PY":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/PY.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/PY.jpg")];
       }
       break;
     case "PE":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/PE.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/PE.jpg")];
       }
       break;
     case "PR":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/PR.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/PR.jpg")];
       }
       break;
     case "LC":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/LC.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/LC.jpg")];
       }
       break;
     case "VC":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/VC.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/VC.jpg")];
       }
       break;
     case "SR":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/SR.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/SR.jpg")];
       }
       break;
     case "TT":
       {
         ILEService = false;
-        asocciationImageUrl = require("../../assets/images/countryLogos/TT.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/TT.jpg")];
       }
       break;
     case "UY":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/UY.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/UY.jpg")];
       }
       break;
     case "VE":
       {
         ILEService = true;
-        asocciationImageUrl = require("../../assets/images/countryLogos/VE.jpg");
+        asocciationImageUrl = [require("../../assets/images/countryLogos/VE.jpg")];
       }
       break;
 
