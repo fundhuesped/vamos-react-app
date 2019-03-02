@@ -30,71 +30,71 @@ export default {
   UY: "Uruguay",
   VE: "Venezuela",
   General_Service_AG:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APPA, la asociación miembro de IPPF/WHR en Antigua y Barbuda: www.facebook.com/AntiguaPlannedParenthood",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APPA, la asociación miembro de IPPF/WHR en Antigua y Barbuda:",
   General_Service_AR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FUSA, la asociación miembro de IPPF/WHR en Argentina: www.grupofusa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de los socios colaboradores de IPPF/RHO en Argentina:",
   General_Service_AW:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Aruba: www.caribbeanfamilyplanning.com/where-we-work/aruba",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Aruba:",
   General_Service_BB:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFPA, la asociación miembro de IPPF/WHR en Barbados: www.facebook.com/BarbadosFamilyPlanningAssociation",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFPA, la asociación miembro de IPPF/WHR en Barbados:",
   General_Service_BZ:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFLA, la asociación miembro de IPPF/WHR en Belice: www.bflabelize.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de BFLA, la asociación miembro de IPPF/WHR en Belice:",
   General_Service_BO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CIES, la asociación miembro de IPPF/WHR en Bolivia: www.cies.org.bo",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CIES, la asociación miembro de IPPF/WHR en Bolivia:",
   General_Service_CL:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFA, la asociación miembro de IPPF/WHR en Chile: www.aprofa.cl",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFA, la asociación miembro de IPPF/WHR en Chile:",
   General_Service_CO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en Colombia: www.profamilia.org.co",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en Colombia:",
   General_Service_CW:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Curazao: http://caribbeanfamilyplanning.com/where-we-work/curacao/",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPRP, la asociación miembro de IPPF/WHR en Curazao:",
   General_Service_DM:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de DPPA, la asociación miembro de IPPF/WHR en Dominica: www.ippfwhr.org/en/country/caribbean",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de DPPA, la asociación miembro de IPPF/WHR en Dominica:",
   General_Service_DO:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en República Dominicana: www.profamilia.org.do/",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilia, la asociación miembro de IPPF/WHR en República Dominicana:",
   General_Service_EC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/WHR en Ecuador: www.cepamgye.org/es",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPAM, la asociación miembro de IPPF/WHR en Ecuador:",
   General_Service_SV:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de ADS, la asociación miembro de IPPF/WHR en El Salvador: www.ads.org.sv",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de ADS, la asociación miembro de IPPF/WHR en El Salvador:",
   General_Service_GD:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de GPPA, la asociación miembro de IPPF/WHR en Granada: www.ippfwhr.org/en/country/caribbean",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de GPPA, la asociación miembro de IPPF/WHR en Granada:",
   General_Service_GT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFAM, la asociación miembro de IPPF/WHR en Guatemala: www.aprofam.org.gt",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APROFAM, la asociación miembro de IPPF/WHR en Guatemala:",
   General_Service_GY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de GRPA, la asociación miembro de IPPF/WHR en Guyana: www.grpa.org.gy",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de GRPA, la asociación miembro de IPPF/WHR en Guyana:",
   General_Service_HT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de PROFAMIL, la asociación miembro de IPPF/WHR en Haití: www.profamilhaiti.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de PROFAMIL, la asociación miembro de IPPF/WHR en Haití:",
   General_Service_HN:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/WHR en Honduras: www.ashonplafa.com",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de ASHONPLAFA, la asociación miembro de IPPF/WHR en Honduras:",
   General_Service_JM:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de JFPA, la asociación miembro de IPPF/WHR en Jamaica: www.famplan.wordpress.com",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de JFPA, la asociación miembro de IPPF/WHR en Jamaica:",
   General_Service_MX:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de MexFam, la asociación miembro de IPPF/WHR en México: www.mexfam.org.mx",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de MexFam, la asociación miembro de IPPF/WHR en México:",
   General_Service_PA:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de APLAFA, la asociación miembro de IPPF/WHR en Panamá: www.aplafa.org.pa",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de APLAFA, la asociación miembro de IPPF/WHR en Panamá:",
   General_Service_PY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPEP, la asociación miembro de IPPF/WHR en Paraguay: www.cepep.org.py",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de CEPEP, la asociación miembro de IPPF/WHR en Paraguay:",
   General_Service_PE:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de INPPARES, la asociación miembro de IPPF/WHR en Perú: www.inppares.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de INPPARES, la asociación miembro de IPPF/WHR en Perú:",
   General_Service_PR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilias, la asociación miembro de IPPF/WHR en Puerto Rico: www.profamiliaspr.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de Profamilias, la asociación miembro de IPPF/WHR en Puerto Rico:",
   General_Service_LC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de SLPPA, la asociación miembro de IPPF/WHR en Santa Lucía: www.slppa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de SLPPA, la asociación miembro de IPPF/WHR en Santa Lucía:",
   General_Service_VC:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de SVPPA, la asociación miembro de IPPF/WHR en San Vicente: www.facebook.com/SVPPA",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de SVPPA, la asociación miembro de IPPF/WHR en San Vicente:",
   General_Service_SR:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de LOBI, la asociación miembro de IPPF/WHR en Surinam: www.lobisuriname.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de LOBI, la asociación miembro de IPPF/WHR en Surinam:",
   General_Service_TT:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPATT, la asociación miembro de IPPF/WHR en Trinidad y Tobago: www.ttfpa.org",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de FPATT, la asociación miembro de IPPF/WHR en Trinidad y Tobago:",
   General_Service_UY:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de IS, la asociación miembro de IPPF/WHR en Uruguay: www.iniciativas.org.uy",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de IS, la asociación miembro de IPPF/WHR en Uruguay:",
   General_Service_VE:
-    "Infórmate sobre salud sexual y reproductiva visitando la página web de PLAFAM, la asociación miembro de IPPF/WHR en Venezuela: www.plafam.org.ve",
+    "Infórmate sobre salud sexual y reproductiva visitando la página web de PLAFAM, la asociación miembro de IPPF/WHR en Venezuela:",
   General_ILE_AG:
-    "En Antigua y Barbuda el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Antigua y Barbuda el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_AR:
     "En Argentina el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_AW:
-    "En Aruba el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Aruba el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_BB:
     "En Barbados el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_BZ:
@@ -106,17 +106,17 @@ export default {
   General_ILE_CO:
     "En Colombia el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_CW:
-    "En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar http://caribbeanfamilyplanning.com/where-we-work/curacao/",
+    "En Curacao el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_DM:
-    "En Dominica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Dominica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_DO:
-    "En República Dominicana el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En República Dominicana el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_EC:
     "En Ecuador el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.",
   General_ILE_SV:
-    "En El Salvador el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En El Salvador el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_GD:
-    "En Granada el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Granada el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_GT:
     "En Guatemala el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.",
   General_ILE_GY:
@@ -124,15 +124,15 @@ export default {
   General_ILE_HT:
     "En Haití el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.",
   General_ILE_HN:
-    "En Honduras el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.ashonplafa.com",
+    "En Honduras el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_JM:
-    "En Jamaica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Jamaica el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_MX:
     "En México el aborto es legal bajo ciertas circunstancias. En la Ciudad de México el aborto es legal. Puedes acceder a consejería y servicios integrales de interrupción legal del embarazo en las siguientes clínicas.",
   General_ILE_PA:
-    "En Panamá el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Panamá el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_PY:
-    "En Paraguay el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Paraguay el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_PE:
     "En Perú el aborto está legalmente restringido. Sin embargo, puedes acceder a servicios de orientación e información integral y confidencial sobre opciones ante embarazos no deseados.",
   General_ILE_PR:
@@ -140,11 +140,11 @@ export default {
   General_ILE_LC:
     "En Santa Lucía el aborto es legal bajo ciertas circunstancias. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_VC:
-    "En San Vicente el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En San Vicente el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_SR:
-    "En Surinam el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Surinam el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_TT:
-    "En Trinidad y Tobago el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar www.safe2choose.org",
+    "En Trinidad y Tobago el aborto está prohibido en cualquier circunstancia. Para más información, puedes visitar",
   General_ILE_UY:
     "En Uruguay el aborto es legal. Puedes acceder a consejería y servicios integrales de interrupción legal de embarazo en las siguientes clínicas.",
   General_ILE_VE:

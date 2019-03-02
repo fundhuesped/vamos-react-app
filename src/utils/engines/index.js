@@ -57,190 +57,329 @@ const isTeen = place =>
   place.friendly_ssr;
 
 export const getGralTextandILEForCountry = country => {
-  let ILEService, asocciationImageUrl;
+  let ILEService;
+  let asocciationImageUrl;
+  let ILELinks;
+  let generalLinks;
   switch (country) {
     case "AG":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/AG.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/AG.jpg")
+        ];
+        generalLinks = ["www.facebook.com/AntiguaPlannedParenthood"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "AR":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/AR.jpg"), require("../../assets/images/countryLogos/AR2.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/AR.jpg"),
+          require("../../assets/images/countryLogos/AR2.jpg")
+        ];
+        generalLinks = [
+          "Fundación Huésped - www.huesped.org.ar",
+          I18n.t("and", {
+            locale: store.getState().ui.lang
+          }),
+          "FUSA - www.grupofusa.org"
+        ];
+        ILELinks = [];
       }
       break;
     case "AW":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/AW.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/AW.jpg")
+        ];
+        generalLinks = ["www.caribbeanfamilyplanning.com/where-we-work/aruba"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "BB":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/BB.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/BB.jpg")
+        ];
+        generalLinks = ["www.facebook.com/BarbadosFamilyPlanningAssociation"];
+        ILELinks = [];
       }
       break;
     case "BZ":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/BZ.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/BZ.jpg")
+        ];
+        generalLinks = ["www.bflabelize.org"];
+        ILELinks = [];
       }
       break;
     case "BO":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/BO.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/BO.jpg")
+        ];
+        generalLinks = ["www.cies.org.bo"];
+        ILELinks = [];
       }
       break;
     case "CL":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/CL.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/CL.jpg")
+        ];
+        generalLinks = ["www.aprofa.cl"];
+        ILELinks = [];
       }
       break;
     case "CO":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/CO.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/CO.jpg")
+        ];
+        generalLinks = ["www.profamilia.org.co"];
+        ILELinks = [];
       }
       break;
     case "CW":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/CW.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/CW.jpg")
+        ];
+        generalLinks = [
+          "http://caribbeanfamilyplanning.com/where-we-work/curacao/"
+        ];
+        ILELinks = [
+          "http://caribbeanfamilyplanning.com/where-we-work/curacao/"
+        ];
       }
       break;
     case "DM":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/DM.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/DM.jpg")
+        ];
+        generalLinks = ["www.ippfwhr.org/en/country/caribbean"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "DO":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/DO.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/DO.jpg")
+        ];
+        generalLinks = ["www.profamilia.org.do"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "EC":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/EC.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/EC.jpg")
+        ];
+        generalLinks = ["www.cepamgye.org/es"];
+        ILELinks = [];
       }
       break;
     case "SV":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/SV.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/SV.jpg")
+        ];
+        generalLinks = ["www.ads.org.sv"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "GD":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/GD.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/GD.jpg")
+        ];
+        generalLinks = ["www.ippfwhr.org/en/country/caribbean"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "GT":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/GT.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/GT.jpg")
+        ];
+        generalLinks = ["www.aprofam.org.gt"];
+        ILELinks = [];
       }
       break;
     case "GY":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/GY.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/GY.jpg")
+        ];
+        generalLinks = ["www.grpa.org.gy"];
+        ILELinks = [];
       }
       break;
     case "HT":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/HT.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/HT.jpg")
+        ];
+        generalLinks = ["www.profamilhaiti.org"];
+        ILELinks = [];
       }
       break;
     case "HN":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/HN.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/HN.jpg")
+        ];
+        generalLinks = ["www.ashonplafa.com"];
+        ILELinks = ["www.ashonplafa.com"];
       }
       break;
     case "JM":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/JM.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/JM.jpg")
+        ];
+        generalLinks = ["www.famplan.wordpress.com"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "MX":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/MX.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/MX.jpg")
+        ];
+        generalLinks = ["www.mexfam.org.mx"];
+        ILELinks = [];
       }
       break;
     case "PA":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/PA.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/PA.jpg")
+        ];
+        generalLinks = ["www.aplafa.org.pa"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "PY":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/PY.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/PY.jpg")
+        ];
+        generalLinks = ["www.cepep.org.py"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "PE":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/PE.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/PE.jpg")
+        ];
+        generalLinks = ["www.inppares.org"];
+        ILELinks = [];
       }
       break;
     case "PR":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/PR.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/PR.jpg")
+        ];
+        generalLinks = ["www.profamiliaspr.org"];
+        ILELinks = [];
       }
       break;
     case "LC":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/LC.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/LC.jpg")
+        ];
+        generalLinks = ["www.slppa.org"];
+        ILELinks = [];
       }
       break;
     case "VC":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/VC.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/VC.jpg")
+        ];
+        generalLinks = ["www.facebook.com/SVPPA"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "SR":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/SR.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/SR.jpg")
+        ];
+        generalLinks = ["www.lobisuriname.org"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "TT":
       {
         ILEService = false;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/TT.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/TT.jpg")
+        ];
+        generalLinks = ["www.ttfpa.org"];
+        ILELinks = ["www.safe2choose.org"];
       }
       break;
     case "UY":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/UY.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/UY.jpg")
+        ];
+        generalLinks = ["www.iniciativas.org.uy"];
+        ILELinks = [];
       }
       break;
     case "VE":
       {
         ILEService = true;
-        asocciationImageUrl = [require("../../assets/images/countryLogos/VE.jpg")];
+        asocciationImageUrl = [
+          require("../../assets/images/countryLogos/VE.jpg")
+        ];
+        generalLinks = ["www.plafam.org.ve"];
+        ILELinks = [];
       }
       break;
 
-    default:
+    default: {
+      ILEService = false;
+      asocciationImageUrl = [];
+      generalLinks = [];
+      ILELinks = [];
+    }
   }
 
   return {
@@ -251,7 +390,9 @@ export const getGralTextandILEForCountry = country => {
     ILEText: I18n.t(`General_ILE_${country}`, {
       locale: store.getState().ui.lang
     }),
-    ILEService: ILEService
+    ILEService: ILEService,
+    ILELinks: ILELinks,
+    generalLinks: generalLinks
   };
 };
 
