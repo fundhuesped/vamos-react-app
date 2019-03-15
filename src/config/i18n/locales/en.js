@@ -30,71 +30,71 @@ export default {
   UY: "Uruguay",
   VE: "Venezuela",
   General_Service_AG:
-    "Find out more about sexual and reproductive health and rights on the website of APPA, the IPPF/WHR Member Association in Antigua and Barbuda: www.facebook.com/AntiguaPlannedParenthood",
+    "Find out more about sexual and reproductive health and rights on the website of APPA, the IPPF/WHR Member Association in Antigua and Barbuda:",
   General_Service_AR:
-    "Find out more about sexual and reproductive health and rights on the website of FUSA, the IPPF/WHR Member Association in Argentina: www.grupofusa.org",
+    "Find out more about sexual and reproductive health and rights on the website of IPPF/WHR local partners in Argentina:",
   General_Service_AW:
-    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Aruba: www.caribbeanfamilyplanning.com/where-we-work/aruba",
+    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Aruba:",
   General_Service_BB:
-    "Find out more about sexual and reproductive health and rights on the website of BFPA, the IPPF/WHR Member Association in Barbados: www.facebook.com/BarbadosFamilyPlanningAssociation",
+    "Find out more about sexual and reproductive health and rights on the website of BFPA, the IPPF/WHR Member Association in Barbados:",
   General_Service_BZ:
-    "Find out more about sexual and reproductive health and rights on the website of BFLA, the IPPF/WHR Member Association in Belize: www.bflabelize.org",
+    "Find out more about sexual and reproductive health and rights on the website of BFLA, the IPPF/WHR Member Association in Belize:",
   General_Service_BO:
-    "Find out more about sexual and reproductive health and rights on the website of CIES, the IPPF/WHR Member Association in Bolivia: www.cies.org.bo",
+    "Find out more about sexual and reproductive health and rights on the website of CIES, the IPPF/WHR Member Association in Bolivia:",
   General_Service_CL:
-    "Find out more about sexual and reproductive health and rights on the website of APROFA, the IPPF/WHR Member Association in Chile: www.aprofa.cl",
+    "Find out more about sexual and reproductive health and rights on the website of APROFA, the IPPF/WHR Member Association in Chile:",
   General_Service_CO:
-    "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Colombia: www.profamilia.org.co",
+    "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Colombia:",
   General_Service_CW:
-    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao: http://caribbeanfamilyplanning.com/where-we-work/curacao/",
+    "Find out more about sexual and reproductive health and rights on the website of FPRP, the IPPF/WHR Member Association in Curacao:",
   General_Service_DM:
-    "Find out more about sexual and reproductive health and rights on the website of DPPA, the IPPF/WHR Member Association in Dominica: www.ippfwhr.org/en/country/caribbean",
+    "Find out more about sexual and reproductive health and rights on the website of DPPA, the IPPF/WHR Member Association in Dominica:",
   General_Service_DO:
-    "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Dominican Republic: www.profamilia.org.do",
+    "Find out more about sexual and reproductive health and rights on the website of Profamilia, the IPPF/WHR Member Association in Dominican Republic:",
   General_Service_EC:
-    "Find out more about sexual and reproductive health and rights on the website of CEPAM, the IPPF/WHR Member Association in Ecuador: www.cepamgye.org/es",
+    "Find out more about sexual and reproductive health and rights on the website of CEPAM, the IPPF/WHR Member Association in Ecuador:",
   General_Service_SV:
-    "Find out more about sexual and reproductive health and rights on the website of ADS, the IPPF/WHR Member Association in El Salvador: www.ads.org.sv",
+    "Find out more about sexual and reproductive health and rights on the website of ADS, the IPPF/WHR Member Association in El Salvador:",
   General_Service_GD:
-    "Find out more about sexual and reproductive health and rights on the website of GPPA, the IPPF/WHR Member Association in Grenada: www.ippfwhr.org/en/country/caribbean",
+    "Find out more about sexual and reproductive health and rights on the website of GPPA, the IPPF/WHR Member Association in Grenada:",
   General_Service_GT:
-    "Find out more about sexual and reproductive health and rights on the website of APROFAM, the IPPF/WHR Member Association in Guatemala: www.aprofam.org.gt",
+    "Find out more about sexual and reproductive health and rights on the website of APROFAM, the IPPF/WHR Member Association in Guatemala:",
   General_Service_GY:
-    "Find out more about sexual and reproductive health and rights on the website of GRPA, the IPPF/WHR Member Association in Guyana: www.grpa.org.gy",
+    "Find out more about sexual and reproductive health and rights on the website of GRPA, the IPPF/WHR Member Association in Guyana:",
   General_Service_HT:
-    "Find out more about sexual and reproductive health and rights on the website of PROFAMIL, the IPPF/WHR Member Association in Haiti: www.profamilhaiti.org",
+    "Find out more about sexual and reproductive health and rights on the website of PROFAMIL, the IPPF/WHR Member Association in Haiti:",
   General_Service_HN:
-    "Find out more about sexual and reproductive health and rights on the website of ASHONPLAFA, the IPPF/WHR Member Association in Honduras: www.ashonplafa.com",
+    "Find out more about sexual and reproductive health and rights on the website of ASHONPLAFA, the IPPF/WHR Member Association in Honduras:",
   General_Service_JM:
-    "Find out more about sexual and reproductive health and rights on the website of JFPA, the IPPF/WHR Member Association in Jamaica: www.famplan.wordpress.com",
+    "Find out more about sexual and reproductive health and rights on the website of JFPA, the IPPF/WHR Member Association in Jamaica:",
   General_Service_MX:
-    "Find out more about sexual and reproductive health and rights on the website of MexFam, the IPPF/WHR Member Association in Mexico: www.mexfam.org.mx",
+    "Find out more about sexual and reproductive health and rights on the website of MexFam, the IPPF/WHR Member Association in Mexico:",
   General_Service_PA:
-    "Find out more about sexual and reproductive health and rights on the website of APLAFA, the IPPF/WHR Member Association in Panama: www.aplafa.org.pa",
+    "Find out more about sexual and reproductive health and rights on the website of APLAFA, the IPPF/WHR Member Association in Panama:",
   General_Service_PY:
-    "Find out more about sexual and reproductive health and rights on the website of CEPEP, the IPPF/WHR Member Association in Paraguay: www.cepep.org.py",
+    "Find out more about sexual and reproductive health and rights on the website of CEPEP, the IPPF/WHR Member Association in Paraguay:",
   General_Service_PE:
-    "Find out more about sexual and reproductive health and rights on the website of INPPARES, the IPPF/WHR Member Association in Peru: www.inppares.org",
+    "Find out more about sexual and reproductive health and rights on the website of INPPARES, the IPPF/WHR Member Association in Peru:",
   General_Service_PR:
-    "Find out more about sexual and reproductive health and rights on the website of Profamilias, the IPPF/WHR Member Association in Puerto Rico: www.profamiliaspr.org",
+    "Find out more about sexual and reproductive health and rights on the website of Profamilias, the IPPF/WHR Member Association in Puerto Rico:",
   General_Service_LC:
-    "Find out more about sexual and reproductive health and rights on the website of SLPPA, the IPPF/WHR Member Association in Saint Lucia: www.slppa.org",
+    "Find out more about sexual and reproductive health and rights on the website of SLPPA, the IPPF/WHR Member Association in Saint Lucia:",
   General_Service_VC:
-    "Find out more about sexual and reproductive health and rights on the website of SVPPA, the IPPF/WHR Member Association in Saint Vincent: www.facebook.com/SVPPA",
+    "Find out more about sexual and reproductive health and rights on the website of SVPPA, the IPPF/WHR Member Association in Saint Vincent:",
   General_Service_SR:
-    "Find out more about sexual and reproductive health and rights on the website of LOBI, the IPPF/WHR Member Association in Suriname: www.lobisuriname.org",
+    "Find out more about sexual and reproductive health and rights on the website of LOBI, the IPPF/WHR Member Association in Suriname:",
   General_Service_TT:
-    "Find out more about sexual and reproductive health and rights on the website of FPATT, the IPPF/WHR Member Association in Trinidad and Tobago: www.ttfpa.org",
+    "Find out more about sexual and reproductive health and rights on the website of FPATT, the IPPF/WHR Member Association in Trinidad and Tobago:",
   General_Service_UY:
-    "Find out more about sexual and reproductive health and rights on the website of IS, the IPPF/WHR Member Association in Uruguay: www.iniciativas.org.uy",
+    "Find out more about sexual and reproductive health and rights on the website of IS, the IPPF/WHR Member Association in Uruguay:",
   General_Service_VE:
-    "Find out more about sexual and reproductive health and rights on the website of PLAFAM, the IPPF/WHR Member Association in Venezuela: www.plafam.org.ve",
+    "Find out more about sexual and reproductive health and rights on the website of PLAFAM, the IPPF/WHR Member Association in Venezuela:",
   General_ILE_AG:
-    "In Antigua and Barbuda abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Antigua and Barbuda abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_AR:
     "In Argentina abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_AW:
-    "In Aruba abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Aruba abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_BB:
     "In Barbados abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_BZ:
@@ -106,17 +106,17 @@ export default {
   General_ILE_CO:
     "In Colombia abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_CW:
-    "In Curacao abortion is prohibited under all circumstances. For more information, visit http://caribbeanfamilyplanning.com/where-we-work/curacao/",
+    "In Curacao abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_DM:
-    "In Dominica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Dominica abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_DO:
-    "In Dominican Republic abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Dominican Republic abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_EC:
     "In Ecuador abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.",
   General_ILE_SV:
-    "In El Salvador abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In El Salvador abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_GD:
-    "In Grenada abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Grenada abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_GT:
     "In Guatemala abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.",
   General_ILE_GY:
@@ -124,15 +124,15 @@ export default {
   General_ILE_HT:
     "In Haiti abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.",
   General_ILE_HN:
-    "In Honduras abortion is prohibited under all circumstances. For more information, visit www.ashonplafa.com",
+    "In Honduras abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_JM:
-    "In Jamaica abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Jamaica abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_MX:
     "In Mexico abortion is legal under certain circumstances. In Mexico City abortion is legal. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_PA:
-    "In Panama abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Panama abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_PY:
-    "In Paraguay abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Paraguay abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_PE:
     "In Perú abortion is legally restricted. However, you can access comprehensive and confidential counseling and information about options for unplanned pregnancy at the following clinics.",
   General_ILE_PR:
@@ -140,11 +140,11 @@ export default {
   General_ILE_LC:
     "In Saint Lucia abortion is legal under certain circumstances. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_VC:
-    "In Saint Vincent abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Saint Vincent abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_SR:
-    "In Suriname abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Suriname abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_TT:
-    "In Trinidad and Tobago abortion is prohibited under all circumstances. For more information, visit www.safe2choose.org",
+    "In Trinidad and Tobago abortion is prohibited under all circumstances. For more information, visit",
   General_ILE_UY:
     "In Uruguay abortion is legal. You can access comprehensive legal abortion counseling and services at the following clinics.",
   General_ILE_VE:

@@ -152,7 +152,7 @@ export default class InfoCountry extends React.Component {
     return button;
   };
 
-  _handleLinks = text => {
+  _handleLinks = (text, index) => {
     let textComponent;
     let textString = text.split("www.");
     let url = `http://www.${textString[1]}`;
@@ -162,20 +162,34 @@ export default class InfoCountry extends React.Component {
     }
 
     if (textString.length === 1) {
-      textComponent = <Text>{textString[0]}</Text>;
+      textComponent = <Text key={index}>{` ${textString[0]}`}</Text>;
     } else {
       textComponent = (
-        <View>
-          <Text>{textString[0]}</Text>
+        <Text style={{ flexDirection: "row" }} key={index}>
+          <Text>{` ${textString[0]}`}</Text>
           <Text onPress={() => this._goURL(url)} style={{ color: "#e6334c" }}>
             {textString[1]}
           </Text>
-        </View>
+        </Text>
       );
     }
 
     return textComponent;
   };
+
+  _renderCountryInfo = (text, links) => (
+    <Text>
+      <Text>{text}</Text>
+      <Text
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap"
+        }}
+      >
+        {links.map((link, index) => this._handleLinks(link, index))}
+      </Text>
+    </Text>
+  );
 
   _goURL = url => {
     Linking.canOpenURL(url)
@@ -196,8 +210,8 @@ export default class InfoCountry extends React.Component {
     this.props.navigation.dispatch(resetAction);
   };
 
-  _renderGralText = (service, ILECondition, text) => {
-    let gralText = this._handleLinks(text);
+  _renderGralText = (service, ILECondition, text, links) => {
+    let gralText = this._renderCountryInfo(text, links);
 
     if (service === "LPI") {
       if (!ILECondition) gralText = null;
@@ -206,34 +220,38 @@ export default class InfoCountry extends React.Component {
     return gralText;
   };
 
-  _renderAssociationImage = (service, ILECondition, image) => {
-    let AssociationImage;
-
-    if (service !== "LPI")
-      AssociationImage = (
-        <Image
-          source={image}
-          style={styles.associationLogo}
-          resizeMode="contain"
-        />
-      );
-    else {
-      if (ILECondition)
-        AssociationImage = (
+  _renderCountryImages = (service, ILECondition, images) => {
+    const countryImages = images.map((image, index) => {
+      if (service !== "LPI")
+        associationImage = (
           <Image
+            key={index}
             source={image}
             style={styles.associationLogo}
             resizeMode="contain"
           />
         );
-      else AssociationImage = null;
-    }
+      else {
+        if (ILECondition)
+          associationImage = (
+            <Image
+              key={index}
+              source={image}
+              style={styles.associationLogo}
+              resizeMode="contain"
+            />
+          );
+        else associationImage = null;
+      }
 
-    return AssociationImage;
+      return associationImage;
+    });
+
+    return countryImages;
   };
 
   render() {
-    let gralTextandILEForCountry = getGralTextandILEForCountry(
+    const gralTextandILEForCountry = getGralTextandILEForCountry(
       this.props.country
     );
     tracker.trackEvent(
@@ -286,7 +304,7 @@ export default class InfoCountry extends React.Component {
                       { locale: this.props.lang }
                     ).toUpperCase()}`}</Text>
                   </View>
-                  {this._renderAssociationImage(
+                  {this._renderCountryImages(
                     this.props.service,
                     gralTextandILEForCountry.ILEService,
                     gralTextandILEForCountry.asocciationImageUrl
@@ -296,12 +314,16 @@ export default class InfoCountry extends React.Component {
                   {this._renderGralText(
                     this.props.service,
                     gralTextandILEForCountry.ILEService,
-                    gralTextandILEForCountry.generalText
+                    gralTextandILEForCountry.generalText,
+                    gralTextandILEForCountry.generalLinks
                   )}
                   {this.props.service === "LPI" ? (
                     <View>
                       <View style={{ height: 20 }} />
-                      {this._handleLinks(gralTextandILEForCountry.ILEText)}
+                      {this._renderCountryInfo(
+                        gralTextandILEForCountry.ILEText,
+                        gralTextandILEForCountry.ILELinks
+                      )}
                     </View>
                   ) : null}
                 </View>
@@ -329,7 +351,8 @@ const styles = StyleSheet.create({
   },
   associationLogo: {
     width: "100%",
-    height: width / 3
+    height: width / 3,
+    marginBottom: 10
   },
   infoCountryBody: {
     marginVertical: "5%"
