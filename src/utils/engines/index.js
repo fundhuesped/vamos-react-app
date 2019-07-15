@@ -279,7 +279,7 @@ export const getGralTextandILEForCountry = country => {
         asocciationImageUrl = [
           require("../../assets/images/countryLogos/PA.jpg")
         ];
-        generalLinks = ["www.aplafa.org.pa"];
+        generalLinks = ["www.aplafapanama.org/"];
         ILELinks = ["www.safe2choose.org"];
       }
       break;

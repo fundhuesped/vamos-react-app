@@ -2,6 +2,10 @@ import Expo from "expo";
 import React from "react";
 import App from "./root/App.js";
 
+if(__DEV__) {
+  import('./config/ReactotronConfig').then(() => console.log('Reactotron Configured'))
+}
+
 function cacheImages(images) {
   return images.map(image => {
     if (typeof image === "string") {
