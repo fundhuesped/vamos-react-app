@@ -98,6 +98,13 @@ export default class Services extends React.Component {
   };
 
   _sendToInfoCountryGEOLOCATE = async () => {
+    const titleAlert = I18n.t("title_error_geolocation", {
+      locale: this.props.ui.lang
+    })
+    const alertContent = I18n.t("alert_error_geolocation", {
+      locale: this.props.ui.lang
+    })
+
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
@@ -152,10 +159,10 @@ export default class Services extends React.Component {
             );
         }
       } else {
-        Alert.alert('Error en permisos', 'Para continuar debe aceptar los permisos requeridos.')
+        Alert.alert(titleAlert, alertContent)
       }
     } catch (error) {
-      Alert.alert('Error con GPS', 'Ocurrio un error al acceder a su ubicacion. Intentelo nuevamente por favor.')
+      Alert.alert(titleAlert, alertContent)
     }
 
 

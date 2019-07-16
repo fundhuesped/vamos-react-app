@@ -10,7 +10,9 @@ import {
   Modal,
   TouchableHighlight,
   ScrollView,
-  Dimensions
+  Dimensions,
+  PermissionsAndroid,
+  Alert
 } from "react-native";
 import { Toast, Icon, Spinner } from "native-base";
 import { connect } from "react-redux";
@@ -30,7 +32,7 @@ import {
 import I18n from "../../../config/i18n/index.js";
 import { HTTPService } from "../../../utils/HTTPServices/index.js";
 import { Engine } from "../../../utils/engines";
-import Permissions from "react-native-permissions";
+// import Permissions from "react-native-permissions";
 import ZendeskChat from "react-native-zendesk-chat";
 import DeviceInfo from "react-native-device-info";
 import SVGChatIcon from "../SVG/ChatIcon/component.js";
@@ -122,67 +124,85 @@ class SideBar extends Component {
     return formatDate;
   };
 
-  _goToNearby = () => {
+  _goToNearby = async () => {
+    const titleAlert = I18n.t("title_error_geolocation", {
+      locale: this.props.ui.lang
+    })
+    const alertContent = I18n.t("alert_error_geolocation", {
+      locale: this.props.ui.lang
+    })
+
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      )
+      if(granted === PermissionsAndroid.RESULTS.GRANTED){
+        this.setState({ showModalGPS: true });
+        this.props.dispatch(selectLookingFor(NEARBY));
+        if (
+          this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined
+        ) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              this.props.dispatch(
+                setCurrentLocation(
+                  position.coords.latitude,
+                  position.coords.longitude
+                )
+              );
+              this._getAddress(position.coords);
+            },
+            error => {
+              this.setState({
+                modalVisible: true,
+                modalType: true,
+                showModalGPS: false
+              });
+            },
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 }
+          );
+        } else {
+          let currentTime = new Date(),
+            timeStamp = this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp;
+    
+          if (
+            currentTime.getTime() - timeStamp.getTime() >=
+            TIME_STAMP_GPS_MIN * 60 * 1000
+          ) {
+            navigator.geolocation.getCurrentPosition(
+              position => {
+                this.props.dispatch(
+                  setCurrentLocation(
+                    position.coords.latitude,
+                    position.coords.longitude
+                  )
+                );
+                this._getAddress(position.coords);
+              },
+              error => {
+                this.setState({
+                  modalVisible: true,
+                  modalType: true,
+                  showModalGPS: false
+                });
+              },
+              { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 }
+            );
+          } else
+            this._getAddress(
+              this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation
+            );
+        }
+      } else {
+        Alert.alert(titleAlert, alertContent)
+      }
+    } catch (error) {
+      Alert.alert(titleAlert, alertContent)
+    }
     // Permissions.check('location', 'always')
     //   .then(response => {
     //     if(response !== 'authorized') this.setState({modalVisible:true, modalType: true, showModalGPS:false})
     // })
-    this.setState({ showModalGPS: true });
-    this.props.dispatch(selectLookingFor(NEARBY));
-    if (
-      this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp === undefined
-    ) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          this.props.dispatch(
-            setCurrentLocation(
-              position.coords.latitude,
-              position.coords.longitude
-            )
-          );
-          this._getAddress(position.coords);
-        },
-        error => {
-          this.setState({
-            modalVisible: true,
-            modalType: true,
-            showModalGPS: false
-          });
-        },
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 }
-      );
-    } else {
-      let currentTime = new Date(),
-        timeStamp = this.props.ui.searchEngine.userInput.GEOLOCATE.timeStamp;
-
-      if (
-        currentTime.getTime() - timeStamp.getTime() >=
-        TIME_STAMP_GPS_MIN * 60 * 1000
-      ) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            this.props.dispatch(
-              setCurrentLocation(
-                position.coords.latitude,
-                position.coords.longitude
-              )
-            );
-            this._getAddress(position.coords);
-          },
-          error => {
-            this.setState({
-              modalVisible: true,
-              modalType: true,
-              showModalGPS: false
-            });
-          },
-          { enableHighAccuracy: false, timeout: 10000, maximumAge: 1000 }
-        );
-      } else
-        this._getAddress(
-          this.props.ui.searchEngine.userInput.GEOLOCATE.currentLocation
-        );
-    }
   };
 
   _getAddress = async coords => {
